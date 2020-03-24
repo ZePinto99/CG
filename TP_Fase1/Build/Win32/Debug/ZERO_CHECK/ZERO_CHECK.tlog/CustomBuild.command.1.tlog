@@ -1,0 +1,10 @@
+^C:\USERS\RVCAR\ONEDRIVE\DESKTOP\UM\CG\TP\BUILD\CMAKEFILES\BB2A7A298FB9B7B45ADDB5738C6EDAEE\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/rvcar/OneDrive/Desktop/UM/CG/TP -BC:/Users/rvcar/OneDrive/Desktop/UM/CG/TP/Build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/rvcar/OneDrive/Desktop/UM/CG/TP/Build/class1.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
