@@ -22,7 +22,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B76A9E60-981F-3838-AC44-1CD3EF9F54FB}</ProjectGuid>
+    <ProjectGuid>{A07DC4B4-D12B-33E4-AD1A-A98BE3E9C24F}</ProjectGuid>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>Win32</Platform>
@@ -66,7 +66,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -76,7 +76,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -86,7 +86,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -96,7 +96,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
     <Midl>
-      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\3ºano\2 Semestre\CG\toolkits\glut;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -105,10 +105,10 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\3ºano\2 Semestre\CG\TP_Fase2\CMakeLists.txt">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TP_Fase2/CMakeLists.txt</Message>
+    <CustomBuild Include="D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
-D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TP_Fase2" "-BD:/3ºano/2 Semestre/CG/TP_Fase2/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TP_Fase2/Build/CMakeFiles/generate.stamp"
+D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3" "-BD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -116,12 +116,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TP_Fase2/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
-D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TP_Fase2" "-BD:/3ºano/2 Semestre/CG/TP_Fase2/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TP_Fase2/Build/CMakeFiles/generate.stamp"
+D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3" "-BD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -129,12 +129,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TP_Fase2/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
-D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TP_Fase2" "-BD:/3ºano/2 Semestre/CG/TP_Fase2/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TP_Fase2/Build/CMakeFiles/generate.stamp"
+D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3" "-BD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -142,12 +142,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TP_Fase2/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
-D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TP_Fase2" "-BD:/3ºano/2 Semestre/CG/TP_Fase2/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TP_Fase2/Build/CMakeFiles/generate.stamp"
+D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3" "-BD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build" --check-stamp-file "D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build/CMakeFiles/generate.stamp"
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -155,22 +155,22 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\3ºano\2 Semestre\CG\TP_Fase2\Build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeCXXCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeRCCompiler.cmake;D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\3.17.0-rc1\CMakeSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCXXInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeCommonLanguageInclude.cmake;D:\Work\share\cmake-3.17\Modules\CMakeGenericSystem.cmake;D:\Work\share\cmake-3.17\Modules\CMakeInitializeConfigs.cmake;D:\Work\share\cmake-3.17\Modules\CMakeLanguageInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeRCInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInformation.cmake;D:\Work\share\cmake-3.17\Modules\CMakeSystemSpecificInitialize.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\CMakeCommonCompilerMacros.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Compiler\MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\FindOpenGL.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageHandleStandardArgs.cmake;D:\Work\share\cmake-3.17\Modules\FindPackageMessage.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-C.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC-CXX.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows-MSVC.cmake;D:\Work\share\cmake-3.17\Modules\Platform\Windows.cmake;D:\Work\share\cmake-3.17\Modules\Platform\WindowsPaths.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="D:\3ºano\2 Semestre\CG\TP_Fase2\Build\ZERO_CHECK.vcxproj">
-      <Project>{455E3A69-E78A-3EAA-95C4-39F4C64223AF}</Project>
+    <ProjectReference Include="D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\ZERO_CHECK.vcxproj">
+      <Project>{200506E0-B598-3B7C-8D7E-032036E509A2}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="D:\3ºano\2 Semestre\CG\TP_Fase2\Build\class1.vcxproj">
-      <Project>{6ABD4DA8-686D-3C46-B6C3-5ECA7E8A59F9}</Project>
+    <ProjectReference Include="D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\class1.vcxproj">
+      <Project>{9ADEDA5B-DFA3-3D7C-83D9-9374C84BA82D}</Project>
       <Name>class1</Name>
     </ProjectReference>
   </ItemGroup>

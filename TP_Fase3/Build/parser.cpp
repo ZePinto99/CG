@@ -112,7 +112,7 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
                 angleValue = atof(rotateAngle);
             }
 
-            addOpGroup(group, i, operation, x, y, z, angleValue);
+            addOpGroup(group, i, operation, x, y, z, angleValue, transform);
         }
 
         if (strcmp((char*)child2->Value(), "scale") == 0) {
@@ -131,7 +131,7 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
             char* Z = (char*)child2->Attribute("Z");
             if (Z != NULL) z = atof(Z);
 
-            addOpGroup(group, i, operation, x, y, z, -1);
+            addOpGroup(group, i, operation, x, y, z, -1, transform);
         }
     }
 }

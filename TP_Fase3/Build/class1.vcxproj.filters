@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="D:\3ºano\2 Semestre\CG\TP_Fase2\Build\main.cpp">
+    <ClCompile Include="D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="operations.cpp">
@@ -15,11 +15,11 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="D:\3ºano\2 Semestre\CG\TP_Fase2\CMakeLists.txt" />
+    <CustomBuild Include="D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{49F3EB8F-670B-3241-8914-B04B0AA7F30C}</UniqueIdentifier>
+      <UniqueIdentifier>{BF29F744-E513-3EC8-A352-65D356EFF627}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
