@@ -1,6 +1,6 @@
-^D:\3ºANO\2 SEMESTRE\CG\TRABALHOPRATICO\CG\TP_FASE3\BUILD\CMAKEFILES\3CE7D47D07C4E2650491676EA9C0E25C\GENERATE.STAMP.RULE
+^C:\USERS\ASUS\DOCUMENTS\GITHUB\CG\TP_FASE3\BUILD\CMAKEFILES\3DA01031E267443A18C055ED44D7E5D7\GENERATE.STAMP.RULE
 setlocal
-D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3" "-BD:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "D:/3ºano/2 Semestre/CG/TrabalhoPratico/CG/TP_Fase3/Build/class1.sln"
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/asus/Documents/GitHub/CG/TP_Fase3 -BC:/Users/asus/Documents/GitHub/CG/TP_Fase3/Build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/asus/Documents/GitHub/CG/TP_Fase3/Build/class1.sln
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
