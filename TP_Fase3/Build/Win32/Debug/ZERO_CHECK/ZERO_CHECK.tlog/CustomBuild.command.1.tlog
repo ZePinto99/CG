@@ -1,0 +1,10 @@
+^D:\3ºANO\2 SEMESTRE\CG\TP_FASE2\BUILD\CMAKEFILES\F92C0DF68C4180F6621D97E406AB860D\GENERATE.STAMP.RULE
+setlocal
+D:\Work\bin\cmake.exe "-SD:/3ºano/2 Semestre/CG/TP_Fase2" "-BD:/3ºano/2 Semestre/CG/TP_Fase2/Build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "D:/3ºano/2 Semestre/CG/TP_Fase2/Build/class1.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

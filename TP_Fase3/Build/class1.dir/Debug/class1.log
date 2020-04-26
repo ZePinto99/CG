@@ -1,0 +1,4 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (class1.dir\Debug\) contains files shared from another project (Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  main.cpp
+D:\3ºano\2 Semestre\CG\TP_Fase2\Build\main.cpp(44,22): warning C4018: '<=': signed/unsigned mismatch
+  class1.vcxproj -> D:\3ºano\2 Semestre\CG\TP_Fase2\Build\Debug\class1.exe
