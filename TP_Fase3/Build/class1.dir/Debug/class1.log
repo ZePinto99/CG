@@ -1,6 +1,3 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(467,5): warning MSB8028: The intermediate directory (class1.dir\Debug\) contains files shared from another project (Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  main.cpp
-C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\main.cpp(157,22): warning C4018: '<=': signed/unsigned mismatch
-main.obj : error LNK2001: unresolved external symbol __imp____glewBindBuffer
-main.obj : error LNK2001: unresolved external symbol __imp____glewBufferData
-C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\Debug\class1.exe : fatal error LNK1120: 2 unresolved externals
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\Microsoft.Common.CurrentVersion.targets(1850,5): warning : The referenced project 'C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\ZERO_CHECK.vcxproj' does not exist.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(467,5): warning MSB8028: The intermediate directory (class1.dir\Debug\) contains files shared from another project (Engine.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(478,5): error MSB3191: Unable to create directory "C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\Debug\". Access to the path 'C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\Debug\' is denied.

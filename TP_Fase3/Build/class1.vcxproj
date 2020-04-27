@@ -316,12 +316,6 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\main.cpp" />
-    <ClCompile Include="operations.cpp" />
-    <ClCompile Include="parser.cpp" />
-    <ClCompile Include="tinyxml2.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\ZERO_CHECK.vcxproj">
       <Project>{DE1AC213-0769-3BD1-B7EF-85BE20391E6B}</Project>
       <Name>ZERO_CHECK</Name>
@@ -330,6 +324,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="operations.cpp" />
+    <ClCompile Include="parser.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h" />
     <ClInclude Include="operations.h" />
     <ClInclude Include="parser.h" />
     <ClInclude Include="tinyxml2.h" />

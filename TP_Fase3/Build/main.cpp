@@ -78,7 +78,7 @@ void multMatrixVector(float* m, float* v, float* res) {
 }
 
 
-void getCatmullRomPoint(float t, float* p0, float* p1, float* p2, float* p3, float* pos, float* deriv) {
+void getCatmullRomPoint(double t, double* p0, double* p1, double* p2, double* p3, double* pos, double* deriv) {
 
 	// catmull-rom matrix
 	float m[4][4] = { {-0.5f,  1.5f, -1.5f,  0.5f},
@@ -104,40 +104,20 @@ void getCatmullRomPoint(float t, float* p0, float* p1, float* p2, float* p3, flo
 }
 
 
-
 // given  global t, returns the point in the curve
-void getGlobalCatmullRomPoint(float gt, float* pos, float* deriv) {
+void getGlobalCatmullRomPoint(double gt, double* pos, double* deriv, double** curve, int size) {
 
-	float t = gt * POINT_COUNT; // this is the real global t
-	int index = floor(t);  // which segment
-	t = t - index; // where within  the segment
+	double t = gt * size; 
+	int index = floor(t);
+	t = t - index;
 
-	// indices store the points
 	int indices[4];
-	indices[0] = (index + POINT_COUNT - 1) % POINT_COUNT;
-	indices[1] = (indices[0] + 1) % POINT_COUNT;
-	indices[2] = (indices[1] + 1) % POINT_COUNT;
-	indices[3] = (indices[2] + 1) % POINT_COUNT;
+	indices[0] = (index + size - 1) % size;
+	indices[1] = (indices[0] + 1) % size;
+	indices[2] = (indices[1] + 1) % size;
+	indices[3] = (indices[2] + 1) % size;
 
-	getCatmullRomPoint(t, p[indices[0]], p[indices[1]], p[indices[2]], p[indices[3]], pos, deriv);
-}
-
-void renderCatmullRomCurve() {
-
-	// draw curve using line segments with GL_LINE_LOOP
-	float p[4][3] = { { 0.0f, 0.0f, 0.0f}, // A
-					  { 1.0f, 0.0f, 1.0f}, // B
-					  {-1.0f, 0.0f, 1.0f}, // C
-					  {-1.0f, 0.0f, 0.0f} }; // D
-
-	float pos[4];
-	float deriv[4];
-	glBegin(GL_LINE_LOOP);
-	for (float gt = 0; gt < 1; gt += 0.01) {
-		getGlobalCatmullRomPoint(gt, pos, deriv);
-		glVertex3f(pos[0], pos[1], pos[2]);
-	}
-	glEnd();
+	getCatmullRomPoint(t, curve[indices[0]], curve[indices[1]], curve[indices[2]], curve[indices[3]], pos, deriv);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -181,11 +161,12 @@ void createVBO(int i) {
 }
 
 
-
 void lerficheiro(std::string nomeficheiro)
 {
 	int c = 0;
-	double storefloat[3];
+
+	double storedouble[3];
+	for (int i = 0; i < 3; i++) storedouble[i] = 0;
 
 	std::ifstream trigsFile;
 	trigsFile.open(nomeficheiro);
@@ -196,7 +177,7 @@ void lerficheiro(std::string nomeficheiro)
 			std::string sTmp;
 			for (int i = 0; i <= linha.length(); i++) {
 				if (linha[i] == ' ' || linha[i] == '\0') {
-					storefloat[c] = stod(sTmp);
+					storedouble[c] = stod(sTmp);
 					sTmp.clear();
 					c++;
 				}
@@ -205,9 +186,9 @@ void lerficheiro(std::string nomeficheiro)
 				}
 			}
 			Ponto aux;
-			aux.x = storefloat[0];
-			aux.y = storefloat[1];
-			aux.z = storefloat[2];
+			aux.x = storedouble[0];
+			aux.y = storedouble[1];
+			aux.z = storedouble[2];
 			triangles.push_back(aux);
 			c = 0;
 		}
@@ -233,9 +214,69 @@ void lertudoemaisalgumacoisa() {
 }
 
 
+void translateTransform(Oper* oper, int i)
+{
+	double intervalos[20], checkpoints[20], time = 0;
+	Transform* t = oper->transform;
+
+	//criar matriz aqui
+	int h = (t->points).size();
+	double** curve = new double* [h];
+	for (int i=0; i<h; i++) curve[i] = new double[3];
+
+	int j = 0;
+	vector<Ponto>::iterator it;
+	for (it = t->points.begin(); it != t->points.end(); it++) {
+		Ponto aux = *it;
+
+		curve[j][0] = aux.x;
+		curve[j][1] = aux.y;
+		curve[j][2] = aux.z;
+
+		j++;
+	}
+    int size = j;
+
+	double pos[4];
+	double deriv[4];
+
+	glBegin(GL_LINE_LOOP);
+		int n = 100;
+		for (int i = 0; i < n; i++) {
+			getGlobalCatmullRomPoint((double)i / n, pos, deriv, curve, size);
+			glVertex3d(pos[0], pos[1], pos[2]);
+		}
+	glEnd();
+
+	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
+
+	if (time < files.size()) {
+		checkpoints[i] = 1 / (t->time * 1000);
+		time++;
+	}
+	intervalos[i] += checkpoints[i];
+
+	//apagar matriz aqui
+	for (int i=0; i<h; i++) delete[] curve[i];
+	delete[] curve;
+
+	glTranslated(pos[0], pos[1], pos[2]);
+}
+
+
+void rotateTransform(Oper* oper, int i)
+{
+	Transform* t = oper->transform;
+
+	double angles[20];
+	double time = t->time;
+
+	angles[i] += 360 / (time * 1000);
+	glRotated(angles[i], oper->x, oper->y, oper->y);
+}
+
 void desenhar(void)
 {
-	
 	std::vector<OperFile*>::iterator itout;
 	itout = files.begin();
 	int i = 0;
@@ -256,11 +297,21 @@ void desenhar(void)
 				it2++;
 				if (strcmp(oper->operation, "translate")==0)
 				{
-					glTranslatef(oper->x, oper->y, oper->z);
+					if (oper->transform == nullptr) {
+						glTranslatef(oper->x, oper->y, oper->z);
+					}
+					else {
+						translateTransform(oper, i);
+					}
 				}
 				if (strcmp(oper->operation, "rotate") == 0)
 				{
-					glRotatef(oper->angle, oper->x, oper->y, oper->z);
+					if (oper->transform == nullptr) {
+						glRotatef(oper->angle, oper->x, oper->y, oper->z);
+					}
+					else {
+						rotateTransform(oper, i);
+					}
 				}
 				if (strcmp(oper->operation, "scale") == 0) {
 					glScalef(oper->x, oper->y, oper->z) ;
