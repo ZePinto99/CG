@@ -106,7 +106,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=class1
+CMAKE_PROJECT_NAME:STATIC=class5
 
 //RC compiler
 CMAKE_RC_COMPILER:FILEPATH=rc
@@ -180,7 +180,7 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_VERBOSE_MAKEFILE:BOOL=OFF
 
 //Path to GLUT folder
-GLUT_DIR:PATH=C:/Users/asus/Desktop/Uni/CG/glut
+GLUT_DIR:PATH=C:/Users/asus/Documents/GitHub/CG/toolkits/glut
 
 //OpenGL library for win32
 OPENGL_gl_LIBRARY:STRING=opengl32
@@ -188,11 +188,20 @@ OPENGL_gl_LIBRARY:STRING=opengl32
 //GLU library for win32
 OPENGL_glu_LIBRARY:STRING=glu32
 
+//Path to Toolkits folder
+TOOLKITS_FOLDER:PATH=C:/Users/asus/Documents/GitHub/CG/toolkits
+
 //Value Computed by CMake
 class1_BINARY_DIR:STATIC=C:/Users/asus/Documents/GitHub/CG/TP_Fase3/Build
 
 //Value Computed by CMake
 class1_SOURCE_DIR:STATIC=C:/Users/asus/Documents/GitHub/CG/TP_Fase3
+
+//Value Computed by CMake
+class5_BINARY_DIR:STATIC=C:/Users/asus/Documents/GitHub/CG/TP_Fase3/Build
+
+//Value Computed by CMake
+class5_SOURCE_DIR:STATIC=C:/Users/asus/Documents/GitHub/CG/TP_Fase3
 
 
 ########################

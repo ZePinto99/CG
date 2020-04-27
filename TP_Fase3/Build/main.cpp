@@ -1,7 +1,9 @@
 #include <stdlib.h>
+#include <stdio.h>
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
+#include <GL/glew.h>
 #include <GL/glut.h>
 #endif
 
@@ -22,8 +24,8 @@ vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 					     // com as suas respetivas transformações).
 
 GLuint vertexCount;
-GLuint buffers;
-float* vertexB;
+GLuint buffers[16];
+double** vertexB;
 
 ////////////////////////////////Curvas///////////////////////////////////////
 #define POINT_COUNT 5
@@ -143,7 +145,7 @@ void renderCatmullRomCurve() {
 void lerficheiro(std::string nomeficheiro)
 {
 	int c = 0;
-	float storefloat[3];
+	double storefloat[3];
 
 	std::ifstream trigsFile;
 	trigsFile.open(nomeficheiro);
@@ -169,34 +171,72 @@ void lerficheiro(std::string nomeficheiro)
 			triangles.push_back(aux);
 			c = 0;
 		}
-		/*
-		glBindBuffer(GL_ARRAY_BUFFER, buffers);
-		glBufferData(GL_ARRAY_BUFFER, vertexCount, vertexB, GL_STATIC_DRAW);
-		glVertexPointer(3, GL_DOUBLE, 0, 0);
-		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+	}
+}
 
-		glPopMatrix();
-		*/
+void lertudoemaisalgumacoisa() {
+	std::vector<OperFile*>::iterator itout;
+	itout = files.begin();
+	while (itout != files.end()) {
+		OperFile* op = *itout;
+		OperFile* opcopy = op;
+		itout++;
+		char* stds = op->fileName;
+		std::string std(stds);
+		lerficheiro(std);
 	}
 }
 
 void createVBO() {
-	vertexB = (float*)malloc(sizeof(float) * triangles.size() * 3);
-	int i = 0;  int vertex = 0;
+	vertexB = (double**)malloc(sizeof(double*) * files.size());
+	int i = 0, p = 0;  int vertex = 0; bool flag;
 
 	vector<Ponto>::iterator tri = triangles.begin();
+	vector<OperFile*>::iterator itFile;
 
-	for (int j = 0; tri != triangles.end(); j++, vertex++) {
-		vertexB[i] = tri[j].x;
-		i++;
-		vertexB[i] = tri[j].y;
-		i++;
-		vertexB[i] = tri[j].z;
+	while(tri != triangles.end()){
+		
+		OperFile* fo = *itFile;
 
-		vertex++;
+		//falta ir buscar o número de vértices para um ficheiro 
+		vertexB[i] = (double*)malloc(sizeof(double) * fo->totalVertexes * 3);
+		p = 0;
+		flag = false;
+
+		while (!flag)
+		{
+			//if (!isMark(aux_1, aux_2, aux_3))
+			if (true) {
+				Ponto aux_1 = *tri; tri++;
+				Ponto aux_2 = *tri; tri++;
+				Ponto aux_3 = *tri; tri++;
+
+				vertexB[i][p] = aux_1.x;
+				vertexB[i][p + 1] = aux_2.y;
+				vertexB[i][p + 2] = aux_3.z;
+				vertex++;
+
+				vertexB[i][p + 3] = aux_1.x;
+				vertexB[i][p + 4] = aux_2.y;
+				vertexB[i][p + 5] = aux_3.z;
+				vertex++;
+
+				vertexB[i][p + 6] = aux_1.x;
+				vertexB[i][p + 7] = aux_2.y;
+				vertexB[i][p + 8] = aux_3.z;
+				vertex++;
+
+				p += 9;
+			}
+			else {
+				flag = true;
+				i++;
+			}
+		}
 	}
 
 	vertexCount = vertex;
+	
 }
 
 
@@ -205,7 +245,7 @@ void desenhar(void)
 	
 	std::vector<OperFile*>::iterator itout;
 	itout = files.begin();
-
+	int i = 0;
 	
 	while (itout != files.end()) {
 		triangles.clear();
@@ -213,14 +253,10 @@ void desenhar(void)
 		itout++;
 		
 		char* stds = op->fileName;
-		std::string std(stds);
-		lerficheiro(std);
-		std::vector<Ponto>::iterator it;
-		it = triangles.begin();
+		//std::string std(stds);
+		//lerficheiro(std);
+		glPushMatrix();
 
-		while (it != triangles.end()) {
-
-			glPushMatrix();
 			std::vector<Oper*>::iterator it2;
 			it2 = op->operations.begin();
 			while(it2 != op->operations.end())
@@ -239,22 +275,15 @@ void desenhar(void)
 					glScalef(oper->x, oper->y, oper->z) ;
 				}
 			}
-			Ponto aux_1 = *it; it++;
-			Ponto aux_2 = *it; it++;
-			Ponto aux_3 = *it; it++;
-
-			glBegin(GL_TRIANGLES);
-			//glColor3f(0.3, 0.1, 0);
 			glColor3f(1, 1, 1);
-			glVertex3d(aux_1.x, aux_1.y, aux_1.z);
-			glVertex3d(aux_2.x, aux_2.y, aux_2.z);
-			glVertex3d(aux_3.x, aux_3.y, aux_3.z);
-			glEnd();
-
+			glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+			glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * 3, vertexB, GL_STATIC_DRAW);
+			glVertexPointer(3, GL_DOUBLE, 0, 0);
+			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 			glPopMatrix();
+			i++;
 		}
-		
-	}
+
 }
 
 void changeSize(int w, int h)
@@ -293,6 +322,10 @@ void renderScene(void)
 		0.0f, 1.0f, 0.0f);
 
 	// put drawing instructions here
+/*	glEnableClientState(GL_VERTEX_ARRAY);
+	int size = static_cast<int>(files.size());
+	printf("%d\n", size);
+	glGenBuffers(size, buffers);*/
 	desenhar();
 	
 
@@ -331,7 +364,11 @@ int main(int argc, char** argv)
 {
 	// put GLUT’s init here
 	xmlParser("config.xml", files);
+
+	lertudoemaisalgumacoisa();
+	
 	createVBO();
+
 	//if (!files.empty()) std::cout << "ola";
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -344,9 +381,16 @@ int main(int argc, char** argv)
 	glutIdleFunc(renderScene);
 	glutDisplayFunc(renderScene);
 	// some OpenGL settings
+
+#ifndef __APPLE__
+	glewInit();
+#endif
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	// enter GLUT’s main cycle
 	glutMainLoop();
 	return 1;
