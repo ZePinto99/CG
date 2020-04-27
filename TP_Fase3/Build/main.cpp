@@ -23,8 +23,9 @@ std::vector<Ponto> triangles;
 vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros 
 					     // com as suas respetivas transformações).
 
+int* fiVertexCount;
 GLuint vertexCount;
-GLuint buffers[16];
+GLuint buffers[20];
 double** vertexB;
 
 ////////////////////////////////Curvas///////////////////////////////////////
@@ -141,6 +142,45 @@ void renderCatmullRomCurve() {
 
 ////////////////////////////////////////////////////////////////
 
+void createVBO(int i) {
+	int p = 0;  int vertex = 0;
+
+	vector<Ponto>::iterator tri = triangles.begin();
+	vector<OperFile*>::iterator itFile;
+
+	vertexB[i] = (double*)malloc(sizeof(double) * triangles.size() * 3);
+
+	while (tri != triangles.end()) {
+		//falta ir buscar o número de vértices para um ficheiro 
+		////////////////////////////////////////////////////////////////////
+		//verificar size
+
+		Ponto aux_1 = *tri; tri++;
+		Ponto aux_2 = *tri; tri++;
+		Ponto aux_3 = *tri; tri++;
+
+		vertexB[i][p] = aux_1.x;
+		vertexB[i][p + 1] = aux_1.y;
+		vertexB[i][p + 2] = aux_1.z;
+		vertex++;
+
+		vertexB[i][p + 3] = aux_2.x;
+		vertexB[i][p + 4] = aux_2.y;
+		vertexB[i][p + 5] = aux_2.z;
+		vertex++;
+
+		vertexB[i][p + 6] = aux_3.x;
+		vertexB[i][p + 7] = aux_3.y;
+		vertexB[i][p + 8] = aux_3.z;
+		vertex++;
+
+		p += 9;
+	}
+	printf("END   p = %d\n ", p);
+	vertexCount = vertex;
+}
+
+
 
 void lerficheiro(std::string nomeficheiro)
 {
@@ -175,68 +215,21 @@ void lerficheiro(std::string nomeficheiro)
 }
 
 void lertudoemaisalgumacoisa() {
+	vertexB = (double**)malloc(sizeof(double*) * files.size());
 	std::vector<OperFile*>::iterator itout;
 	itout = files.begin();
+	int i=0;
 	while (itout != files.end()) {
+		triangles.clear();
 		OperFile* op = *itout;
 		OperFile* opcopy = op;
-		itout++;
 		char* stds = op->fileName;
 		std::string std(stds);
 		lerficheiro(std);
+		createVBO(i);
+		itout++;
+		i++;
 	}
-}
-
-void createVBO() {
-	vertexB = (double**)malloc(sizeof(double*) * files.size());
-	int i = 0, p = 0;  int vertex = 0; bool flag;
-
-	vector<Ponto>::iterator tri = triangles.begin();
-	vector<OperFile*>::iterator itFile;
-
-	while(tri != triangles.end()){
-		
-		OperFile* fo = *itFile;
-
-		//falta ir buscar o número de vértices para um ficheiro 
-		vertexB[i] = (double*)malloc(sizeof(double) * fo->totalVertexes * 3);
-		p = 0;
-		flag = false;
-
-		while (!flag)
-		{
-			//if (!isMark(aux_1, aux_2, aux_3))
-			if (true) {
-				Ponto aux_1 = *tri; tri++;
-				Ponto aux_2 = *tri; tri++;
-				Ponto aux_3 = *tri; tri++;
-
-				vertexB[i][p] = aux_1.x;
-				vertexB[i][p + 1] = aux_2.y;
-				vertexB[i][p + 2] = aux_3.z;
-				vertex++;
-
-				vertexB[i][p + 3] = aux_1.x;
-				vertexB[i][p + 4] = aux_2.y;
-				vertexB[i][p + 5] = aux_3.z;
-				vertex++;
-
-				vertexB[i][p + 6] = aux_1.x;
-				vertexB[i][p + 7] = aux_2.y;
-				vertexB[i][p + 8] = aux_3.z;
-				vertex++;
-
-				p += 9;
-			}
-			else {
-				flag = true;
-				i++;
-			}
-		}
-	}
-
-	vertexCount = vertex;
-	
 }
 
 
@@ -253,8 +246,6 @@ void desenhar(void)
 		itout++;
 		
 		char* stds = op->fileName;
-		//std::string std(stds);
-		//lerficheiro(std);
 		glPushMatrix();
 
 			std::vector<Oper*>::iterator it2;
@@ -277,7 +268,7 @@ void desenhar(void)
 			}
 			glColor3f(1, 1, 1);
 			glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-			glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * 3, vertexB, GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
 			glVertexPointer(3, GL_DOUBLE, 0, 0);
 			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 			glPopMatrix();
@@ -322,10 +313,9 @@ void renderScene(void)
 		0.0f, 1.0f, 0.0f);
 
 	// put drawing instructions here
-/*	glEnableClientState(GL_VERTEX_ARRAY);
-	int size = static_cast<int>(files.size());
-	printf("%d\n", size);
-	glGenBuffers(size, buffers);*/
+	glEnableClientState(GL_VERTEX_ARRAY);
+	int size = files.size();
+	glGenBuffers(size, buffers);
 	desenhar();
 	
 
@@ -366,8 +356,6 @@ int main(int argc, char** argv)
 	xmlParser("config.xml", files);
 
 	lertudoemaisalgumacoisa();
-	
-	createVBO();
 
 	//if (!files.empty()) std::cout << "ola";
 	glutInit(&argc, argv);
