@@ -86,10 +86,10 @@
             <!-- satelite Ganímedes -->
             <group>
                 <translate time="6">
-                 <translate X="-10.2634" Y="4" Z="0" />
-                 <translate X="0" Y="4" Z="-10.2634" />
-                 <translate X="10.2634" Y="4" Z="0" />
-                 <translate X="0" Y="4" Z="10.2634" />
+                 <point X="-10.2634" Y="4" Z="0" />
+                 <point X="0" Y="4" Z="-10.2634" />
+                 <point X="10.2634" Y="4" Z="0" />
+                 <point X="0" Y="4" Z="10.2634" />
                 </translate>
                 <scale X="0.2634" Y="0.2634" Z="0.2634" />
                 <models>
@@ -113,10 +113,10 @@
             <group>
             <!--saturno -->
                 <translate time="60">
-                 <translate X="114.555" Y="0" Z="0" />
-                 <translate X="0" Y="0" Z="114.555" />
-                 <translate X="-114.555" Y="0" Z="0" />
-                 <translate X="0" Y="0" Z="-114.555" />
+                 <point X="114.555" Y="0" Z="0" />
+                 <point X="0" Y="0" Z="114.555" />
+                 <point X="-114.555" Y="0" Z="0" />
+                 <point X="0" Y="0" Z="-114.555" />
                 </translate>
                 <scale X="0.7" Y="0.7" Z="0.7" />
                 <models>
@@ -190,10 +190,10 @@
             <!-- satelite Triton-->
             <group>
               <translate time="9">
-                 <translate X="0" Y="10" Z="-10" />
-                 <translate X="-10" Y="10" Z="0" />
-                 <translate X="0" Y="10" Z="10" />
-                 <translate X="10" Y="10" Z="0" />
+                 <point X="0" Y="10" Z="-10" />
+                 <point X="-10" Y="10" Z="0" />
+                 <point X="0" Y="10" Z="10" />
+                 <point X="10" Y="10" Z="0" />
               </translate>
               <scale X="0.353" Y="0.353" Z="0.353" />
               <models>
