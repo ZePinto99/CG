@@ -70,6 +70,7 @@ void addOperFile(char* fileName, Group group, vector<OperFile*>& files)
             newOp->y = tmp->y;
             newOp->z = tmp->z;
             newOp->angle = tmp->angle;
+            newOp->transform = tmp->transform;
             
             newOp->operation = new char[15];
             strcpy(newOp->operation, tmp->operation);

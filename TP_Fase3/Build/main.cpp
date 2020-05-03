@@ -77,35 +77,65 @@ void multMatrixVector(float* m, float* v, float* res) {
 
 }
 
+void multMatrix14(double uW[1][4], double m[4][4], double res[1][4])
+{
+	res[0][0] = uW[0][0] * m[0][0] + uW[0][1] * m[1][0] + uW[0][2] * m[2][0] + uW[0][3] * m[3][0];
+	res[0][1] = uW[0][0] * m[0][1] + uW[0][1] * m[1][1] + uW[0][2] * m[2][1] + uW[0][3] * m[3][1];
+	res[0][2] = uW[0][0] * m[0][2] + uW[0][1] * m[1][2] + uW[0][2] * m[2][2] + uW[0][3] * m[3][2];
+	res[0][3] = uW[0][0] * m[0][3] + uW[0][1] * m[1][3] + uW[0][2] * m[2][3] + uW[0][3] * m[3][3];
+}
 
-void getCatmullRomPoint(double t, double* p0, double* p1, double* p2, double* p3, double* pos, double* deriv) {
+void multMatrix1441(double trans[1][4], double vH[4][1], double* res)
+{
+	*res = trans[0][0] * vH[0][0] + trans[0][1] * vH[1][0] + trans[0][2] * vH[2][0] + trans[0][3] * vH[3][0];
+}
 
-	// catmull-rom matrix
-	float m[4][4] = { {-0.5f,  1.5f, -1.5f,  0.5f},
-						{ 1.0f, -2.5f,  2.0f, -0.5f},
-						{-0.5f,  0.0f,  0.5f,  0.0f},
-						{ 0.0f,  1.0f,  0.0f,  0.0f} };
-	float p[4];
-	float a[4];
-	for (int i = 0; i < 4; i++) {
-		// Compute A = M * P
-		p[0] = p0[i];
-		p[1] = p1[i];
-		p[2] = p2[i];
-		p[3] = p3[i];
-		multMatrixVector(*m, p, a);
 
-		// Compute pos[i] = T * A
-		pos[i] = pow(t, 3) * a[0] + pow(t, 2) * a[1] + t * a[2] + a[3];
+void getCatmullRomPoint(double t, double* p0, double* p1, double* p2, double* p3, double* pos, float* deriv) {
 
-		// Compute pos[i] = T * A
-		deriv[i] = 3 * pow(t, 2) * a[0] + 2 * t * a[1] + a[2];
-	}
+	double x, y, z;
+	double res[1][4];
+	double time[1][4] = { { powf(t,3), powf(t,2), t, 1 } };
+
+	double m[4][4] = { {-0.5f,  1.5f, -1.5f,  0.5f},
+					   { 1.0f, -2.5f,  2.0f, -0.5f},
+					   {-0.5f,  0.0f,  0.5f,  0.0f},
+					   { 0.0f,  1.0f,  0.0f,  0.0f} };
+
+	//printf("p0[0] = %f p1[0] = %f p2[0] = %f p3[0] = %f \n", p0[0], p1[0], p2[0], p3[0] );
+
+	double px[4][1] = { { p0[0] }, { p1[0] }, { p2[0] }, { p3[0] } };
+	double py[4][1] = { { p0[1] }, { p1[1] }, { p2[1] }, { p3[1] } };
+	double pz[4][1] = { { p0[2] }, { p1[2] }, { p2[2] }, { p3[2] } };
+
+	multMatrix14(time, m, res);
+	multMatrix1441(res, px, &x);
+	multMatrix1441(res, py, &y);
+	multMatrix1441(res, pz, &z);
+
+	pos[0] = x;
+	pos[1] = y;
+	pos[2] = z;
+
+	float a[4][4] = { 0 };
+	float pxx[4];
+	float pyy[4];
+	float pzz[4];
+	float dT[4] = { 3 * powf(t,2), static_cast<float>(2 * t), 1, 0 };
+
+	pxx[0] = px[0][0]; pxx[1] = px[1][0]; pxx[2] = px[2][0]; pxx[3] = px[3][0];
+	pyy[0] = py[0][0]; pyy[1] = py[1][0]; pyy[2] = py[2][0]; pyy[3] = py[3][0];
+	pzz[0] = pz[0][0]; pzz[1] = pz[1][0]; pzz[2] = pz[2][0]; pzz[3] = pz[3][0];
+
+	multMatrixVector(reinterpret_cast<float*>(*m), pxx, a[0]);
+	multMatrixVector(reinterpret_cast<float*>(*m), pyy, a[1]);
+	multMatrixVector(reinterpret_cast<float*>(*m), pzz, a[2]);
+	multMatrixVector(*a, dT, deriv);
 }
 
 
 // given  global t, returns the point in the curve
-void getGlobalCatmullRomPoint(double gt, double* pos, double* deriv, double** curve, int size) {
+void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** curve, int size) {
 
 	double t = gt * size; 
 	int index = floor(t);
@@ -131,9 +161,6 @@ void createVBO(int i) {
 	vertexB[i] = (double*)malloc(sizeof(double) * triangles.size() * 3);
 
 	while (tri != triangles.end()) {
-		//falta ir buscar o número de vértices para um ficheiro 
-		////////////////////////////////////////////////////////////////////
-		//verificar size
 
 		Ponto aux_1 = *tri; tri++;
 		Ponto aux_2 = *tri; tri++;
@@ -156,7 +183,7 @@ void createVBO(int i) {
 
 		p += 9;
 	}
-	printf("END   p = %d\n ", p);
+	//printf("END   p = %d\n ", p);
 	vertexCount = vertex;
 }
 
@@ -214,57 +241,71 @@ void lertudoemaisalgumacoisa() {
 }
 
 
-void translateTransform(Oper* oper, int i)
+void dynamicTranslate(Oper* oper, int i)
 {
-	double intervalos[20], checkpoints[20], time = 0;
 	Transform* t = oper->transform;
+	double intervalos[20];
+	double checkpoints[20];
+	double time = 0;
 
 	//criar matriz aqui
 	int h = (t->points).size();
+	printf("h = %d \n", h);
+	int cols = 3;
 	double** curve = new double* [h];
-	for (int i=0; i<h; i++) curve[i] = new double[3];
+	
+	for (int i = 0; i < h; ++i)
+		curve[i] = new double[cols];
 
-	int j = 0;
+
+	int size = 0;
 	vector<Ponto>::iterator it;
 	for (it = t->points.begin(); it != t->points.end(); it++) {
 		Ponto aux = *it;
 
-		curve[j][0] = aux.x;
-		curve[j][1] = aux.y;
-		curve[j][2] = aux.z;
+		curve[size][0] = aux.x;
+		curve[size][1] = aux.y;
+		curve[size][2] = aux.z;
 
-		j++;
+		size++;
 	}
-    int size = j;
+	printf("size = %d \n", size);
 
 	double pos[4];
-	double deriv[4];
+	float deriv[4];
 
 	glBegin(GL_LINE_LOOP);
 		int n = 100;
-		for (int i = 0; i < n; i++) {
+		for (int i = 1; i < n; i++) {
 			getGlobalCatmullRomPoint((double)i / n, pos, deriv, curve, size);
 			glVertex3d(pos[0], pos[1], pos[2]);
 		}
 	glEnd();
 
-	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
+	printf("AQUI \n");
 
+	/*
 	if (time < files.size()) {
+		double ttt = glutGet(GLUT_ELAPSED_TIME);
 		checkpoints[i] = 1 / (t->time * 1000);
 		time++;
 	}
+	printf("AQUI 2 i = &d \n", i);
 	intervalos[i] += checkpoints[i];
+	printf("intervalos[i] = %f \n",  intervalos[i]);
+	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
 
 	//apagar matriz aqui
-	for (int i=0; i<h; i++) delete[] curve[i];
+	for (int i = 0; i < h; ++i)
+		delete[] curve[i];
 	delete[] curve;
+	*/
 
 	glTranslated(pos[0], pos[1], pos[2]);
 }
 
 
-void rotateTransform(Oper* oper, int i)
+void dynamicRotate(Oper* oper, int i)
 {
 	Transform* t = oper->transform;
 
@@ -301,7 +342,7 @@ void desenhar(void)
 						glTranslatef(oper->x, oper->y, oper->z);
 					}
 					else {
-						translateTransform(oper, i);
+						dynamicTranslate(oper, i);
 					}
 				}
 				if (strcmp(oper->operation, "rotate") == 0)
@@ -310,7 +351,8 @@ void desenhar(void)
 						glRotatef(oper->angle, oper->x, oper->y, oper->z);
 					}
 					else {
-						rotateTransform(oper, i);
+						printf("dinamico \n");
+						dynamicRotate(oper, i);
 					}
 				}
 				if (strcmp(oper->operation, "scale") == 0) {
@@ -324,7 +366,7 @@ void desenhar(void)
 			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 			glPopMatrix();
 			i++;
-		}
+	}
 
 }
 
@@ -404,7 +446,8 @@ void processSpecialKeys(int key, int xx, int yy)
 int main(int argc, char** argv)
 {
 	// put GLUT’s init here
-	xmlParser("config.xml", files);
+	xmlParser("solar_system_orbits.xml", files);
+	xmlParser("solar_system.xml", files);
 
 	lertudoemaisalgumacoisa();
 

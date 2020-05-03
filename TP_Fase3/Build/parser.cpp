@@ -49,6 +49,7 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
                 time = atof(timeStr);
 
                 for (const XMLElement* child3 = child2->FirstChildElement(); child3; child3 = child3->NextSiblingElement()) {
+                   
                     char* pointX = (char*)child3->Attribute("X");
                     if (pointX != NULL) x = atof(pointX);
                     char* pointY = (char*)child3->Attribute("Y");
@@ -111,6 +112,8 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
             else if ((rotateAngle = (char*)child2->Attribute("angle"))) {
                 angleValue = atof(rotateAngle);
             }
+
+            if (transform == nullptr) printf("ola\n");
 
             addOpGroup(group, i, operation, x, y, z, angleValue, transform);
         }
