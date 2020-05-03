@@ -3,15 +3,25 @@
 #include <string>
 #include <vector>
 #include <math.h>
+#include <string>       // std::string
+#include <sstream>
 #include <string.h>
 #include <stdlib.h>
+#include <iostream>     // std::cout
+#include <fstream>
 #define _USE_MATH_DEFINES // for C++
 #include <cmath>
 #include "generator.h"
 //#define M_PI 3.14159265358979323846
 std::ofstream outFile;
 
-
+class Point {
+public: float x, y, z;
+};
+int patches = 0;
+int vertices = 0;
+std::vector<std::vector<int> > indicesPatch;
+std::vector<Point> points;
 
 bool exists(const std::string fileName) {
     std::fstream checkFile(fileName);
@@ -325,6 +335,7 @@ void box(int argc, char* argv[]) {
         }
     }
 }
+
 void cone(char* argv[])
 {
     double pi = 3.14159265358979323846;
@@ -350,6 +361,187 @@ void cone(char* argv[])
     }
 
 }
+
+void writeBezier(std::string newfile, int tesslevel) {
+    ////////////////////////////////////////
+   ////// Escrever Patches no ficheiro ////
+   ////////////////////////////////////////
+    float res[3];
+    float t;
+    int index, indices[4];
+    float q[4][tesslevel][3];
+
+    float tess = 1 / ((float)tesslevel - 1);
+    float r[tesslevel][tesslevel][3];
+    float pontos = patches * (tesslevel) * 2 * (tesslevel) * 3 * 3;
+
+
+    if (open(newfile)) {
+        /////////////////////////////
+        ///escrever num de pontos////
+        /////////////////////////////
+
+        outFile << pontos; outFile << '\n';
+        for (int n = 0; n < patches; n++) {
+            /////////////////////////////////////////////////////
+            /////recolher os vértices de points para x y z //////
+            /////////////////////////////////////////////////////
+            float p[16][3];
+            for (int m = 0; m < 16; m++) {
+                p[m][0] = points[indicesPatch[n][m]].x;
+                p[m][1] = points[indicesPatch[n][m]].y;
+                p[m][2] = points[indicesPatch[n][m]].z;
+            }
+            int j = 0, k = 0;
+            /////////////////////////////////
+            ///desenahr 4 curvas de Bezier///
+            /////////////////////////////////
+            for (int i = 0; i < 15; i += 4) {
+                indices[0] = i;
+                indices[1] = i + 1;
+                indices[2] = i + 2;
+                indices[3] = i + 3;
+                /////////////////////////////////////////////////////////////////////
+                ///////////////calcular a curva//////////////////////////////////////
+                ///  [-t^3 + 3t^2 - 3t,3t^3-6t^2+3t, -3t^3+3t^2,t^3][P0] ////////////
+                /////////////////////////////////////////////////// [P1] ////////////
+                /////////////////////////////////////////////////// [P2] ////////////
+                //////////////////////////////////////////////////  [P3] ////////////
+                /////////////////////////////////////////////////////////////////////
+                for (int a = 0; a < tesslevel - 1; a++) {
+                    t = a * tess;
+                    index = floor(t);
+                    t = t - index;
+                    res[0] = (-p[indices[0]][0] + 3 * p[indices[1]][0] - 3 * p[indices[2]][0] + p[indices[3]][0]) * t * t * t + (3 * p[indices[0]][0] - 6 * p[indices[1]][0] + 3 * p[indices[2]][0]) * t * t + (-3 * p[indices[0]][0] + 3 * p[indices[1]][0]) * t + p[indices[0]][0];
+                    res[1] = (-p[indices[0]][1] + 3 * p[indices[1]][1] - 3 * p[indices[2]][1] + p[indices[3]][1]) * t * t * t + (3 * p[indices[0]][1] - 6 * p[indices[1]][1] + 3 * p[indices[2]][1]) * t * t + (-3 * p[indices[0]][1] + 3 * p[indices[1]][1]) * t + p[indices[0]][1];
+                    res[2] = (-p[indices[0]][2] + 3 * p[indices[1]][2] - 3 * p[indices[2]][2] + p[indices[3]][2]) * t * t * t + (3 * p[indices[0]][2] - 6 * p[indices[1]][2] + 3 * p[indices[2]][2]) * t * t + (-3 * p[indices[0]][2] + 3 * p[indices[1]][2]) * t + p[indices[0]][2];
+                    q[j][k][0] = res[0];
+                    q[j][k][1] = res[1];
+                    q[j][k][2] = res[2];
+                    k++;
+                }
+                /////////////////////////////////////////////////////////
+                //////////////////// caso tesslevel seja um /////////////
+                ///////////////////  slavaguarda ////////////////////////
+                /////////////////////////////////////////////////////////
+                t = 1;
+
+                res[0] = (-p[indices[0]][0] + 3 * p[indices[1]][0] - 3 * p[indices[2]][0] + p[indices[3]][0]) * t * t * t + (3 * p[indices[0]][0] - 6 * p[indices[1]][0] + 3 * p[indices[2]][0]) * t * t + (-3 * p[indices[0]][0] + 3 * p[indices[1]][0]) * t + p[indices[0]][0];
+                res[1] = (-p[indices[0]][1] + 3 * p[indices[1]][1] - 3 * p[indices[2]][1] + p[indices[3]][1]) * t * t * t + (3 * p[indices[0]][1] - 6 * p[indices[1]][1] + 3 * p[indices[2]][1]) * t * t + (-3 * p[indices[0]][1] + 3 * p[indices[1]][1]) * t + p[indices[0]][1];
+                res[2] = (-p[indices[0]][2] + 3 * p[indices[1]][2] - 3 * p[indices[2]][2] + p[indices[3]][2]) * t * t * t + (3 * p[indices[0]][2] - 6 * p[indices[1]][2] + 3 * p[indices[2]][2]) * t * t + (-3 * p[indices[0]][2] + 3 * p[indices[1]][2]) * t + p[indices[0]][2];
+
+                q[j][k][0] = res[0];
+                q[j][k][1] = res[1];
+                q[j][k][2] = res[2];
+                j++;
+                k = 0;
+            }
+
+            for (int j = 0; j < tesslevel; j++) {
+                for (int a = 0; a < tesslevel - 1; a++) {
+                    t = a * tess;;
+                    index = floor(t);
+                    t = t - index;
+
+                    res[0] = (-q[0][j][0] + 3 * q[1][j][0] - 3 * q[2][j][0] + q[3][j][0]) * t * t * t + (3 * q[0][j][0] - 6 * q[1][j][0] + 3 * q[2][j][0]) * t * t + (-3 * q[0][j][0] + 3 * q[1][j][0]) * t + q[0][j][0];
+                    res[1] = (-q[0][j][1] + 3 * q[1][j][1] - 3 * q[2][j][1] + q[3][j][1]) * t * t * t + (3 * q[0][j][1] - 6 * q[1][j][1] + 3 * q[2][j][1]) * t * t + (-3 * q[0][j][1] + 3 * q[1][j][1]) * t + q[0][j][1];
+                    res[2] = (-q[0][j][2] + 3 * q[1][j][2] - 3 * q[2][j][2] + q[3][j][2]) * t * t * t + (3 * q[0][j][2] - 6 * q[1][j][2] + 3 * q[2][j][2]) * t * t + (-3 * q[0][j][2] + 3 * q[1][j][2]) * t + q[0][j][2];
+                    r[j][k][0] = res[0];
+                    r[j][k][1] = res[1];
+                    r[j][k][2] = res[2];
+                    k++;
+                }
+
+                t = 1;
+
+                res[0] = (-q[0][j][0] + 3 * q[1][j][0] - 3 * q[2][j][0] + q[3][j][0]) * t * t * t + (3 * q[0][j][0] - 6 * q[1][j][0] + 3 * q[2][j][0]) * t * t + (-3 * q[0][j][0] + 3 * q[1][j][0]) * t + q[0][j][0];
+                res[1] = (-q[0][j][1] + 3 * q[1][j][1] - 3 * q[2][j][1] + q[3][j][1]) * t * t * t + (3 * q[0][j][1] - 6 * q[1][j][1] + 3 * q[2][j][1]) * t * t + (-3 * q[0][j][1] + 3 * q[1][j][1]) * t + q[0][j][1];
+                res[2] = (-q[0][j][2] + 3 * q[1][j][2] - 3 * q[2][j][2] + q[3][j][2]) * t * t * t + (3 * q[0][j][2] - 6 * q[1][j][2] + 3 * q[2][j][2]) * t * t + (-3 * q[0][j][2] + 3 * q[1][j][2]) * t + q[0][j][2];
+
+                r[j][k][0] = res[0];
+                r[j][k][1] = res[1];
+                r[j][k][2] = res[2];
+                k = 0;
+            }
+            /////////////////////////////
+            ////escrever no newfile//////
+            /////////////////////////////
+            ////nao usamos a wrtiteline//
+            ////pois tinha de se pssar///
+            ////os floats para string////
+            ////o que colocava casas/////
+            ////decimais a mais /////////
+            /////////////////////////////
+            for (int i = 0; i < tesslevel - 1; i++)
+                for (int j = 0; j < tesslevel - 1; j++) {
+                    outFile << r[i][j][0];   outFile << ' '; outFile << r[i][j][1];   outFile << ' '; outFile << r[i][j][2];   outFile << '\n';
+                    outFile << r[i + 1][j][0]; outFile << ' '; outFile << r[i + 1][j][1]; outFile << ' '; outFile << r[i + 1][j][2];  outFile << '\n';
+                    outFile << r[i][j + 1][0]; outFile << ' '; outFile << r[i][j + 1][1]; outFile << ' '; outFile << r[i][j + 1][2]; outFile << '\n';
+
+                    outFile << r[i + 1][j][0];   outFile << ' '; outFile << r[i + 1][j][1];   outFile << ' '; outFile << r[i + 1][j][2];   outFile << '\n';
+                    outFile << r[i + 1][j + 1][0]; outFile << ' '; outFile << r[i + 1][j + 1][1]; outFile << ' '; outFile << r[i + 1][j + 1][2]; outFile << '\n';
+                    outFile << r[i][j + 1][0];   outFile << ' '; outFile << r[i][j + 1][1];   outFile << ' '; outFile << r[i][j + 1][2];   outFile << '\n';
+                }
+        }
+    }
+    else { printf("Error: Cannot open file...\n"); exit(0); }
+}
+
+void readBezier(std::string patchfilename) {
+    std::fstream f;
+    f.open(patchfilename, std::ios::in);
+    if (f.is_open()) {
+        /////////////////// le numero de patches
+        std::string line;
+        if (getline(f, line)) sscanf(line.c_str(), "%d\n", &patches);
+        for (int i = 0; i < patches; i++) {
+            std::vector<int> iPatch;
+            std::getline(f, line);
+            std::istringstream str1(line);
+            std::string str2;
+            /////////////////// patches
+            while (std::getline(str1, str2, ',')) {
+                /////////// adiciona indices dos patchs
+                iPatch.push_back(atoi(str2.c_str()));
+
+            }
+
+            indicesPatch.push_back(iPatch);
+        }
+        //////////////////// cria os pontos e coloca no vetor points
+        if (getline(f, line)) sscanf(line.c_str(), "%d\n", &vertices);
+        for (int i = 0; i < vertices; i++) {
+            float x = 0, y = 0, z = 0;
+            if (getline(f, line)) sscanf(line.c_str(), "%f, %f, %f\n", &x, &y, &z);
+
+            Point p;
+            p.x = x; p.y = y; p.z = z;
+
+            points.push_back(p);
+        }
+
+        f.close();
+    }
+    else { printf("Error: Not possible acess patch file..."); exit(0); }
+
+}
+
+void besier(const char* patchfilename, int tesslevel, const char* newfile) {
+
+    //////////////////////////
+    /////ler patch bezier/////
+    //////////////////////////
+    readBezier(patchfilename);
+    //////////////////////////
+    /////Desenhar bezier//////
+    //////////////////////////
+    writeBezier(newfile,tesslevel);
+  
+}
+
+
+
+
 
 int main(int argc, char* argv[]) {
     if (argc > 0) {
@@ -397,7 +589,19 @@ int main(int argc, char* argv[]) {
                 std::cout << "Not enough arguments.\n";
             }
         }
+        if (type == "Bezier") {
 
+            if (argc == 5) {
+                std::ofstream file;
+                std::string nomeFicheiro;
+                nomeFicheiro = argv[4];
+                int tess = atoi(argv[3]);
+                besier(argv[2], tess, argv[4]);
+               //writeLine( readbezier(argv));
+                close();
+                std::cout << "Success!\n";
+            }
+        }
     }
     
 
