@@ -446,8 +446,7 @@ void processSpecialKeys(int key, int xx, int yy)
 int main(int argc, char** argv)
 {
 	// put GLUT’s init here
-	xmlParser("solar_system_orbits.xml", files);
-	xmlParser("solar_system.xml", files);
+	xmlParser("sistemaSolarDinamico.xml", files);
 
 	lertudoemaisalgumacoisa();
 
