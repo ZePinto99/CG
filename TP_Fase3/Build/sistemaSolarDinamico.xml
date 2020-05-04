@@ -8,12 +8,12 @@
 
         <!--mercurio-->
         <group>
-        	<translate time="10">
+        	<translate time="1">
             	<point X="16.23" Y="0" Z="0" />
             	<point X="14.05" Y="0" Z="8.115" />
             	<point X="8.115" Y="0" Z="14.05" />
                 <point X="0" Y="0" Z="16.3" />
-            	<point X="-8.115" Y="0" Z="14.05" />                
+            	<point X="-8.115" Y="0" Z="14.05" />             
             	<point X="-14.05" Y="0" Z="8.115" />
                 <point X="-16.23" Y="0" Z="0" />
             	<point X="-14.05" Y="0" Z="-8.115" />
@@ -29,7 +29,7 @@
         </group>
         <group>
             <!--venus-->
-            <translate time="20">
+            <translate time="2">
                  <point X="29.67" Y="0" Z="0" />
                  <point X="25.695" Y="0" Z="14.685" />
                  <point X="14.835" Y="0" Z="25.43" />	
@@ -50,7 +50,7 @@
          </group>
          <group>
              <!--terra -->
-             <translate time="30">
+             <translate time="3">
                 <point X="46.22" Y="0" Z="0" />
                 <point X="40.03" Y="0" Z="23.11" />
                 <point X="23.11" Y="0" Z="40.03" />
@@ -70,19 +70,19 @@
              </models>
              <group>
               <!-- lua -->
-              <translate time="5">
-                    <point X="10.5" Y="10.5" Z="-5"/>
-                    <point X="9.1" Y="10.5" Z="-0.25"/>
-                    <point X="5.25" Y="10.5" Z="4.1"/>
-                    <point X="0" Y="10.5" Z="5.5"/>
-                    <point X="-5.25" Y="10.5" Z="4.1"/>
-                    <point X="-9.1" Y="10.5" Z="-0.25"/>
-                    <point X="-10.5" Y="10.5" Z="5"/>
-                    <point X="-9.1" Y="10.5" Z="0.25"/>
-                    <point X="-5.25" Y="10.5" Z="-4.1"/>
-                    <point X="5" Y="10.5" Z="-10.5"/>
-                    <point X="5.25" Y="10.5" Z="4.1"/>
-                    <point X="9.1" Y="10.5" Z="-0.25"/>
+              <translate time="6">
+                    <point X="10.5" Y="6" Z="-5"/>
+                    <point X="9.1" Y="5" Z="-0.25"/>
+                    <point X="5.25" Y="4" Z="4.1"/>
+                    <point X="0" Y="3" Z="5"/>
+                    <point X="-5.25" Y="2" Z="4.1"/>
+                    <point X="-9.1" Y="1" Z="-0.25"/>
+                    <point X="-10.5" Y="0" Z="-5"/>
+                    <point X="-9.1" Y="1" Z="-0.25"/>
+                    <point X="-5.25" Y="2" Z="4.1"/>
+                    <point X="0" Y="3" Z="5"/>
+                    <point X="5.25" Y="4" Z="4.1"/>
+                    <point X="9.1" Y="5" Z="-0.25"/>
                 </translate>
                  <scale X="0.1737" Y="0.1737" Z="0.1737" />
                  <models>
@@ -92,7 +92,7 @@
          </group>
          <group>
           <!-- marte -->
-                  <translate time="40">
+                  <translate time="4">
                     <point X="67.16" Y="0" Z="0" />
                     <point X="58.16" Y="0" Z="33.58" />
                     <point X="33.58" Y="0" Z="58.16" />
@@ -113,7 +113,7 @@
               </group>
           <group>
             <!-- jupiter -->
-                    <translate time="50">
+                    <translate time="6">
                         <point X="90.55" Y="0" Z="0" />
                         <point X="78.42" Y="0" Z="45.28" />
                         <point X="45.28" Y="0" Z="78.42" />
@@ -126,7 +126,6 @@
                         <point X="0" Y="0" Z="-90.55" />
                         <point X="45.28" Y="0" Z="-78.42" />
                         <point X="78.42" Y="0" Z="-45.28" />
-
                     </translate>
                     <scale X="0.8" Y="0.8" Z="0.8" />
                     <models>
@@ -134,19 +133,19 @@
                     </models>
             <!-- satelite Ganímedes -->
             <group>
-                <translate time="6">
-                 <point X="-10.2634" Y="4" Z="0" />
-                 <point X="-8.89" Y="4" Z="-5.1317" />
-                 <point X="-5.1317" Y="4" Z="-8.89" />
-                 <point X="0" Y="4" Z="-10.2634" />
-                 <point X="5.1317" Y="4" Z="-8.89" />
-                 <point X="8.89" Y="4" Z="-5.1317" />                 
-                 <point X="10.2634" Y="4" Z="0" />
-                 <point X="8.89" Y="4" Z="5.1317" />
-                 <point X="5.1317" Y="4" Z="8.89" />
-                 <point X="0" Y="4" Z="10.2634" />
-                 <point X="5.1317" Y="4" Z="-8.89" />
-                 <point X="8.89" Y="4" Z="-5.1317" />
+                <translate time="12">
+                 <point X="-10.2634" Y="0" Z="0" />
+                 <point X="-8.89" Y="0" Z="-5.1317" />
+                 <point X="-5.1317" Y="0" Z="-8.89" />
+                 <point X="0" Y="0" Z="-10.2634" />
+                 <point X="5.1317" Y="0" Z="-8.89" />
+                 <point X="8.89" Y="0" Z="-5.1317" />            
+                 <point X="10.2634" Y="0" Z="0" />
+                 <point X="8.89" Y="0" Z="5.1317" />
+                 <point X="5.1317" Y="0" Z="8.89" />
+                 <point X="0" Y="0" Z="10.2634" />
+                 <point X="-5.1317" Y="0" Z="8.89" />
+                 <point X="-8.89" Y="0" Z="5.1317" />
                 </translate>
                 <scale X="0.2634" Y="0.2634" Z="0.2634" />
                 <models>
@@ -155,19 +154,19 @@
             </group>
             <!-- satelite Calisto -->
              <group>
-                 <translate time="7">
-                    <point X="10.2408" Y="-4" Z="0" />
-                    <point X="8.7" Y="-4" Z="5.12" />
+                 <translate time="12">
+                    <point X="10.2408" Y="-6" Z="0" />
+                    <point X="8.7" Y="-5" Z="5.12" />
                     <point X="5.12" Y="-4" Z="8.7" />
-                    <point X="0" Y="-4" Z="10.2408" />
-                    <point X="-5.12" Y="-4" Z="8.7" />
-                    <point X="-8.7" Y="-4" Z="5.12" />
-                    <point X="-10.2408" Y="-4" Z="0" />
-                    <point X="-8.7" Y="-4" Z="-5.12" />
-                    <point X="-5.12" Y="-4" Z="-8.7" />
-                    <point X="0" Y="-4" Z="-10.2408" />
+                    <point X="0" Y="-3" Z="10.2408" />
+                    <point X="-5.12" Y="-2" Z="8.7" />
+                    <point X="-8.7" Y="-1" Z="5.12" />
+                    <point X="-10.2408" Y="0" Z="0" />
+                    <point X="-8.7" Y="-1" Z="-5.12" />
+                    <point X="-5.12" Y="-2" Z="-8.7" />
+                    <point X="0" Y="-3" Z="-10.2408" />
                     <point X="5.12" Y="-4" Z="-8.7" />
-                    <point X="8.7" Y="-4" Z="-5.12" />
+                    <point X="8.7" Y="-5" Z="-5.12" />
                  </translate>
                  <scale X="0.2408" Y="0.2408" Z="0.2408" />
                  <models>
@@ -177,7 +176,7 @@
             </group>
             <group>
             <!--saturno -->
-                <translate time="60">
+                <translate time="8">
                  <point X="114.555" Y="0" Z="0" />
                  <point X="99.208" Y="0" Z="57.28" />
                  <point X="57.28" Y="0" Z="99.208" />
@@ -197,7 +196,7 @@
                 </models>
             <!-- satelite Titã -->
             <group>
-                <translate time="8">
+                <translate time="16">
                     <point X="0" Y="14.123" Z="0" />
                     <point X="7.06" Y="12.23" Z="0" />
                     <point X="12.23" Y="7.06" Z="0" />
@@ -219,7 +218,7 @@
             </group>
             <group>
                 <!-- urano -->
-                <translate time="70">
+                <translate time="10">
                     <point X="140"  Y="0" Z="0" />
                     <point X="121.24"  Y="0" Z="70" />
                     <point X="70"  Y="0" Z="121.24" />
@@ -239,13 +238,13 @@
                 </models>
             <group> 
                 <!-- Titania -->
-                <translate time="8">
+                <translate time="500">
                     <point X="0" Y="6" Z="20" />
                     <point X="10" Y="6" Z="17.3" />
                     <point X="17.3" Y="6" Z="10" />
                     <point X="20" Y="6" Z="0" />
                     <point X="17.3" Y="6" Z="-10" />
-                    <point X="10" Y="6" Z="-17.3" />               
+                    <point X="10" Y="6" Z="-17.3" />           
                     <point X="0" Y="6" Z="-20" />
                     <point X="-10" Y="6" Z="-17.3" />
                     <point X="-17.3" Y="6" Z="-10" />
@@ -256,11 +255,11 @@
                 <scale X="0.4" Y="0.4" Z="0.4" />
                 <models>
                     <model file = "sphere.3d" />
-                </models>       
-            </group>
+                </models>   
+            </group>    
             <group> 
                 <!-- Uberon -->
-                <translate time="9">
+                <translate time="500">
                     <point X="14" Y="0" Z="-10" />
                     <point X="12.124" Y="0" Z="-3" />
                     <point X="7" Y="0" Z="2.124" />
@@ -282,7 +281,7 @@
             </group>
             <group>
             <!--neptuno-->
-                <translate time="80">
+                <translate time="20">
                    <point X="168.305" Y="0" Z="0" />
                    <point X="145.76" Y="0" Z="84.15" />
                    <point X="84.15" Y="0" Z="145.76" />
@@ -302,19 +301,19 @@
                 </models>
             <!-- satelite Triton-->
             <group>
-              <translate time="9">
-                 <point X="0" Y="10" Z="-10" />
-                 <point X="-5" Y="10" Z="-8.66" />
-                 <point X="-8.66" Y="10" Z="-5" />
-                 <point X="-10" Y="10" Z="0" />
-                 <point X="-8.66" Y="10" Z="5" />
-                 <point X="-5" Y="10" Z="8.66" />
-                 <point X="0" Y="10" Z="10" />
-                 <point X="5" Y="10" Z="8.66" />
-                 <point X="8.66" Y="10" Z="5" />
-                 <point X="10" Y="10" Z="0" />
-                 <point X="8.66" Y="10" Z="-5" />
-                 <point X="5" Y="10" Z="-8.66" />
+              <translate time="40">
+                 <point X="0" Y="3" Z="-10" />
+                 <point X="-5" Y="2.5" Z="-8.66" />
+                 <point X="-8.66" Y="2" Z="-5" />
+                 <point X="-10" Y="1.5" Z="0" />
+                 <point X="-8.66" Y="1" Z="5" />
+                 <point X="-5" Y="0.5" Z="8.66" />
+                 <point X="0" Y="0" Z="10" />
+                 <point X="5" Y="0.5" Z="8.66" />
+                 <point X="8.66" Y="1" Z="5" />
+                 <point X="10" Y="1.5" Z="0" />
+                 <point X="8.66" Y="2" Z="-5" />
+                 <point X="5" Y="2.5" Z="-8.66" />
               </translate>
               <scale X="0.353" Y="0.353" Z="0.353" />
               <models>

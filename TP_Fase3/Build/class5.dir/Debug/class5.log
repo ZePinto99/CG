@@ -1,5 +1,5 @@
 ﻿  main.cpp
-D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\main.cpp(205,22): warning C4018: '<=': signed/unsigned mismatch
-D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\main.cpp(248,9): warning C4101: 'checkpoints': unreferenced local variable
-D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\main.cpp(247,9): warning C4101: 'intervalos': unreferenced local variable
-  class5.vcxproj -> D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase3\Build\Debug\class5.exe
+C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\main.cpp(205,22): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\main.cpp(292,29): warning C4474: 'printf' : too many arguments passed for format string
+C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\main.cpp(292,29): message : placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+  class5.vcxproj -> C:\Users\asus\Documents\GitHub\CG\TP_Fase3\Build\Debug\class5.exe

@@ -244,9 +244,9 @@ void lertudoemaisalgumacoisa() {
 void dynamicTranslate(Oper* oper, int i)
 {
 	Transform* t = oper->transform;
-	double intervalos[20];
-	double checkpoints[20];
-	double time = 0;
+	static double intervalos[20];
+	static double checkpoints[20];
+	static double time = 0;
 
 	//criar matriz aqui
 	int h = (t->points).size();
@@ -276,15 +276,14 @@ void dynamicTranslate(Oper* oper, int i)
 
 	glBegin(GL_LINE_LOOP);
 		int n = 100;
-		for (int i = 1; i < n; i++) {
-			getGlobalCatmullRomPoint((double)i / n, pos, deriv, curve, size);
+		for (int j = 1; j < n; j++) {
+			getGlobalCatmullRomPoint((double) j / n, pos, deriv, curve, size);
 			glVertex3d(pos[0], pos[1], pos[2]);
 		}
 	glEnd();
 
-	printf("AQUI \n");
-
-	/*
+	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
+	
 	if (time < files.size()) {
 		double ttt = glutGet(GLUT_ELAPSED_TIME);
 		checkpoints[i] = 1 / (t->time * 1000);
@@ -292,7 +291,7 @@ void dynamicTranslate(Oper* oper, int i)
 	}
 	printf("AQUI 2 i = &d \n", i);
 	intervalos[i] += checkpoints[i];
-	printf("intervalos[i] = %f \n",  intervalos[i]);
+	/*printf("intervalos[i] = %f \n",  intervalos[i]);
 	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
 
 	//apagar matriz aqui

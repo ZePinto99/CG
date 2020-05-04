@@ -66,13 +66,13 @@ void writeLine(const std::string line) {
 
 void esfera(char* argv[]) {
     double pi = 3.14159265358979323846;
-   // double x = M_PI;
+    // double x = M_PI;
 
     int radius = atoi(argv[2]);
     int slices = atoi(argv[3]);
     int stacks = atoi(argv[4]);
     std::string nomeFicheiro = argv[5];
-    double angle1,angle3 = 0;
+    double angle1, angle3 = 0;
     double angle2 = (2 * pi) / slices;
     double angle4 = pi / stacks;
     double p1x, p1y, p1z;
@@ -81,22 +81,22 @@ void esfera(char* argv[]) {
     double p4x, p4y, p4z;
     std::cout << "File:" << nomeFicheiro << "\n";
     if (open(nomeFicheiro)) {
-       
+
         for (int i = 0; i < stacks; i++) {
             angle1 = 0;
             for (int j = 0; j < slices; j++) {
-                p1x = radius* sin(angle3)* sin(angle1);
-                p1y = radius* cos(angle3);
-                p1z = radius* sin(angle3)* cos(angle1);
-                p2x = radius* sin(angle3 + angle4) * sin(angle1);
-                p2y = radius* cos(angle3 + angle4);
-                p2z = radius* sin(angle3 + angle4) * cos(angle1);
-                p3x = radius* sin(angle3)* sin(angle1 + angle2);
-                p3y = radius* cos(angle3);
-                p3z = radius* sin(angle3)* cos(angle1 + angle2);
-                p4x = radius* sin(angle3 + angle4) * sin(angle1 + angle2);
-                p4y = radius* cos(angle3 + angle4);
-                p4z = radius* sin(angle3 + angle4) * cos(angle1 + angle2);
+                p1x = radius * sin(angle3) * sin(angle1);
+                p1y = radius * cos(angle3);
+                p1z = radius * sin(angle3) * cos(angle1);
+                p2x = radius * sin(angle3 + angle4) * sin(angle1);
+                p2y = radius * cos(angle3 + angle4);
+                p2z = radius * sin(angle3 + angle4) * cos(angle1);
+                p3x = radius * sin(angle3) * sin(angle1 + angle2);
+                p3y = radius * cos(angle3);
+                p3z = radius * sin(angle3) * cos(angle1 + angle2);
+                p4x = radius * sin(angle3 + angle4) * sin(angle1 + angle2);
+                p4y = radius * cos(angle3 + angle4);
+                p4z = radius * sin(angle3 + angle4) * cos(angle1 + angle2);
 
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p2x << " " << p2y << " " << p2z << "\n";
@@ -104,10 +104,10 @@ void esfera(char* argv[]) {
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
                 outFile << p3x << " " << p3y << " " << p3z << "\n";
-                
+
                 angle1 += angle2;
             }
-            
+
             angle3 += angle4;
         }
     }
@@ -167,7 +167,7 @@ void plane(char* argv[]) {
     std::string nomeFicheiro = argv[3];
     std::cout << "File:" << nomeFicheiro << "\n";
     if (open(nomeFicheiro)) {
-       
+
         writeLine(triangulo1_1);
         writeLine(triangulo1_2);
         writeLine(triangulo1_3);
@@ -347,8 +347,8 @@ void cone(char* argv[])
     double angle2 = (2 * pi) / slices;
     std::string nomeFicheiro = argv[6];
     std::cout << "File:" << nomeFicheiro << "\n";
-     if (open(nomeFicheiro)) {
-       
+    if (open(nomeFicheiro)) {
+
         for (int i = 0; i < slices; i++) {
             outFile << "" << "0" << " 0 " << "0" << "\n";
             outFile << "" << (radius * sin(angle1 + angle2)) << " 0 " << (radius * cos(angle1 + angle2)) << "\n";
@@ -381,7 +381,7 @@ void writeBezier(std::string newfile, int tesslevel) {
         ///escrever num de pontos////
         /////////////////////////////
 
-        outFile << pontos; outFile << '\n';
+        //outFile << pontos; outFile << '\n';
         for (int n = 0; n < patches; n++) {
             /////////////////////////////////////////////////////
             /////recolher os vértices de points para x y z //////
@@ -535,8 +535,8 @@ void besier(const char* patchfilename, int tesslevel, const char* newfile) {
     //////////////////////////
     /////Desenhar bezier//////
     //////////////////////////
-    writeBezier(newfile,tesslevel);
-  
+    writeBezier(newfile, tesslevel);
+
 }
 
 
@@ -548,7 +548,7 @@ int main(int argc, char* argv[]) {
         std::string type = argv[1];
         if (type == "sphere") {
             if (argc == 6) {
-                
+
                 //open(file);
                 esfera(argv);
                 close();
@@ -564,11 +564,11 @@ int main(int argc, char* argv[]) {
                 cone(argv);
                 close();
                 std::cout << "Success!\n";
-                }
-            else {
-                    std::cout << "Not enough arguments.\n";
             }
-            
+            else {
+                std::cout << "Not enough arguments.\n";
+            }
+
         }
         if (type == "plane") {
             if (argc == 4) {
@@ -597,13 +597,13 @@ int main(int argc, char* argv[]) {
                 nomeFicheiro = argv[4];
                 int tess = atoi(argv[3]);
                 besier(argv[2], tess, argv[4]);
-               //writeLine( readbezier(argv));
+                //writeLine( readbezier(argv));
                 close();
                 std::cout << "Success!\n";
             }
         }
     }
-    
+
 
 
     return 0;
