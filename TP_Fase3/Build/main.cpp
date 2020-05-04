@@ -102,8 +102,6 @@ void getCatmullRomPoint(double t, double* p0, double* p1, double* p2, double* p3
 					   {-0.5f,  0.0f,  0.5f,  0.0f},
 					   { 0.0f,  1.0f,  0.0f,  0.0f} };
 
-	//printf("p0[0] = %f p1[0] = %f p2[0] = %f p3[0] = %f \n", p0[0], p1[0], p2[0], p3[0] );
-
 	double px[4][1] = { { p0[0] }, { p1[0] }, { p2[0] }, { p3[0] } };
 	double py[4][1] = { { p0[1] }, { p1[1] }, { p2[1] }, { p3[1] } };
 	double pz[4][1] = { { p0[2] }, { p1[2] }, { p2[2] }, { p3[2] } };
@@ -183,7 +181,6 @@ void createVBO(int i) {
 
 		p += 9;
 	}
-	//printf("END   p = %d\n ", p);
 	vertexCount = vertex;
 }
 
@@ -250,7 +247,6 @@ void dynamicTranslate(Oper* oper, int i)
 
 	//criar matriz aqui
 	int h = (t->points).size();
-	printf("h = %d \n", h);
 	int cols = 3;
 	double** curve = new double* [h];
 	
@@ -269,7 +265,6 @@ void dynamicTranslate(Oper* oper, int i)
 
 		size++;
 	}
-	printf("size = %d \n", size);
 
 	double pos[4];
 	float deriv[4];
@@ -289,16 +284,13 @@ void dynamicTranslate(Oper* oper, int i)
 		checkpoints[i] = 1 / (t->time * 1000);
 		time++;
 	}
-	printf("AQUI 2 i = &d \n", i);
 	intervalos[i] += checkpoints[i];
-	/*printf("intervalos[i] = %f \n",  intervalos[i]);
-	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
 
 	//apagar matriz aqui
 	for (int i = 0; i < h; ++i)
 		delete[] curve[i];
 	delete[] curve;
-	*/
+	
 
 	glTranslated(pos[0], pos[1], pos[2]);
 }
@@ -350,7 +342,6 @@ void desenhar(void)
 						glRotatef(oper->angle, oper->x, oper->y, oper->z);
 					}
 					else {
-						printf("dinamico \n");
 						dynamicRotate(oper, i);
 					}
 				}
