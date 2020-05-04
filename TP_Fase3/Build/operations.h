@@ -62,7 +62,7 @@ typedef struct operationAux {
  Array de hierarquias, que contém OperAux's, ou seja,
 listas ligadas de operações e suas variáveis.
  */
-typedef OperAux* Group[10];
+typedef OperAux* Group[40];
 
 
 

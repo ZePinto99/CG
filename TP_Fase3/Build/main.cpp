@@ -227,7 +227,6 @@ void lertudoemaisalgumacoisa() {
 	while (itout != files.end()) {
 		triangles.clear();
 		OperFile* op = *itout;
-		OperFile* opcopy = op;
 		char* stds = op->fileName;
 		std::string std(stds);
 		lerficheiro(std);
@@ -279,11 +278,11 @@ void dynamicTranslate(Oper* oper, int i)
 
 	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
 	
-	if (time < files.size()) {
+	//if (time < files.size()) {
 		double ttt = glutGet(GLUT_ELAPSED_TIME);
 		checkpoints[i] = 1 / (t->time * 1000);
 		time++;
-	}
+	//}
 	intervalos[i] += checkpoints[i];
 
 	//apagar matriz aqui

@@ -16,7 +16,7 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
             int j = i + 1;
             parseGroup(child2, group, j, files);
 
-            for (j; j < 10; j++) group[j] = NULL;
+            for (j; j < 40; j++) group[j] = NULL;
         }
 
         if (strcmp((char*)child2->Value(), "models") == 0) {
@@ -74,8 +74,8 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
                 char* translateZ = (char*)child2->Attribute("Z");
                 if (translateZ != NULL) z = atof(translateZ);
             }
-
             addOpGroup(group, i, operation, x, y, z, -1, transform);
+
 
         }
 
@@ -102,7 +102,7 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
             char* timeStr;
             char* rotateAngle;
             if ((timeStr = (char*)child2->Attribute("time"))) {
-                time = atoi(timeStr);
+                time = atof(timeStr);
                 vector<Ponto> points;
 
                 transform = new Transform();
@@ -157,7 +157,7 @@ void xmlParser(const char* configFile, vector<OperFile*>& files)
         for (const XMLElement* child = elem->FirstChildElement(); child; child = child->NextSiblingElement()) {
             if (strcmp(child->Value(), "group") == 0) {
                 
-                for (int j = i; j < 10; j++) group[i] = NULL;
+                for (int j = i; j < 40; j++) group[i] = NULL;
                     
                 parseGroup(child, group, i, files);
             }

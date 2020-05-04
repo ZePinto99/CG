@@ -6,7 +6,7 @@
  */
 void initGroup(Group g)
 {
-    for (int i = 0; i < 10; i++) g[i] = NULL;
+    for (int i = 0; i < 40; i++) g[i] = NULL;
 }
 
 
