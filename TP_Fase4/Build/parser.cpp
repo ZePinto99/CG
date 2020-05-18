@@ -29,7 +29,71 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
                 file[0] = '\0';
                 strcat(file, aux);
 
-                addOperFile(file, group, files);
+                // textured model
+                char* texture = NULL;
+                if (child3->Attribute("texture")) texture = (char*)child3->Attribute("texture");
+                
+
+                // coloured model 
+                Color* color = NULL;
+                char* r;
+                char* g;
+                char* b;
+
+                if (child3->Attribute("diffR")) {
+                    color = (Color*)malloc(sizeof(struct color));
+                    color->component = (char*)malloc(sizeof(char) * 12);
+
+                    strcpy(color->component, "diffuse");
+
+                    r = (char*)child3->Attribute("diffR");
+                    color->r = atof(r);
+                    g = (char*)child3->Attribute("diffG");
+                    color->g = atof(g);
+                    b = (char*)child3->Attribute("diffB");
+                    color->b = atof(b);
+                }
+                else if (child3->Attribute("specR")) {
+                    color = (Color*)malloc(sizeof(struct color));
+                    color->component = (char*)malloc(sizeof(char) * 12);
+
+                    strcpy(color->component, "specular");
+
+                    r = (char*)child3->Attribute("specR");
+                    color->r = atof(r);
+                    g = (char*)child3->Attribute("specG");
+                    color->g = atof(g);
+                    b = (char*)child3->Attribute("specB");
+                    color->b = atof(b);
+                }
+                else if (child3->Attribute("emisR")) {
+                    color = (Color*)malloc(sizeof(struct color));
+                    color->component = (char*)malloc(sizeof(char) * 12);
+
+                    strcpy(color->component, "emissive");
+
+                    r = (char*)child3->Attribute("emisR");
+                    color->r = atof(r);
+                    g = (char*)child3->Attribute("emisG");
+                    color->g = atof(g);
+                    b = (char*)child3->Attribute("emisB");
+                    color->b = atof(b);
+                }
+                else if (child3->Attribute("ambiR")) {
+                    color = (Color*)malloc(sizeof(struct color));
+                    color->component = (char*)malloc(sizeof(char) * 12);
+
+                    strcpy(color->component, "ambient");
+
+                    r = (char*)child3->Attribute("ambiR");
+                    color->r = atof(r);
+                    g = (char*)child3->Attribute("ambiG");
+                    color->g = atof(g);
+                    b = (char*)child3->Attribute("ambiB");
+                    color->b = atof(b);
+                }
+
+                addOperFile(file, group, files, texture, color);
             }
         }
 
@@ -74,8 +138,8 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
                 char* translateZ = (char*)child2->Attribute("Z");
                 if (translateZ != NULL) z = atof(translateZ);
             }
-            addOpGroup(group, i, operation, x, y, z, -1, transform);
 
+            addOpGroup(group, i, operation, x, y, z, -1, transform);
 
         }
 
@@ -113,8 +177,6 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
                 angleValue = atof(rotateAngle);
             }
 
-            if (transform == nullptr) printf("ola\n");
-
             addOpGroup(group, i, operation, x, y, z, angleValue, transform);
         }
 
@@ -139,11 +201,41 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
     }
 }
 
+
+/*
+ * Parser XML auxiliar do Parser principal para percorrer secções de iluminação.
+ */
+void parseLights(const XMLElement* child, vector<Light*>& lightVector)
+{
+    for (const XMLElement* child2 = child->FirstChildElement(); child2; child2 = child2->NextSiblingElement()) {
+    
+        double x = 0, y = 0, z = 0;
+        
+        Light* lighting = (Light*)malloc(sizeof(struct light));
+        lighting->type = (char*)malloc(sizeof(char) * 15);
+
+        char* type = (char*)child2->Attribute("type");
+        char* posX = (char*)child2->Attribute("posX");
+        if (posX != NULL) x = atof(posX);
+        char* posY = (char*)child2->Attribute("posY");
+        if (posY != NULL) y = atof(posY);
+        char* posZ = (char*)child2->Attribute("posZ");
+        if (posZ != NULL) z = atof(posZ);
+    
+        strcpy(lighting->type, type);
+        lighting->x = x;
+        lighting->y = y;
+        lighting->z = z;
+        lightVector.push_back(lighting);
+    }
+}   
+
+
 /*
  * Parser XML para percorrer e interpretar um config file,
  * usando tinyxml2.
  */
-void xmlParser(const char* configFile, vector<OperFile*>& files)
+void xmlParser(const char* configFile, vector<OperFile*>& files, vector<Light*>& lightVector)
 {
     int i = 0;
     Group group;
@@ -154,12 +246,21 @@ void xmlParser(const char* configFile, vector<OperFile*>& files)
 
     if (!error) {
         XMLElement* elem = doc.FirstChildElement();
+
         for (const XMLElement* child = elem->FirstChildElement(); child; child = child->NextSiblingElement()) {
+           
+            if (strcmp(child->Value(), "lights") == 0) {
+                
+                parseLights(child, lightVector);
+
+            }
+            
             if (strcmp(child->Value(), "group") == 0) {
                 
                 for (int j = i; j < 40; j++) group[i] = NULL;
                     
                 parseGroup(child, group, i, files);
+
             }
         }
     }

@@ -55,7 +55,7 @@ void addOpGroup(Group group, int i, char operation[], double x, double y, double
  * Adiciona um OperFile ao vector files que guarda todas as operações
  * a realizar em relação a um ficheiro.
  */
-void addOperFile(char* fileName, Group group, vector<OperFile*>& files)
+void addOperFile(char* fileName, Group group, vector<OperFile*>& files, char* texture, Color* color)
 {
     OperFile* novo = new OperFile();
     novo->fileName = new char[15];
@@ -81,5 +81,23 @@ void addOperFile(char* fileName, Group group, vector<OperFile*>& files)
 
     novo->operations = operations;
     strcpy(novo->fileName, fileName);
+
+    if (texture != NULL) {
+        novo->texture = new char[30];
+        strcpy(novo->texture, texture);
+    }
+    else novo->texture = NULL;
+
+    if (color != NULL) {
+        novo->color = new Color();
+        (novo->color)->component = new char[12];
+        strcpy((novo->color)->component, color->component);
+
+        (novo->color)->r = color->r;
+        (novo->color)->g = color->g;
+        (novo->color)->b = color->b;
+    }
+    else novo->color = NULL;
+
     files.push_back(novo);
 }

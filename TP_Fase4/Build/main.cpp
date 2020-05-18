@@ -24,8 +24,11 @@ std::vector<Ponto> texture;
 //Luz
 
 
-vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros 
-						 // com as suas respetivas transformações).
+vector<OperFile*> files;    // Vector de OperFiles (que relacionam os ficheiros 
+						    // com as suas respetivas transformações).
+
+vector<Light*> lightVector; // Vector de Light's (que contem todas as componentes 
+						    // de iluminação a ser aplicadas).
 
 int* fiVertexCount;
 GLuint vertexCount;
@@ -545,7 +548,7 @@ void init() {
 int main(int argc, char** argv)
 {
 	// put GLUT’s init here
-	xmlParser("sistemaSolarDinamico.xml", files);
+	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
 
 	//if (!files.empty()) std::cout << "ola";
 	glutInit(&argc, argv);

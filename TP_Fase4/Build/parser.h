@@ -11,6 +11,8 @@ using namespace tinyxml2;
 
 void parseGroup(const XMLElement* child, Group g, int i, vector<OperFile*>& files);
 
-void xmlParser(const char* config, vector<OperFile*>& files);
+void parseLights(const XMLElement* child, vector<Light*>& lightVector);
+
+void xmlParser(const char* configFile, vector<OperFile*>& files, vector<Light*>& lightVector);
 
 #endif //CG_TP_PARSER_H
