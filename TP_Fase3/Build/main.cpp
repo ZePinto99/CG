@@ -21,7 +21,7 @@ std::vector<std::string> Trabalho;
 std::vector<Ponto> triangles;
 
 vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros 
-					     // com as suas respetivas transformações).
+						 // com as suas respetivas transformações).
 
 int* fiVertexCount;
 GLuint vertexCount;
@@ -135,7 +135,7 @@ void getCatmullRomPoint(double t, double* p0, double* p1, double* p2, double* p3
 // given  global t, returns the point in the curve
 void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** curve, int size) {
 
-	double t = gt * size; 
+	double t = gt * size;
 	int index = floor(t);
 	t = t - index;
 
@@ -223,7 +223,7 @@ void lertudoemaisalgumacoisa() {
 	vertexB = (double**)malloc(sizeof(double*) * files.size());
 	std::vector<OperFile*>::iterator itout;
 	itout = files.begin();
-	int i=0;
+	int i = 0;
 	while (itout != files.end()) {
 		triangles.clear();
 		OperFile* op = *itout;
@@ -248,7 +248,7 @@ void dynamicTranslate(Oper* oper, int i)
 	int h = (t->points).size();
 	int cols = 3;
 	double** curve = new double* [h];
-	
+
 	for (int i = 0; i < h; ++i)
 		curve[i] = new double[cols];
 
@@ -269,19 +269,19 @@ void dynamicTranslate(Oper* oper, int i)
 	float deriv[4];
 
 	glBegin(GL_LINE_LOOP);
-		int n = 100;
-		for (int j = 1; j < n; j++) {
-			getGlobalCatmullRomPoint((double) j / n, pos, deriv, curve, size);
-			glVertex3d(pos[0], pos[1], pos[2]);
-		}
+	int n = 100;
+	for (int j = 1; j < n; j++) {
+		getGlobalCatmullRomPoint((double)j / n, pos, deriv, curve, size);
+		glVertex3d(pos[0], pos[1], pos[2]);
+	}
 	glEnd();
 
 	getGlobalCatmullRomPoint(intervalos[i], pos, deriv, curve, size);
-	
+
 	//if (time < files.size()) {
-		double ttt = glutGet(GLUT_ELAPSED_TIME);
-		checkpoints[i] = 1 / (t->time * 1000);
-		time++;
+	double ttt = glutGet(GLUT_ELAPSED_TIME);
+	checkpoints[i] = 1 / (t->time * 1000);
+	time++;
 	//}
 	intervalos[i] += checkpoints[i];
 
@@ -289,7 +289,7 @@ void dynamicTranslate(Oper* oper, int i)
 	for (int i = 0; i < h; ++i)
 		delete[] curve[i];
 	delete[] curve;
-	
+
 
 	glTranslated(pos[0], pos[1], pos[2]);
 }
@@ -311,50 +311,50 @@ void desenhar(void)
 	std::vector<OperFile*>::iterator itout;
 	itout = files.begin();
 	int i = 0;
-	
+
 	while (itout != files.end()) {
 		triangles.clear();
 		OperFile* op = *itout;
 		itout++;
-		
+
 		char* stds = op->fileName;
 		glPushMatrix();
 
-			std::vector<Oper*>::iterator it2;
-			it2 = op->operations.begin();
-			while(it2 != op->operations.end())
-			{	
-				Oper* oper = *it2;
-				it2++;
-				if (strcmp(oper->operation, "translate")==0)
-				{
-					if (oper->transform == nullptr) {
-						glTranslatef(oper->x, oper->y, oper->z);
-					}
-					else {
-						dynamicTranslate(oper, i);
-					}
+		std::vector<Oper*>::iterator it2;
+		it2 = op->operations.begin();
+		while (it2 != op->operations.end())
+		{
+			Oper* oper = *it2;
+			it2++;
+			if (strcmp(oper->operation, "translate") == 0)
+			{
+				if (oper->transform == nullptr) {
+					glTranslatef(oper->x, oper->y, oper->z);
 				}
-				if (strcmp(oper->operation, "rotate") == 0)
-				{
-					if (oper->transform == nullptr) {
-						glRotatef(oper->angle, oper->x, oper->y, oper->z);
-					}
-					else {
-						dynamicRotate(oper, i);
-					}
-				}
-				if (strcmp(oper->operation, "scale") == 0) {
-					glScalef(oper->x, oper->y, oper->z) ;
+				else {
+					dynamicTranslate(oper, i);
 				}
 			}
-			glColor3f(1, 1, 1);
-			glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-			glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
-			glVertexPointer(3, GL_DOUBLE, 0, 0);
-			glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-			glPopMatrix();
-			i++;
+			if (strcmp(oper->operation, "rotate") == 0)
+			{
+				if (oper->transform == nullptr) {
+					glRotatef(oper->angle, oper->x, oper->y, oper->z);
+				}
+				else {
+					dynamicRotate(oper, i);
+				}
+			}
+			if (strcmp(oper->operation, "scale") == 0) {
+				glScalef(oper->x, oper->y, oper->z);
+			}
+		}
+		glColor3f(1, 1, 1);
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
+		glVertexPointer(3, GL_DOUBLE, 0, 0);
+		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+		glPopMatrix();
+		i++;
 	}
 
 }
@@ -399,7 +399,7 @@ void renderScene(void)
 	int size = files.size();
 	glGenBuffers(size, buffers);
 	desenhar();
-	
+
 
 	// End of frame
 	glutSwapBuffers();

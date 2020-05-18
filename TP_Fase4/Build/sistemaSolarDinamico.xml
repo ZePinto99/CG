@@ -1,0 +1,336 @@
+<scene>
+    <!--sol-->
+    <group>
+        <translate X="-90" />
+        <models>
+            <model file="sphere.3d" /> <!-- Sun -->
+        </models>
+        <group>
+           	<translate time="1">
+            <point X="200" Y="0" Z="0" />
+            <point X="0" Y="0" Z="20" />
+            <point X="-200" Y="0" Z="0" />
+            <point X="0" Y="0" Z="-20" />
+            </translate>
+            <scale X="0.5" Y="0.55" Z="0.55" />
+            <models>
+                <model file = "bezi.3d" />
+            </models>
+         </group>        
+        <!--mercurio-->
+        <group>
+        	<translate time="0.25">
+            	<point X="16.23" Y="0" Z="0" />
+            	<point X="14.05" Y="0" Z="8.115" />
+            	<point X="8.115" Y="0" Z="14.05" />
+                <point X="0" Y="0" Z="16.3" />
+            	<point X="-8.115" Y="0" Z="14.05" />   
+            	<point X="-14.05" Y="0" Z="8.115" />
+                <point X="-16.23" Y="0" Z="0" />
+            	<point X="-14.05" Y="0" Z="-8.115" />
+            	<point X="-8.115" Y="0" Z="-14.05" />
+                <point X="0" Y="0" Z="-16.3" />
+                <point X="8.115" Y="0" Z="-14.05" />
+                <point X="14.05" Y="0" Z="-8.115" />
+            </translate>
+            <scale X="0.244" Y="0.244" Z="0.244" />
+            <models>
+                <model file = "sphere.3d"/>
+            </models>
+        </group>
+        <group>
+            <!--venus-->
+            <translate time="0.5">
+                 <point X="29.67" Y="0" Z="0" />
+                 <point X="25.695" Y="0" Z="14.685" />
+                 <point X="14.835" Y="0" Z="25.43" />	
+                 <point X="0" Y="0" Z="29.67" />
+                 <point X="-14.835" Y="0" Z="25.43" />
+                 <point X="-25.695" Y="0" Z="14.685" />
+                 <point X="-29.67" Y="0" Z="0" />
+                 <point X="-25.695" Y="0" Z="-14.685" />
+                 <point X="-14.835" Y="0" Z="-25.43" />	
+                 <point X="0" Y="0" Z="-29.67" />
+                 <point X="14.835" Y="0" Z="-25.43" />
+                 <point X="25.695" Y="0" Z="-14.685" />
+            </translate>
+            <scale X="0.605" Y="0.605" Z="0.605" />
+            <models>
+                 <model file = "sphere.3d"/>
+             </models>
+         </group>
+         <group>
+             <!--terra -->
+             <translate time="0.75">
+                <point X="46.22" Y="0" Z="0" />
+                <point X="40.03" Y="0" Z="23.11" />
+                <point X="23.11" Y="0" Z="40.03" />
+                <point X="0" Y="0" Z="46.22" />
+                <point X="-23.11" Y="0" Z="40.03" />
+                <point X="-40.03" Y="0" Z="23.11" />
+                <point X="-46.22" Y="0" Z="0" />
+                <point X="-40.03" Y="0" Z="-23.11" />
+                <point X="-23.11" Y="0" Z="-40.03" />
+                <point X="0" Y="0" Z="-46.22" />
+                <point X="23.11" Y="0" Z="-40.03" />
+                <point X="40.03" Y="0" Z="-23.11" />
+            </translate>
+             <scale X="0.6450" Y="0.6450" Z="0.6450" />
+             <models>
+                 <model file ="sphere.3d" />
+             </models>
+             <group>
+              <!-- lua -->
+              <translate time="420.25">
+                    <point X="10.5" Y="6" Z="0"/>
+                    <point X="9.1" Y="5" Z="5.25"/>
+                    <point X="5.25" Y="4" Z="9.1"/>
+                    <point X="0" Y="3" Z="10.5"/>
+                    <point X="-5.25" Y="2" Z="9.1"/>
+                    <point X="-9.1" Y="1" Z="5.25"/>
+                    <point X="-10.5" Y="0" Z="0"/>
+                    <point X="-9.1" Y="1" Z="-5.25"/>
+                    <point X="-5.25" Y="2" Z="-9.1"/>
+                    <point X="0" Y="3" Z="-10.5"/>
+                    <point X="5.25" Y="4" Z="-9.1"/>
+                    <point X="9.1" Y="5" Z="-5.25"/>
+                </translate>
+                 <scale X="0.1737" Y="0.1737" Z="0.1737" />
+                 <models>
+                     <model file = "sphere.3d"/>
+                 </models>
+             </group>
+         </group>
+         <group>
+          <!-- marte -->
+                  <translate time="1">
+                    <point X="67.16" Y="0" Z="0" />
+                    <point X="58.16" Y="0" Z="33.58" />
+                    <point X="33.58" Y="0" Z="58.16" />
+                    <point X="0" Y="0" Z="67.16" />
+                    <point X="-33.58" Y="0" Z="58.16" />
+                    <point X="-58.16" Y="0" Z="33.58" />
+                    <point X="-67.16" Y="0" Z="0" />
+                    <point X="-58.16" Y="0" Z="-33.58" />
+                    <point X="-33.58" Y="0" Z="-58.16" />
+                    <point X="0" Y="0" Z="-67.16" />
+                    <point X="33.58" Y="0" Z="-58.16" />
+                    <point X="58.16" Y="0" Z="-33.58" />
+                  </translate>
+                  <scale X="0.3395" Y="0.3395" Z="0.3395" />
+                  <models>
+                      <model file = "sphere.3d"/>
+                  </models>
+              </group>
+          <group>
+            <!-- jupiter -->
+                    <translate time="1.5">
+                        <point X="90.55" Y="0" Z="0" />
+                        <point X="78.42" Y="0" Z="45.28" />
+                        <point X="45.28" Y="0" Z="78.42" />
+                        <point X="0" Y="0" Z="90.55" />
+                        <point X="-45.28" Y="0" Z="78.42" />
+                        <point X="-78.42" Y="0" Z="45.28" />
+                        <point X="-90.55" Y="0" Z="0" />
+                        <point X="-78.42" Y="0" Z="-45.28" />
+                        <point X="-45.28" Y="0" Z="-78.42" />
+                        <point X="0" Y="0" Z="-90.55" />
+                        <point X="45.28" Y="0" Z="-78.42" />
+                        <point X="78.42" Y="0" Z="-45.28" />
+                    </translate>
+                    <scale X="0.8" Y="0.8" Z="0.8" />
+                    <models>
+                        <model file = "sphere.3d" />
+                    </models>
+            <!-- satelite Ganímedes -->
+            <group>
+                <translate time="1450">
+                 <point X="-10.2634" Y="0" Z="0" />
+                 <point X="-8.89" Y="0" Z="-5.1317" />
+                 <point X="-5.1317" Y="0" Z="-8.89" />
+                 <point X="0" Y="0" Z="-10.2634" />
+                 <point X="5.1317" Y="0" Z="-8.89" />
+                 <point X="8.89" Y="0" Z="-5.1317" />            
+                 <point X="10.2634" Y="0" Z="0" />
+                 <point X="8.89" Y="0" Z="5.1317" />
+                 <point X="5.1317" Y="0" Z="8.89" />
+                 <point X="0" Y="0" Z="10.2634" />
+                 <point X="-5.1317" Y="0" Z="8.89" />
+                 <point X="-8.89" Y="0" Z="5.1317" />
+                </translate>
+                <scale X="0.2634" Y="0.2634" Z="0.2634" />
+                <models>
+                    <model file = "sphere.3d" />
+                </models>
+            </group>
+            <!-- satelite Calisto -->
+             <group>
+                 <translate time="1450">
+                    <point X="10.2408" Y="-6" Z="0" />
+                    <point X="8.7" Y="-5" Z="5.12" />
+                    <point X="5.12" Y="-4" Z="8.7" />
+                    <point X="0" Y="-3" Z="10.2408" />
+                    <point X="-5.12" Y="-2" Z="8.7" />
+                    <point X="-8.7" Y="-1" Z="5.12" />
+                    <point X="-10.2408" Y="0" Z="0" />
+                    <point X="-8.7" Y="-1" Z="-5.12" />
+                    <point X="-5.12" Y="-2" Z="-8.7" />
+                    <point X="0" Y="-3" Z="-10.2408" />
+                    <point X="5.12" Y="-4" Z="-8.7" />
+                    <point X="8.7" Y="-5" Z="-5.12" />
+                 </translate>
+                 <scale X="0.2408" Y="0.2408" Z="0.2408" />
+                 <models>
+                     <model file = "sphere.3d" />
+                 </models>
+             </group>
+            </group>
+            <group>
+            <!--saturno -->
+                <translate time="2">
+                 <point X="114.555" Y="0" Z="0" />
+                 <point X="99.208" Y="0" Z="57.28" />
+                 <point X="57.28" Y="0" Z="99.208" />
+                 <point X="0" Y="0" Z="114.555" />
+                 <point X="-57.28" Y="0" Z="99.208" />
+                 <point X="-99.208" Y="0" Z="57.28" />
+                 <point X="-114.555" Y="0" Z="0" />
+                 <point X="-99.208" Y="0" Z="-57.28" />
+                 <point X="-57.28" Y="0" Z="-99.208" />
+                 <point X="0" Y="0" Z="-114.555" />
+                 <point X="57.28" Y="0" Z="-99.208" />
+                 <point X="99.208" Y="0" Z="-57.28" />
+                </translate>
+                <scale X="0.7" Y="0.7" Z="0.7" />
+                <models>
+                        <model file = "sphere.3d"/>
+                </models>
+            <!-- satelite Titã -->
+            <group>
+                <translate time="1400">
+                    <point X="0" Y="14.123" Z="0" />
+                    <point X="7.06" Y="12.23" Z="0" />
+                    <point X="12.23" Y="7.06" Z="0" />
+                    <point X="14.123" Y="0" Z="0" />
+                    <point X="12.23" Y="-7.06" Z="0" />
+                    <point X="7.06" Y="-12.23" Z="0" />
+                    <point X="0" Y="-14.123" Z="0" />
+                    <point X="-7.06" Y="-12.23" Z="0" />
+                    <point X="-12.23" Y="-7.06" Z="0" />
+                    <point X="-14.123" Y="0" Z="0" />
+                    <point X="-12.23" Y="7.06" Z="0" />
+                    <point X="-7.06" Y="12.23" Z="0" />
+                </translate>
+                <scale X="0.2575" Y="0.2575" Z="0.2575" />
+                <models>
+                    <model file = "sphere.3d" />
+                </models>
+            </group>
+            </group>
+            <group>
+                <!-- urano -->
+                <translate time="2.5">
+                    <point X="140"  Y="0" Z="0" />
+                    <point X="121.24"  Y="0" Z="70" />
+                    <point X="70"  Y="0" Z="121.24" />
+                    <point X="0"  Y="0" Z="140" />
+                    <point X="-70"  Y="0" Z="121.24" />
+                    <point X="-121.24"  Y="0" Z="70" />
+                    <point X="-140"  Y="0" Z="0" />
+                    <point X="-121.24"  Y="0" Z="-70" />
+                    <point X="-70"  Y="0" Z="-121.24" />
+                    <point X="0"  Y="0" Z="-140" />
+                    <point X="70"  Y="0" Z="-121.24" />
+                    <point X="121.24"  Y="0" Z="-70" />
+                </translate>
+                <scale X="0.675" Y="0.675" Z="0.675" />
+                <models>
+                    <model file = "sphere.3d"/>
+                </models>
+            <group> 
+                <!-- Titania -->
+                <translate time="2000">
+                    <point X="0" Y="6" Z="20" />
+                    <point X="10" Y="6" Z="17.3" />
+                    <point X="17.3" Y="6" Z="10" />
+                    <point X="20" Y="6" Z="0" />
+                    <point X="17.3" Y="6" Z="-10" />
+                    <point X="10" Y="6" Z="-17.3" />           
+                    <point X="0" Y="6" Z="-20" />
+                    <point X="-10" Y="6" Z="-17.3" />
+                    <point X="-17.3" Y="6" Z="-10" />
+                    <point X="-20" Y="6" Z="0" />
+                    <point X="-17.3" Y="6" Z="10" />
+                    <point X="-10" Y="6" Z="17.3" /> 
+                </translate>
+                <scale X="0.4" Y="0.4" Z="0.4" />
+                <models>
+                    <model file = "sphere.3d" />
+                </models>   
+            </group>    
+            <group> 
+                <!-- Uberon -->
+                <translate time="1000">
+                    <point X="14" Y="0" Z="-10" />
+                    <point X="12.124" Y="0" Z="-3" />
+                    <point X="7" Y="0" Z="2.124" />
+                    <point X="0" Y="0" Z="4" />
+                    <point X="-7" Y="0" Z="2.124" />
+                    <point X="-12.124" Y="0" Z="-3" />
+                    <point X="-14" Y="0" Z="-10" />
+                    <point X="-12.124" Y="0" Z="-17" />
+                    <point X="-7" Y="0" Z="-22.124" />
+                    <point X="0" Y="0" Z="-24" />
+                    <point X="7" Y="0" Z="-22.124" />
+                    <point X="12.124" Y="0" Z="-17" />
+                </translate>
+                <scale X="0.4" Y="0.4" Z="0.4" />
+                <models>
+                     <model file = "sphere.3d" />
+                </models>
+            </group>
+            </group>
+            <group>
+            <!--neptuno-->
+                <translate time="5">
+                   <point X="168.305" Y="0" Z="0" />
+                   <point X="145.76" Y="0" Z="84.15" />
+                   <point X="84.15" Y="0" Z="145.76" />
+                   <point X="0" Y="0" Z="168.305" />
+                   <point X="-84.15" Y="0" Z="145.76" />
+                   <point X="-145.76" Y="0" Z="84.15" />
+                   <point X="-168.305" Y="0" Z="0" />
+                   <point X="-145.76" Y="0" Z="-84.15" />
+                   <point X="-84.15" Y="0" Z="-145.76" />
+                   <point X="0" Y="0" Z="-168.305" />
+                   <point X="84.15" Y="0" Z="-145.76" />
+                   <point X="145.76" Y="0" Z="-84.15" />
+                </translate>
+                <scale X="0.65" Y="0.65" Z="0.65" />
+                <models>
+                     <model file = "sphere.3d"/>
+                </models>
+            <!-- satelite Triton-->
+            <group>
+              <translate time="7482.5">
+                 <point X="0" Y="3" Z="-10" />
+                 <point X="-5" Y="2.5" Z="-8.66" />
+                 <point X="-8.66" Y="2" Z="-5" />
+                 <point X="-10" Y="1.5" Z="0" />
+                 <point X="-8.66" Y="1" Z="5" />
+                 <point X="-5" Y="0.5" Z="8.66" />
+                 <point X="0" Y="0" Z="10" />
+                 <point X="5" Y="0.5" Z="8.66" />
+                 <point X="8.66" Y="1" Z="5" />
+                 <point X="10" Y="1.5" Z="0" />
+                 <point X="8.66" Y="2" Z="-5" />
+                 <point X="5" Y="1.5" Z="-8.66" />
+              </translate>
+              <scale X="0.353" Y="0.353" Z="0.353" />
+              <models>
+                  <model file = "sphere.3d" />
+              </models>
+            </group>
+            </group>
+        </group>
+</scene>
