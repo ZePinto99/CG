@@ -5,6 +5,7 @@
 #else
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include <IL/il.h>
 #endif
 
 #define _USE_MATH_DEFINES
@@ -16,13 +17,12 @@
 #include <string>
 #include "parser.h"
 
+#include <IL/il.h>
 
-std::vector<std::string> Trabalho;
-std::vector<Ponto> triangles;
-std::vector<Ponto> normal;
-std::vector<Ponto> texture;
-//Luz
-
+vector<string> Trabalho;
+vector<Ponto> triangles;
+vector<Ponto> normal;
+vector<Ponto> texture;
 
 vector<OperFile*> files;    // Vector de OperFiles (que relacionam os ficheiros 
 						    // com as suas respetivas transformações).
@@ -39,6 +39,8 @@ double** textures;
 
 GLuint normals[1];
 GLuint texturesG[1];
+GLuint* texturesByID;
+
 
 ////////////////////////////////Curvas///////////////////////////////////////
 #define POINT_COUNT 5
@@ -245,23 +247,22 @@ void light() {
 	glMaterialf(GL_FRONT, GL_SHININESS, 128);
 }
 
-//int loadTexture(string s)
-void loadTexture() {
+void loadTexture(string texture) {
 
 	unsigned int t, tw, th;
 	unsigned char* texData;
 	glGenerateMipmap(GL_TEXTURE_2D);
-/*
-	ilInit();
+
+	ilInt();
 	ilGenImages(1, &t);
 	ilBindImage(t);
-	//ilLoadImage((ILstring)"relva1.jpg");
+	ilLoadImage((ILstring)"relva1.jpg");
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
 	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);*/
+	glBindTexture(GL_TEXTURE_2D, texture);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -273,22 +274,22 @@ void loadTexture() {
 
 
 //falta preencher o vetor das normais e das texturas
-void lerficheiro(std::string nomeficheiro)
+void lerficheiro(string nomeficheiro)
 {
 	int c = 0;
 
 	double storedouble[3];
 	for (int i = 0; i < 3; i++) storedouble[i] = 0;
 
-	std::ifstream trigsFile;
+	ifstream trigsFile;
 	trigsFile.open(nomeficheiro);
 	int type = 0;
-	std::string linha;
+	string linha;
 	if (trigsFile.is_open()) {
 		
 		while (getline(trigsFile, linha)) {
 			type++;
-			std::string sTmp;
+			string sTmp;
 			for (int i = 0; i <= linha.length(); i++) {
 				if (linha[i] == ' ' || linha[i] == '\0') {
 					storedouble[c] = stod(sTmp);
@@ -317,14 +318,14 @@ void lerficheiro(std::string nomeficheiro)
 
 void lertudoemaisalgumacoisa() {
 	vertexB = (double**)malloc(sizeof(double*) * files.size());
-	std::vector<OperFile*>::iterator itout;
+	vector<OperFile*>::iterator itout;
 	itout = files.begin();
 	int i = 0;
 	while (itout != files.end()) {
 		triangles.clear();
 		OperFile* op = *itout;
 		char* stds = op->fileName;
-		std::string std(stds);
+		string std(stds);
 		lerficheiro(std);
 		createVBO(i);
 		itout++;
@@ -404,7 +405,7 @@ void dynamicRotate(Oper* oper, int i)
 
 void desenhar(void)
 {
-	std::vector<OperFile*>::iterator itout;
+	vector<OperFile*>::iterator itout;
 	itout = files.begin();
 	int i = 0;
 
@@ -416,7 +417,7 @@ void desenhar(void)
 		char* stds = op->fileName;
 		glPushMatrix();
 
-		std::vector<Oper*>::iterator it2;
+		vector<Oper*>::iterator it2;
 		it2 = op->operations.begin();
 		while (it2 != op->operations.end())
 		{
@@ -527,30 +528,32 @@ void processSpecialKeys(int key, int xx, int yy)
 		break;
 
 	default:
-		std::cout << "Não conheço esse comando!" << "\n";
+		cout << "Não conheço esse comando!" << "\n";
 	}
 }
 
-void init() {
-	/* Extrai todos os nomes dos ficheiros das texturas, atribuindo um ID a cada textura. */
-	/* int i = 0;
-    texIds = (GLuint*)malloc(sizeof(GLuint) * files.size());
-    vector<FileOper*>::iterator it;
-    for (it = files.begin(); it != files.end(); i++, it++) {
-        FileOper* fo = *it;
-        if (fo->texture != NULL) {
-            char path[50] = "../textures/";
-            char* tex = strcat(path, fo->texture);
-            texIds[i] = loadTexture(string(tex));
-        }
-    }*/
+void initTexturesByID() {
 
-	/*glEnable(GL_LIGHTING);
+	int i = 0;
+	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
+    vector<OperFile*>::iterator it;
+
+    for (it = files.begin(); it != files.end(); i++, it++) {
+        OperFile* oper = *it;
+        if (oper->texture != NULL) {
+            char dir[40] = "../textures/";
+            char* textureFileName = strcat(dir, oper->texture);
+			string textureString(textureFileName);
+			texturesByID[i] = loadTexture(textureString);
+        }
+    }
+
+	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);*/
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 int main(int argc, char** argv)
@@ -558,7 +561,7 @@ int main(int argc, char** argv)
 	// put GLUT’s init here
 	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
 
-	//if (!files.empty()) std::cout << "ola";
+	//if (!files.empty()) cout << "ola";
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
@@ -575,7 +578,7 @@ int main(int argc, char** argv)
 	glewInit();
 #endif
 
-	init();
+	initTexturesByID();
 
 	lertudoemaisalgumacoisa();
 
