@@ -63,11 +63,10 @@ void writeLine(const std::string line) {
     }
 }
 
-
 void esfera(char* argv[]) {
     double pi = 3.14159265358979323846;
     // double x = M_PI;
-
+    double s_factor, t_factor;
     int radius = atoi(argv[2]);
     int slices = atoi(argv[3]);
     int stacks = atoi(argv[4]);
@@ -81,10 +80,13 @@ void esfera(char* argv[]) {
     double p4x, p4y, p4z;
     std::cout << "File:" << nomeFicheiro << "\n";
     if (open(nomeFicheiro)) {
-
+        float texV = 1 / (float)stacks;
+        float texH = 1 / (float)stacks;
         for (int i = 0; i < stacks; i++) {
+            t_factor = (stacks - i) * (1/stacks);
             angle1 = 0;
             for (int j = 0; j < slices; j++) {
+                s_factor = j * (1 / slices);
                 p1x = radius * sin(angle3) * sin(angle1);
                 p1y = radius * cos(angle3);
                 p1z = radius * sin(angle3) * cos(angle1);
@@ -98,12 +100,31 @@ void esfera(char* argv[]) {
                 p4y = radius * cos(angle3 + angle4);
                 p4z = radius * sin(angle3 + angle4) * cos(angle1 + angle2);
 
+                /////////////////////////////
+                ///////////////   nao e preciso por o raio no normal pois é um vetor.
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p2x << " " << p2y << " " << p2z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
+                outFile << "" << radius*sen(angle3)*sen(angl1) << " " <<radius* cos(angle3) << " " << radius*cos(angle1) * sin(angle3);
+                outFile << "" << radius * sen(angle3 + angle4) * sen(angle1) << "  " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3+angle4) * cos(angle1);
+                outFile << "" << radius * sen(angle3 + angle4) * sen(angle1+angle) << "  " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1+angle2);
+                outFile << s_factor << " " << t_factor  << " 0";
+                outFile << s_factor << " " << t_factor - (1/stacks) << " 0";
+                outFile << s_factor + (1/slices) << " " << t_factor-(i/stacks) << " 0";
+
+
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
                 outFile << p3x << " " << p3y << " " << p3z << "\n";
+                outFile << "" << radius * sen(angle3) * sen(angl1) << " " << cos(angle3) << " " << radius * cos(angle1) * sin(angle3);
+                outFile << "" << radius * sen(angle3 + angle4) * sen(angle1) << "  " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1);
+                outFile << "" << radius * sen(angle3) * sen(angle1 + angle) << "  " << radius*cos(angle3) << " " << radius * sin(angle3) * cos(angle1 + angle2);
+                outFile << s_factor << " " << t_factor << " 0";
+                outFile << s_factor + (1 / slices) << " " << t_factor - (i / stacks) << " 0";
+                outFile << s_factor + (1/slices) << " " << t_factor << " 0";
+
+
+
 
                 angle1 += angle2;
             }
@@ -115,6 +136,7 @@ void esfera(char* argv[]) {
 }
 
 void plane(char* argv[]) {
+
     std::string slength = (argv[2]);
     double length = (double)atof(slength.c_str());
     double halfdouble = length / 2;
@@ -129,6 +151,38 @@ void plane(char* argv[]) {
 
     std::string triangulo1_3;
     triangulo1_3 = half + " 0 " + half;
+
+
+
+    std::string triangulo1_1Normal;
+    triangulo1_1Normal = "0 1 0";
+
+
+    std::string triangulo2_1Normal;
+    triangulo2_1Normal = "0 -1 0";
+
+    ////////////texturas
+
+    std::string triangulo1_1Text;
+    triangulo1_1Text = "0 1 0";
+
+    std::string triangulo1_2Text;
+    triangulo1_2Text = "1 1 0";
+
+    std::string triangulo1_3Text;
+    triangulo1_3Text = "0 1 0";
+
+    /////////////////////////
+
+    std::string triangulo2_1Text;
+    triangulo2_1Text = "0 0 0";
+
+    std::string triangulo2_2Text;
+    triangulo2_2Text = "1 0 0";
+
+    std::string triangulo2_3Text;
+    triangulo2_3Text = "0 1 0";
+
 
 
     // Triângulo 2 => Coordenadas do triângulo à direita.
@@ -171,15 +225,45 @@ void plane(char* argv[]) {
         writeLine(triangulo1_1);
         writeLine(triangulo1_2);
         writeLine(triangulo1_3);
+        writeLine(triangulo1_1Normal);
+        writeLine(triangulo1_1Normal);
+        writeLine(triangulo1_1Normal);
+        writeLine(triangulo1_1Text);
+        writeLine(triangulo1_2Text);
+        writeLine(triangulo1_3Text);
+
+
         writeLine(triangulo2_1);
         writeLine(triangulo2_2);
         writeLine(triangulo2_3);
+        writeLine(triangulo1_1Normal);
+        writeLine(triangulo1_1Normal);
+        writeLine(triangulo1_1Normal);
+        writeLine(triangulo2_1Text);
+        writeLine(triangulo2_1Text);
+        writeLine(triangulo2_1Text);
+
+
         writeLine(triangulo1_1B);
         writeLine(triangulo1_3B);
         writeLine(triangulo1_2B);
+        writeLine(triangulo2_1Normal);
+        writeLine(triangulo2_1Normal);
+        writeLine(triangulo2_1Normal);
+        writeLine(triangulo1_1Text);
+        writeLine(triangulo1_2Text);
+        writeLine(triangulo1_3Text);
+
+
         writeLine(triangulo2_1B);
         writeLine(triangulo2_3B);
         writeLine(triangulo2_2B);
+        writeLine(triangulo2_1Normal);
+        writeLine(triangulo2_1Normal);
+        writeLine(triangulo2_1Normal);
+        writeLine(triangulo2_1Text);
+        writeLine(triangulo2_2Text);
+        writeLine(triangulo2_3Text);
 
 
         close();
@@ -208,6 +292,34 @@ void box(int argc, char* argv[]) {
         double divY = height / div;
         double divZ = width / div;
 
+
+
+        double textura1 = 0.25 / camadas;
+        double textura2 = 0.33 / camadas;
+        //   1 __ __ __ __
+        //    |  |tp|  |  |
+        //0.66|__|__|__|__|
+        //    |Lf|Fr|Ri|Bk|
+        //0.33|__|__|__|__|
+        //    |  |Ba|  |  |
+        //   0|__|__|__|__|
+        //   0 .25 .50 .75 1
+        //
+        //
+        //
+
+        double frenteX = 0.25;
+        double frenteY = 0.33;
+        double trasX = 0.75;
+        double trasY = 0.33;
+        float esquerdaX = 0;
+        float esquerdaY = 0.33;
+        float direitaX = 0.50;
+        float direitaY = 0.33;
+        float cimaX = 0.25;
+        float cimaY = 0.66;
+        float baixoX = 0.25;
+        float baixoY = 0;
         //Face frontal
         x = length / 2;
         z = width / 2;
@@ -219,15 +331,32 @@ void box(int argc, char* argv[]) {
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << (z - divZ) << "\n";
+                outFile << "0 0 1\n";
+                outFile << "0 0 1\n";
+                outFile << "0 0 1\n";
+                outFile << frenteX << " " << frenteY << " 0\n";
+                outFile << frenteX + textura1 << " " << frenteY << " 0\n";
+                outFile << frenteX + textura1 << " " << frenteY + textura2 << " 0\n";
 
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << (z - divZ) << "\n";
                 outFile << "" << x << " " << y << " " << (z - divZ) << "\n";
+                outFile << "0 0 1\n";
+                outFile << "0 0 1\n";
+                outFile << "0 0 1\n";
+                outFile << frenteX + textura1 << " " << frenteY + textura2 << " 0\n";
+                outFile << frenteX << " " << frenteY + textura2 << " 0\n";
+                outFile << frenteX << " " << frenteY  << " 0\n";
+                frenteX += textura1;
+
 
                 y -= divY;
             }
+            frenteY += textura2;
             z -= divZ;
         }
+      
+
 
         //Face direita
         x = -length / 2;
@@ -240,13 +369,27 @@ void box(int argc, char* argv[]) {
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << (x + divX) << " " << y << " " << z << "\n";
                 outFile << "" << (x + divX) << " " << (y - divY) << " " << z << "\n";
+                outFile << "1 0 0\n";
+                outFile << "1 0 0\n";
+                outFile << "1 0 0\n";
+                outFile << direitaX << " " << direitaY  << " 0\n";
+                outFile << direitaX + textura1 << " " << direitaY << " 0\n";
+                outFile << direitaX + textura1 << " " << direitaY + textura2 << " 0\n";
 
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << (x + divX) << " " << (y - divY) << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << z << "\n";
+                outFile << "1 0 0\n";
+                outFile << "1 0 0\n";
+                outFile << "1 0 0\n";
+                outFile << direitaX + textura1 << " " << direitaY + textura2 << " 0\n";
+                outFile << direitaX << " " << direitaY + textura2<< " 0\n";
+                outFile << direitaX << " " << direitaY  << " 0\n";
 
+                direitaX += textura1;
                 y -= divY;
             }
+            direitaY += textura2;
             x += divX;
         }
 
@@ -261,16 +404,32 @@ void box(int argc, char* argv[]) {
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << z << "\n";
                 outFile << "" << (x + divX) << " " << y << " " << z << "\n";
+                outFile << "-1 0 0\n";
+                outFile << "-1 0 0\n";
+                outFile << "-1 0 0\n";
+                outFile << esquerdaX << " " << esquerdaY << " 0\n";
+                outFile << esquerdaX + textura1 << " " << esquerdaY << " 0\n";
+                outFile << esquerdaX + textura1 << " " << esquerdaY + textura2 << " 0\n";
 
                 outFile << "" << x << " " << (y - divY) << " " << z << "\n";
                 outFile << "" << (x + divX) << " " << (y - divY) << " " << z << "\n";
                 outFile << "" << (x + divX) << " " << y << " " << z << "\n";
+                outFile << "-1 0 0\n";
+                outFile << "-1 0 0\n";
+                outFile << "-1 0 0\n";
+                outFile << esquerdaX + textura1 << " " << esquerdaY + textura2 << " 0\n";
+                outFile << esquerdaX << " " << esquerdaY + textura2 << " 0\n";
+                outFile << esquerdaX << " " << esquerdaY << " 0\n";
+
+
+                esquerdaX += textura1;
 
                 y -= divY;
             }
+            esquerdaY += textura2;
             x += divX;
         }
-
+        
         //Tampa superior
         y = height;
         z = -width / 2;
@@ -282,12 +441,30 @@ void box(int argc, char* argv[]) {
                 outFile << "" << (x + divX) << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << y << " " << (z + divZ) << "\n";
+                outFile << "0 1 0\n";
+                outFile << "0 1 0\n";
+                outFile << "0 1 0\n";
+                outFile << cimaX << " " << cimaY << " 0\n";
+                outFile << cimaX + textura1 << " " << cimaY << " 0\n";
+                outFile << cimaX + textura1 << " " << cimaY + textura2 << " 0\n";
+
 
                 outFile << "" << (x + divX) << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << y << " " << (z + divZ) << "\n";
                 outFile << "" << (x + divX) << " " << y << " " << (z + divZ) << "\n";
+                outFile << "0 1 0\n";
+                outFile << "0 1 0\n";
+                outFile << "0 1 0\n";
+                outFile << cimaX + textura1 << " " << cimaY + textura2 << " 0\n";
+                outFile << cimaX << " " << cimaY + textura2 << " 0\n";
+                outFile << cimaX << " " << cimaY << " 0\n";
+
+
+
+                cimaX += textura1;
                 x += divX;
             }
+            cimaY += textura2;
             z += divZ;
         }
 
@@ -302,13 +479,27 @@ void box(int argc, char* argv[]) {
                 outFile << "" << x << " 0 " << (z - divZ) << "\n";
                 outFile << "" << (x + divX) << " 0 " << z << "\n";
                 outFile << "" << x << " 0 " << z << "\n";
+                outFile << "0 -1 0\n";
+                outFile << "0 -1 0\n";
+                outFile << "0 -1 0\n";
+                outFile << baixoX << " " << baixoY << " 0\n";
+                outFile << baixoX + textura1 << " " << baixoY << " 0\n";
+                outFile << baixoX + textura1 << " " << baixoY + textura2 << " 0\n";
 
                 outFile << "" << x << " 0 " << (z - divZ) << "\n";
                 outFile << "" << (x + divX) << " 0 " << (z - divZ) << "\n";
                 outFile << "" << (x + divX) << " 0 " << z << "\n";
+                outFile << "0 -1 0\n";
+                outFile << "0 -1 0\n";
+                outFile << "0 -1 0\n";
+                outFile << baixoX + textura1 << " " << baixoY + textura2 << " 0\n";
+                outFile << baixoX << " " << baixoY + textura2 << " 0\n";
+                outFile << baixoX << " " << baixoY << " 0\n";
 
+                baixoX += textura1;
                 x += divX;
             }
+            baixoY += textura2;
             z -= divZ;
         }
 
@@ -323,14 +514,27 @@ void box(int argc, char* argv[]) {
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << (z + divZ) << "\n";
+                outFile << "0 0 -1\n";
+                outFile << "0 0 -1\n";
+                outFile << "0 0 -1\n";
+                outFile << trasX << " " << trasY << " 0\n";
+                outFile << trasX + textura1 << " " << trasY << " 0\n";
+                outFile << trasX + textura1 << " " << trasY + textura2 << " 0\n";
 
                 outFile << "" << x << " " << y << " " << z << "\n";
                 outFile << "" << x << " " << (y - divY) << " " << (z + divZ) << "\n";
                 outFile << "" << x << " " << y << " " << (z + divZ) << "\n";
+                outFile << "0 0 -1\n";
+                outFile << "0 0 -1\n";
+                outFile << "0 0 -1\n";
+                outFile << trasX + textura1 << " " << trasY + textura2 << " 0\n";
+                outFile << trasX << " " << trasY + textura2 << " 0\n";
+                outFile << trasX << " " << trasY << " 0\n";
 
-
+                trasX += textura1;
                 y -= divY;
             }
+            trasY += textura2;
             z += divZ;
         }
     }
@@ -339,6 +543,7 @@ void box(int argc, char* argv[]) {
 void cone(char* argv[])
 {
     double pi = 3.14159265358979323846;
+    double s_factor, t_factor;
     double radius = atof(argv[2]);
     double height = atof(argv[3]);
     double slices = atof(argv[4]);
@@ -353,9 +558,33 @@ void cone(char* argv[])
             outFile << "" << "0" << " 0 " << "0" << "\n";
             outFile << "" << (radius * sin(angle1 + angle2)) << " 0 " << (radius * cos(angle1 + angle2)) << "\n";
             outFile << "" << (radius * sin(angle1)) << " 0 " << (radius * cos(angle1)) << "\n";
+            outFile << "0 -1 0";
+            outFile << "0 -1 0";
+            outFile << "0 -1 0";
+            ////texturas
+            outFile << s_factor << " " << t_factor << " 0";
+            outFile << s_factor << " " << t_factor - (1 / stacks) << " 0";
+            outFile << s_factor + (1 / slices) << " " << t_factor - (i / stacks) << " 0";
+
+
+
+
+
+
+
             outFile << "" << "0 " << height << " 0" << "\n";
             outFile << "" << (radius * sin(angle1)) << " 0 " << (radius * cos(angle1)) << "\n";
             outFile << "" << (radius * sin(angle1 + angle2)) << " 0 " << (radius * cos(angle1 + angle2)) << "\n";
+            outFile << "0 1 0";
+            outFile << "" << radius * sen(j + 1) * angle1 << " 0 " << radius * cos(j + 1) * (angle1);
+            outFile << "" << radius * sen(j + 1) * (angle1+angle2) << " 0 " << radius * cos(j + 1) * (angle1 + angle2);
+            ////texturas
+            outFile << "0 -1 0";
+            outFile << "0 -1 0";
+            outFile << "0 -1 0";
+
+
+
             angle1 += angle2;
         }
     }
@@ -538,10 +767,6 @@ void besier(const char* patchfilename, int tesslevel, const char* newfile) {
     writeBezier(newfile, tesslevel);
 
 }
-
-
-
-
 
 int main(int argc, char* argv[]) {
     if (argc > 0) {
