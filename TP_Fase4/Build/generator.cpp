@@ -543,7 +543,6 @@ void box(int argc, char* argv[]) {
 void cone(char* argv[])
 {
     double pi = 3.14159265358979323846;
-    double s_factor, t_factor;
     double radius = atof(argv[2]);
     double height = atof(argv[3]);
     double slices = atof(argv[4]);
@@ -562,9 +561,9 @@ void cone(char* argv[])
             outFile << "0 -1 0";
             outFile << "0 -1 0";
             ////texturas
-            outFile << s_factor << " " << t_factor << " 0";
-            outFile << s_factor << " " << t_factor - (1 / stacks) << " 0";
-            outFile << s_factor + (1 / slices) << " " << t_factor - (i / stacks) << " 0";
+            outFile << "0 -1 0";
+            outFile << "0 -1 0";
+            outFile << "0 -1 0";
 
 
 

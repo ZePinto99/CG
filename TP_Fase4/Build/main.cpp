@@ -282,10 +282,12 @@ void lerficheiro(std::string nomeficheiro)
 
 	std::ifstream trigsFile;
 	trigsFile.open(nomeficheiro);
-
+	int type = 0;
 	std::string linha;
 	if (trigsFile.is_open()) {
+		
 		while (getline(trigsFile, linha)) {
+			type++;
 			std::string sTmp;
 			for (int i = 0; i <= linha.length(); i++) {
 				if (linha[i] == ' ' || linha[i] == '\0') {
@@ -301,7 +303,13 @@ void lerficheiro(std::string nomeficheiro)
 			aux.x = storedouble[0];
 			aux.y = storedouble[1];
 			aux.z = storedouble[2];
+			if(type==1||type==2||type==3)
 			triangles.push_back(aux);
+			if (type == 4 || type == 5 || type == 6)
+				normal.push_back(aux);
+			if (type == 7 || type == 8 || type == 9)
+				texture.push_back(aux);
+			if (type == 9) type = 0;
 			c = 0;
 		}
 	}
