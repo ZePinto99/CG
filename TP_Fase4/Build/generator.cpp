@@ -82,11 +82,11 @@ void esfera(char* argv[]) {
     if (open(nomeFicheiro)) {
         float texV = 1 / (float)stacks;
         float texH = 1 / (float)stacks;
-        for (int i = 0; i < stacks; i++) {
-            t_factor = (stacks - i) * (1/stacks);
+        for (double i = 0; i < stacks; i++) {
+            t_factor = (stacks - i) * (1.d / stacks); 
             angle1 = 0;
             for (int j = 0; j < slices; j++) {
-                s_factor = j * (1 / slices);
+                s_factor = j * (1.d / slices);
                 p1x = radius * sin(angle3) * sin(angle1);
                 p1y = radius * cos(angle3);
                 p1z = radius * sin(angle3) * cos(angle1);
@@ -105,23 +105,23 @@ void esfera(char* argv[]) {
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p2x << " " << p2y << " " << p2z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
-                outFile << "" << radius*sen(angle3)*sen(angl1) << " " <<radius* cos(angle3) << " " << radius*cos(angle1) * sin(angle3);
-                outFile << "" << radius * sen(angle3 + angle4) * sen(angle1) << "  " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3+angle4) * cos(angle1);
-                outFile << "" << radius * sen(angle3 + angle4) * sen(angle1+angle) << "  " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1+angle2);
-                outFile << s_factor << " " << t_factor  << " 0";
-                outFile << s_factor << " " << t_factor - (1/stacks) << " 0";
-                outFile << s_factor + (1/slices) << " " << t_factor-(i/stacks) << " 0";
+                outFile << "" << radius*sin(angle3)*sin(angle1) << " " <<radius* cos(angle3) << " " << radius*cos(angle1) * sin(angle3) << "\n";
+                outFile << "" << radius * sin(angle3 + angle4) * sin(angle1) << " " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3+angle4) * cos(angle1) << "\n";
+                outFile << "" << radius * sin(angle3 + angle4) * sin(angle1+angle2) << " " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1+angle2) << "\n";
+                outFile << s_factor << " " << t_factor << " 0\n";
+                outFile << s_factor << " " << t_factor - (1.d/stacks) << " 0\n";
+                outFile << s_factor + (1.d/slices) << " " << t_factor-(1.d/stacks) << " 0\n";
 
 
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
                 outFile << p3x << " " << p3y << " " << p3z << "\n";
-                outFile << "" << radius * sen(angle3) * sen(angl1) << " " << cos(angle3) << " " << radius * cos(angle1) * sin(angle3);
-                outFile << "" << radius * sen(angle3 + angle4) * sen(angle1) << "  " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1);
-                outFile << "" << radius * sen(angle3) * sen(angle1 + angle) << "  " << radius*cos(angle3) << " " << radius * sin(angle3) * cos(angle1 + angle2);
-                outFile << s_factor << " " << t_factor << " 0";
-                outFile << s_factor + (1 / slices) << " " << t_factor - (i / stacks) << " 0";
-                outFile << s_factor + (1/slices) << " " << t_factor << " 0";
+                outFile << "" << radius * sin(angle3) * sin(angle1) << " " << cos(angle3) << " " << radius * cos(angle1) * sin(angle3) << "\n";
+                outFile << "" << radius * sin(angle3 + angle4) * sin(angle1) << " " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1) << "\n";
+                outFile << "" << radius * sin(angle3) * sin(angle1 + angle2) << " " << radius*cos(angle3) << " " << radius * sin(angle3) * cos(angle1 + angle2) << "\n";
+                outFile << s_factor << " " << t_factor << " 0\n";
+                outFile << s_factor + (1.d / slices) << " " << t_factor - (1.d / stacks) << " 0\n";
+                outFile << s_factor + (1.d/slices) << " " << t_factor << " 0\n";
 
 
 
@@ -294,8 +294,8 @@ void box(int argc, char* argv[]) {
 
 
 
-        double textura1 = 0.25 / camadas;
-        double textura2 = 0.33 / camadas;
+        double textura1 = 0.25 / div;
+        double textura2 = 0.33 / div;
         //   1 __ __ __ __
         //    |  |tp|  |  |
         //0.66|__|__|__|__|
@@ -557,13 +557,13 @@ void cone(char* argv[])
             outFile << "" << "0" << " 0 " << "0" << "\n";
             outFile << "" << (radius * sin(angle1 + angle2)) << " 0 " << (radius * cos(angle1 + angle2)) << "\n";
             outFile << "" << (radius * sin(angle1)) << " 0 " << (radius * cos(angle1)) << "\n";
-            outFile << "0 -1 0";
-            outFile << "0 -1 0";
-            outFile << "0 -1 0";
+            outFile << "0 -1 0\n";
+            outFile << "0 -1 0\n";
+            outFile << "0 -1 0\n";
             ////texturas
-            outFile << "0 -1 0";
-            outFile << "0 -1 0";
-            outFile << "0 -1 0";
+            outFile << "0 -1 0\n";
+            outFile << "0 -1 0\n";
+            outFile << "0 -1 0\n";
 
 
 
@@ -574,13 +574,13 @@ void cone(char* argv[])
             outFile << "" << "0 " << height << " 0" << "\n";
             outFile << "" << (radius * sin(angle1)) << " 0 " << (radius * cos(angle1)) << "\n";
             outFile << "" << (radius * sin(angle1 + angle2)) << " 0 " << (radius * cos(angle1 + angle2)) << "\n";
-            outFile << "0 1 0";
-            outFile << "" << radius * sen(j + 1) * angle1 << " 0 " << radius * cos(j + 1) * (angle1);
-            outFile << "" << radius * sen(j + 1) * (angle1+angle2) << " 0 " << radius * cos(j + 1) * (angle1 + angle2);
+            outFile << "0 1 0\n";
+            outFile << "" << radius * sin(i + 1) * angle1 << " 0 " << radius * cos(i + 1) * (angle1) << "\n";
+            outFile << "" << radius * sin(i + 1) * (angle1+angle2) << " 0 " << radius * cos(i + 1) * (angle1 + angle2) << "\n";
             ////texturas
-            outFile << "0 -1 0";
-            outFile << "0 -1 0";
-            outFile << "0 -1 0";
+            outFile << "0 -1 0\n";
+            outFile << "0 -1 0\n";
+            outFile << "0 -1 0\n";
 
 
 
@@ -622,7 +622,7 @@ void writeBezier(std::string newfile, int tesslevel) {
             }
             int j = 0, k = 0;
             /////////////////////////////////
-            ///desenahr 4 curvas de Bezier///
+            ///desinahr 4 curvas de Bezier///
             /////////////////////////////////
             for (int i = 0; i < 15; i += 4) {
                 indices[0] = i;
@@ -761,7 +761,7 @@ void besier(const char* patchfilename, int tesslevel, const char* newfile) {
     //////////////////////////
     readBezier(patchfilename);
     //////////////////////////
-    /////Desenhar bezier//////
+    /////Desinhar bezier//////
     //////////////////////////
     writeBezier(newfile, tesslevel);
 
