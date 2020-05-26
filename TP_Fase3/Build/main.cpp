@@ -20,8 +20,8 @@
 std::vector<std::string> Trabalho;
 std::vector<Ponto> triangles;
 
-vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros 
-						 // com as suas respetivas transformações).
+vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
+						 // com as suas respetivas transformaï¿½ï¿½es).
 
 int* fiVertexCount;
 GLuint vertexCount;
@@ -185,20 +185,22 @@ void createVBO(int i) {
 }
 
 
-void lerficheiro(std::string nomeficheiro)
+void lerficheiro(string nomeficheiro)
 {
 	int c = 0;
 
 	double storedouble[3];
 	for (int i = 0; i < 3; i++) storedouble[i] = 0;
 
-	std::ifstream trigsFile;
+	ifstream trigsFile;
 	trigsFile.open(nomeficheiro);
-
-	std::string linha;
+	int type = 0;
+	string linha;
 	if (trigsFile.is_open()) {
+
 		while (getline(trigsFile, linha)) {
-			std::string sTmp;
+			type++;
+			string sTmp;
 			for (int i = 0; i <= linha.length(); i++) {
 				if (linha[i] == ' ' || linha[i] == '\0') {
 					storedouble[c] = stod(sTmp);
@@ -213,11 +215,36 @@ void lerficheiro(std::string nomeficheiro)
 			aux.x = storedouble[0];
 			aux.y = storedouble[1];
 			aux.z = storedouble[2];
-			triangles.push_back(aux);
+
+			if (type == 1 || type == 2 || type == 3) {
+				cout << "1 \n";
+				triangles.push_back(aux);
+				cout << "1.1 \n";
+			}
+			if (type == 4 || type == 5 || type == 6)
+			{
+				cout << "2 \n";
+				normal.push_back(aux);
+				cout << "2.1 \n";
+			}
+			if (type == 7 || type == 8 || type == 9)
+			{
+				cout << "3 \n";
+				texture.push_back(aux);
+				cout << "3.1 \n";
+			}
+			if (type == 9)
+			{
+				cout << "4 \n";
+				type = 0;
+				cout << "4.1 \n";
+			}
+
 			c = 0;
 		}
 	}
 }
+
 
 void lertudoemaisalgumacoisa() {
 	vertexB = (double**)malloc(sizeof(double*) * files.size());
@@ -362,7 +389,7 @@ void desenhar(void)
 void changeSize(int w, int h)
 {
 	// Prevent a divide by zero, when window is too short
-	// (you can’t make a window with zero width).
+	// (you canï¿½t make a window with zero width).
 	if (h == 0)
 		h = 1;
 	// compute window's aspect ratio
@@ -426,7 +453,7 @@ void processSpecialKeys(int key, int xx, int yy)
 		break;
 
 	default:
-		std::cout << "Não conheço esse comando!" << "\n";
+		std::cout << "Nï¿½o conheï¿½o esse comando!" << "\n";
 	}
 }
 
@@ -434,7 +461,7 @@ void processSpecialKeys(int key, int xx, int yy)
 
 int main(int argc, char** argv)
 {
-	// put GLUT’s init here
+	// put GLUTï¿½s init here
 	xmlParser("sistemaSolarDinamico.xml", files);
 
 	lertudoemaisalgumacoisa();
@@ -444,7 +471,7 @@ int main(int argc, char** argv)
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(1000, 1000);
-	glutCreateWindow("CG_Trabalho_prático");
+	glutCreateWindow("CG_Trabalho_prï¿½tico");
 	// put callback registry here
 	glutReshapeFunc(changeSize);
 	glutSpecialFunc(processSpecialKeys);
@@ -461,7 +488,7 @@ int main(int argc, char** argv)
 	glCullFace(GL_BACK);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	// enter GLUT’s main cycle
+	// enter GLUTï¿½s main cycle
 	glutMainLoop();
 	return 1;
 }

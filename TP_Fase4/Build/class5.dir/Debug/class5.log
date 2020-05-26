@@ -1,5 +1,8 @@
 ﻿  main.cpp
-D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase4\Build\main.cpp(364,22): warning C4018: '<=': signed/unsigned mismatch
-D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase4\Build\main.cpp(682,20): warning C4018: '<': signed/unsigned mismatch
-D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase4\Build\main.cpp(689,37): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  class5.vcxproj -> D:\3ºano\2 Semestre\CG\TrabalhoPratico\CG\TP_Fase4\Build\Debug\class5.exe
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(235,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(236,9): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(237,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(257,22): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(517,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(535,19): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
+  class5.vcxproj -> C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\Debug\class5.exe
