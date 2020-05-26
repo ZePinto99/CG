@@ -172,8 +172,6 @@ void createVBO(int i) {
 
 	while (tri != triangles.end()) {
 
-
-
 		Ponto aux_1 = *tri; tri++;
 		Ponto aux_2 = *tri; tri++;
 		Ponto aux_3 = *tri; tri++;
@@ -235,6 +233,7 @@ void createVBO(int i) {
 void lerficheiro(string nomeficheiro)
 {
 	int c = 0;
+	cout << nomeficheiro << "\n";
 
 	double storedouble[3];
 	for (int i = 0; i < 3; i++) storedouble[i] = 0;
@@ -244,7 +243,7 @@ void lerficheiro(string nomeficheiro)
 	int type = 0;
 	string linha;
 	if (trigsFile.is_open()) {
-
+		int numlinhas = 0;
 		while (getline(trigsFile, linha)) {
 			type++;
 			string sTmp;
@@ -286,9 +285,10 @@ void lerficheiro(string nomeficheiro)
 				type = 0;
 				////cout << "4.1 \n";
 			}
-
 			c = 0;
+			numlinhas++;
 		}
+		cout << numlinhas << "\n";
 	}
 }
 
@@ -669,7 +669,7 @@ int main(int argc, char** argv)
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
+	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(1920, 1080);
 	glutCreateWindow("CG_Trabalho_prático");
 	// put callback registry here
