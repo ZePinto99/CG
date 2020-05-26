@@ -5,6 +5,7 @@
 #else
 #include <GL/glew.h>
 #include <GL/glut.h>
+#include <IL/il.h>
 #endif
 
 #define _USE_MATH_DEFINES
@@ -21,6 +22,7 @@ std::vector<std::string> Trabalho;
 std::vector<Ponto> triangles;
 std::vector<Ponto> normal;
 std::vector<Ponto> texture;
+
 vector<Light*> lightVector;
 
 vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
@@ -30,6 +32,7 @@ int* fiVertexCount;
 GLuint vertexCount;
 GLuint buffers[20];
 GLuint normals[20];
+GLuint* texturesByID;
 double** vertexB;
 double** normais;
 double** textures;
@@ -469,57 +472,40 @@ void processColor(Color* color)
 	cout << "processColor check \n";
 }
 
-/*
-int loadTexture(string texture) {
+
+int loadTexture(std::string s) {
 	unsigned int t, tw, th;
 	unsigned char* texData;
-	unsigned int id;
+	unsigned int texID;
+
 	ilInit();
 	ilEnable(IL_ORIGIN_SET);
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 	ilGenImages(1, &t);
 	ilBindImage(t);
-	ilLoadImage((ILstring)texture.c_str());
+	ilLoadImage((ILstring)s.c_str());
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
+
+	glGenTextures(1, &texID);
+
+	glBindTexture(GL_TEXTURE_2D, texID);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-	glGenerateMipmap(GL_TEXTURE_2D);
+	//glGenerateMipmap(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	return id;
 	cout << "loadTexture check \n";
+	return texID;
 }
 
-void initTexturesByID() {
-	int i = 0;
-	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
-	for (int i = 0; i < files.size(); i++) texturesByID[i] = NULL;
-	vector<OperFile*>::iterator it;
-	for (it = files.begin(); it != files.end(); i++, it++) {
-		OperFile* oper = *it;
-		if (oper->texture != NULL) {
-			char dir[60] = "../texturas/";
-			char* textureFileName = strcat(dir, oper->texture);
-			string textureString(textureFileName);
-			texturesByID[i] = loadTexture(textureString);
-		}
-	}
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	cout << "initTexturesByID check \n";
-}
-*/
+
 void desenhar(void)
 {
 	vector<OperFile*>::iterator itout;
@@ -562,9 +548,13 @@ void desenhar(void)
 				glScalef(oper->x, oper->y, oper->z);
 			}
 		}
+	/*	if (oper->co != NULL) {
+			processColors(oper->col);
+		}*/
+
 		glColor3f(1, 1, 1);
 
-//		glBindTexture(GL_TEXTURE_2D, textures[i][i]);
+		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
 
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
 		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
@@ -573,6 +563,8 @@ void desenhar(void)
 
 		glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
 		glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * 3, normais[i], GL_STATIC_DRAW);
+
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glPopMatrix();
 		i++;
 	}
@@ -614,6 +606,8 @@ void renderScene(void)
 		20.0, 5.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
+	processLight();
+
 	// put drawing instructions here
 	glEnableClientState(GL_VERTEX_ARRAY);
 	int size = files.size();
@@ -621,6 +615,18 @@ void renderScene(void)
 	glGenBuffers(size, normals);
 	desenhar();
 
+	//#####################################MUDAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!########################################################################################
+	// Reset
+	float amb[4] = { 0.2, 0.2, 0.2, 1.0 };
+	float dif[4] = { 1.0, 1.0, 1.0, 1.0 };
+	float spec[4] = { 0.0, 0.0, 0.0, 1.0 };
+	float emi[4] = { 0.0, 0.0, 0.0, 1.0 };
+
+	glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
+	glMaterialfv(GL_FRONT, GL_EMISSION, emi);
+	//#####################################MUDAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!########################################################################################
 
 	// End of frame
 	glutSwapBuffers();
@@ -651,10 +657,38 @@ void processSpecialKeys(int key, int xx, int yy)
 	}
 }
 
-void init() {
+
+
+void initTexturesByID() {
+	int i = 0;
+	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
+	for (int i = 0; i < files.size(); i++) texturesByID[i] = NULL;
+	vector<OperFile*>::iterator it;
+	for (it = files.begin(); it != files.end(); i++, it++) {
+		OperFile* oper = *it;
+		if (oper->texture != NULL) {
+			char dir[60] = "../texturas/";
+			char* textureFileName = strcat(dir, oper->texture);
+			string textureString = "";
+
+			int length = sizeof(textureFileName) / sizeof(char);
+			for (int k = 0; k < length; k++) {
+				textureString = textureString + textureFileName[k];
+			}
+			//strcpy(textureFileName, textureString);
+			printf("-----> %s\n", textureFileName);
+			printf("-----> %s\n", textureString);
+
+			texturesByID[i] = loadTexture(string(textureFileName));
+		}
+	}
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cout << "initTexturesByID check \n";
 }
 
 
@@ -665,7 +699,7 @@ int main(int argc, char** argv)
 	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
 
 	lertudoemaisalgumacoisa();
-	init();
+	initTexturesByID();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
