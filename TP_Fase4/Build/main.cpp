@@ -29,6 +29,7 @@ vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 int* fiVertexCount;
 GLuint vertexCount;
 GLuint buffers[20];
+GLuint normals[20];
 double** vertexB;
 double** normais;
 double** textures;
@@ -157,11 +158,7 @@ void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** cur
 
 void createVBO(int i) {
 	int p = 0, n = 0, t = 0;  int vertex = 0;
-	/*
-	glGenBuffers(1, buffers);
-	glGenBuffers(1, normals);
-	glGenBuffers(1, texturesG);*/
-
+	
 	vector<Ponto>::iterator tri = triangles.begin();
 	vector<Ponto>::iterator norm = normal.begin();
 	vector<Ponto>::iterator text = texture.begin();
@@ -171,9 +168,6 @@ void createVBO(int i) {
     normais[i]    = (double*)malloc(sizeof(double) * normal.size() * 3);
   	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 3);
 
-	//cout << "normal size: " << normal.size() << "\n";
-	//cout << "text size: " << texture.size() << "\n";
-	//cout << "tria size: " << triangles.size() << "\n";
 
 	while (tri != triangles.end()) {
 
@@ -235,7 +229,6 @@ void createVBO(int i) {
 	normal.end();
 	texture.end();
 	triangles.end();
-	//cout << texture.size() << "??";
 }
 
 void lerficheiro(string nomeficheiro)
@@ -435,12 +428,15 @@ void desenhar(void)
 		}
 		glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, textures[i][i]);
+//		glBindTexture(GL_TEXTURE_2D, textures[i][i]);
 
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
 		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
 		glVertexPointer(3, GL_DOUBLE, 0, 0);
 		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+
+		glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * 3, normais[i], GL_STATIC_DRAW);
 		glPopMatrix();
 		i++;
 	}
@@ -486,6 +482,7 @@ void renderScene(void)
 	glEnableClientState(GL_VERTEX_ARRAY);
 	int size = files.size();
 	glGenBuffers(size, buffers);
+	glGenBuffers(size, normals);
 	desenhar();
 
 
@@ -518,6 +515,12 @@ void processSpecialKeys(int key, int xx, int yy)
 	}
 }
 
+void init() {
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 
 
 int main(int argc, char** argv)
@@ -526,6 +529,7 @@ int main(int argc, char** argv)
 	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
 
 	lertudoemaisalgumacoisa();
+	init();
 
 	//if (!files.empty()) std::////cout << "ola";
 	glutInit(&argc, argv);
