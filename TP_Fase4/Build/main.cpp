@@ -166,7 +166,7 @@ void createVBO(int i) {
 
 	vertexB[i]    = (double*)malloc(sizeof(double) * triangles.size() * 3);
     normais[i]    = (double*)malloc(sizeof(double) * normal.size() * 3);
-  	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 3);
+  	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 2);
 	
 	printf("%d\n", normal.size());
 
@@ -224,7 +224,7 @@ void createVBO(int i) {
 		textures[i][t + 5] = text_3.y;
 		vertex++;
 
-		p += 9; n += 9; t += 9;
+		p += 9; n += 9; t += 6;
 	}
 	vertexCount = vertex;
 	normal.end();
@@ -667,12 +667,11 @@ int main(int argc, char** argv)
 	lertudoemaisalgumacoisa();
 	init();
 
-	//if (!files.empty()) std::////cout << "ola";
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(1000, 1000);
-	glutCreateWindow("CG_Trabalho_pr�tico");
+	glutInitWindowSize(1920, 1080);
+	glutCreateWindow("CG_Trabalho_prático");
 	// put callback registry here
 	glutReshapeFunc(changeSize);
 	glutSpecialFunc(processSpecialKeys);
