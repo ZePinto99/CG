@@ -31,8 +31,9 @@ void parseGroup(const XMLElement* child, Group group, int i, vector<OperFile*>& 
 
                 // textured model
                 char* texture = NULL;
-                if (child3->Attribute("texture")) texture = (char*)child3->Attribute("texture");
-                
+                if (child3->Attribute("texture")) {
+                    texture = (char*)child3->Attribute("texture");
+                }
 
                 // coloured model 
                 Color* color = NULL;

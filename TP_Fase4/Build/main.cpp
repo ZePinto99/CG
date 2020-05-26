@@ -9,68 +9,38 @@
 #endif
 
 #define _USE_MATH_DEFINES
+#define POINT_COUNT 5
 #include <math.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <tuple>
 #include <string>
 #include "parser.h"
 
-#include <IL/il.h>
 
 vector<string> Trabalho;
 vector<Ponto> triangles;
 vector<Ponto> normal;
 vector<Ponto> texture;
-
 vector<OperFile*> files;    // Vector de OperFiles (que relacionam os ficheiros 
 						    // com as suas respetivas transformações).
-
 vector<Light*> lightVector; // Vector de Light's (que contem todas as componentes 
 						    // de iluminação a ser aplicadas).
 
 int* fiVertexCount;
+double** vertexB;
+double** normais;
+double** textures;
+float lx = 30.0, ly = 30.0, lz = 30.0;
+
 GLuint vertexCount;
 GLuint buffers[20];
-double** vertexB;
-double** normas;
-double** textures;
-
 GLuint normals[1];
 GLuint texturesG[1];
 GLuint* texturesByID;
 
 
-////////////////////////////////Curvas///////////////////////////////////////
-#define POINT_COUNT 5
-// Points that make up the loop for catmull-rom interpolation
-float p[POINT_COUNT][3] = { {-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0} };
-
-
-void cross(float* a, float* b, float* res) {
-
-	res[0] = a[1] * b[2] - a[2] * b[1];
-	res[1] = a[2] * b[0] - a[0] * b[2];
-	res[2] = a[0] * b[1] - a[1] * b[0];
-}
-
-
-void normalize(float* a) {
-
-	float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-	a[0] = a[0] / l;
-	a[1] = a[1] / l;
-	a[2] = a[2] / l;
-}
-
-
-float length(float* v) {
-
-	float res = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-	return res;
-
-}
+////////////////////////// Curvas /////////////////////////////
 
 void multMatrixVector(float* m, float* v, float* res) {
 
@@ -90,6 +60,7 @@ void multMatrix14(double uW[1][4], double m[4][4], double res[1][4])
 	res[0][2] = uW[0][0] * m[0][2] + uW[0][1] * m[1][2] + uW[0][2] * m[2][2] + uW[0][3] * m[3][2];
 	res[0][3] = uW[0][0] * m[0][3] + uW[0][1] * m[1][3] + uW[0][2] * m[2][3] + uW[0][3] * m[3][3];
 }
+
 
 void multMatrix1441(double trans[1][4], double vH[4][1], double* res)
 {
@@ -138,7 +109,6 @@ void getCatmullRomPoint(double t, double* p0, double* p1, double* p2, double* p3
 }
 
 
-// given  global t, returns the point in the curve
 void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** curve, int size) {
 
 	double t = gt * size;
@@ -154,25 +124,34 @@ void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** cur
 	getCatmullRomPoint(t, curve[indices[0]], curve[indices[1]], curve[indices[2]], curve[indices[3]], pos, deriv);
 }
 
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
 
 void createVBO(int i) {
 	int p = 0, n = 0, t = 0;  int vertex = 0;
+
+	glGenBuffers(1, buffers);
+	glGenBuffers(1, normals);
+	glGenBuffers(1, texturesG);
 
 	vector<Ponto>::iterator tri = triangles.begin();
 	vector<Ponto>::iterator norm = normal.begin();
 	vector<Ponto>::iterator text = texture.begin();
 
 	vertexB[i]    = (double*)malloc(sizeof(double) * triangles.size() * 3);
-//	normas[i]    = (double*)malloc(sizeof(double) * normal.size() * 3);
-//	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 2);
+	cout << "normal size: " << normal.size() <<  "\n";
+    normais[i]    = (double*)malloc(sizeof(double) * normal.size() * 3);
+  	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 2);
 
 	while (tri != triangles.end()) {
+
+		cout << "normal size: " << normal.size() << "\n";
+		cout << "text size: " << texture.size() << "\n";
+		cout << "tria size: " << triangles.size() << "\n";
+
 
 		Ponto aux_1 = *tri; tri++;
 		Ponto aux_2 = *tri; tri++;
 		Ponto aux_3 = *tri; tri++;
-/*
 		Ponto norm_1 = *norm; norm++;
 		Ponto norm_2 = *norm; norm++;
 		Ponto norm_3 = *norm; norm++;
@@ -180,41 +159,41 @@ void createVBO(int i) {
 		Ponto text_1 = *text; text++;
 		Ponto text_2 = *text; text++;
 		Ponto text_3 = *text; text++;
-*/
+
 		vertexB[i][p] = aux_1.x;
 		vertexB[i][p + 1] = aux_1.y;
 		vertexB[i][p + 2] = aux_1.z;
 
-/*		normas[i][n] = norm_1.x;
-		normas[i][n + 1] = norm_1.y;
-		normas[i][n + 2] = norm_1.z;
+		normais[i][n] = norm_1.x;
+		normais[i][n + 1] = norm_1.y;
+		normais[i][n + 2] = norm_1.z;
 
 		textures[i][t] = norm_1.x;
-		textures[i][t + 1] = norm_1.y;*/
+		textures[i][t + 1] = norm_1.y;
 		vertex++;
 
 		vertexB[i][p + 3] = aux_2.x;
 		vertexB[i][p + 4] = aux_2.y;
 		vertexB[i][p + 5] = aux_2.z;
 
-	/*	normas[i][n + 3] = norm_1.x;
-		normas[i][n + 4] = norm_1.y;
-		normas[i][n + 5] = norm_1.z;
+		normais[i][n + 3] = norm_1.x;
+		normais[i][n + 4] = norm_1.y;
+		normais[i][n + 5] = norm_1.z;
 
 		textures[i][t + 2] = norm_1.x;
-		textures[i][t + 3] = norm_1.y;*/
+		textures[i][t + 3] = norm_1.y;
 		vertex++;
 
 		vertexB[i][p + 6] = aux_3.x;
 		vertexB[i][p + 7] = aux_3.y;
 		vertexB[i][p + 8] = aux_3.z;
 
-	/*	normas[i][n + 6] = norm_1.x;
-		normas[i][n + 7] = norm_1.y;
-		normas[i][n + 8] = norm_1.z;
+		normais[i][n + 6] = norm_1.x;
+		normais[i][n + 7] = norm_1.y;
+		normais[i][n + 8] = norm_1.z;
 
 		textures[i][t + 4] = norm_1.x;
-		textures[i][t + 5] = norm_1.y;*/
+		textures[i][t + 5] = norm_1.y;
 		vertex++;
 
 		p += 9; n += 9; t += 9;
@@ -222,58 +201,150 @@ void createVBO(int i) {
 	vertexCount = vertex;
 }
 
-//void processColors(Colors* col)
 
-//void processLight()
-void light() {
-	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
+void processColor(Color* color)
+{
+	GLfloat diff[4] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat spec[4] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat emis[4] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat ambi[4] = { 0.2, 0.2, 0.2, 1.0 };
 
-	//definir a cor da luz (branco)
-	GLfloat darkL[4] = { 0.2, 0.2, 0.2, 1.0 };
-	GLfloat whiteL[4] = { 1.0, 1.0, 1.0, 1.0 };
+	if (strcmp(color->component, "diffuse") == 0) {
 
-	glLightfv(GL_LIGHT0, GL_AMBIENT, darkL);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, whiteL);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, whiteL);
+		diff[0] = static_cast<GLfloat>(color->r);
+		diff[1] = static_cast<GLfloat>(color->g);
+		diff[2] = static_cast<GLfloat>(color->b);
+		diff[3] = 1;
 
-	glLightfv(GL_LIGHT0, GL_POSITION, pos);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
+	}
 
-	//definir o material do cilindro 
-	float dark[] = { 0.2, 0.2, 0.2, 1.0 };
-	float white[] = { 0.8, 0.8, 0.8, 1.0 };
-	float red[] = { 0.8, 0.2, 0.2, 1.0 };
-	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, white);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, white);
-	glMaterialf(GL_FRONT, GL_SHININESS, 128);
+	if (strcmp(color->component, "specular") == 0) {
+
+		spec[0] = static_cast<GLfloat>(color->r);
+		spec[1] = static_cast<GLfloat>(color->g);
+		spec[2] = static_cast<GLfloat>(color->b);
+		spec[3] = 1;
+
+		glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
+	}
+
+	if (strcmp(color->component, "emissive") == 0) {
+
+		emis[0] = static_cast<GLfloat>(color->r);
+		emis[1] = static_cast<GLfloat>(color->g);
+		emis[2] = static_cast<GLfloat>(color->b);
+		emis[3] = 1;
+
+		glMaterialfv(GL_FRONT, GL_EMISSION, emis);
+	}
+
+	if (strcmp(color->component, "ambient") == 0) {
+
+		ambi[0] = static_cast<GLfloat>(color->r);
+		ambi[1] = static_cast<GLfloat>(color->g);
+		ambi[2] = static_cast<GLfloat>(color->b);
+		ambi[3] = 1;
+
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambi);
+	}
+	cout << "processColor check \n";
 }
 
-void loadTexture(string texture) {
+
+void processLight(){
+
+	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat ambi[4] = {0.2, 0.2, 0.2, 1.0};
+    GLfloat diff[4] = {1.0, 1.0, 1.0, 1.0};
+    GLfloat direction[3] = {0.0, 0.0, -1.0};
+	
+	vector<Light*>::iterator it;
+    for (it = lightVector.begin(); it != lightVector.end(); it++) {
+        Light* light = *it;
+
+        if (strcmp(light->type, "POINT") == 0) {
+
+            pos[0] = static_cast<GLfloat>(light->x);
+            pos[1] = static_cast<GLfloat>(light->y);
+            pos[2] = static_cast<GLfloat>(light->z);
+            pos[3] = 1;
+
+            glEnable(GL_LIGHT0);
+            glLightfv(GL_LIGHT0, GL_POSITION, pos);
+            glLightfv(GL_LIGHT0, GL_AMBIENT, ambi);
+            glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+
+        } 
+		else if (strcmp(light->type, "DIRECTIONAL") == 0) {
+
+            pos[0] = static_cast<GLfloat>(light->x);
+            pos[1] = static_cast<GLfloat>(light->y);
+            pos[2] = static_cast<GLfloat>(light->z);
+            pos[3] = 0;
+
+            glEnable(GL_LIGHT0);
+            glLightfv(GL_LIGHT0, GL_POSITION, pos);
+            glLightfv(GL_LIGHT0, GL_AMBIENT, ambi);
+            glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+
+        } 
+		else if (strcmp(light->type, "SPOT") == 0) {
+
+            pos[0] = static_cast<GLfloat>(light->x);
+            pos[1] = static_cast<GLfloat>(light->y);
+            pos[2] = static_cast<GLfloat>(light->z);
+            pos[3] = 1;
+			direction[0] = static_cast<GLfloat>(light->x);
+			direction[1] = static_cast<GLfloat>(light->y);
+			direction[2] = static_cast<GLfloat>(light->z);
+
+            glEnable(GL_LIGHT0);
+            glLightfv(GL_LIGHT0, GL_POSITION, pos);
+            glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+            glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direction);
+            glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0);
+            glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0);
+
+        }
+    }
+	cout << "processLight check \n";
+}
+
+
+int loadTexture(string texture) {
 
 	unsigned int t, tw, th;
 	unsigned char* texData;
-	glGenerateMipmap(GL_TEXTURE_2D);
+	unsigned int id;
 
-	ilInt();
+	ilInit();
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 	ilGenImages(1, &t);
 	ilBindImage(t);
-	ilLoadImage((ILstring)"relva1.jpg");
+	ilLoadImage((ILstring)texture.c_str());
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_2D, id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return id;
+	cout << "loadTexture check \n";
 
 }
 
 
-
-//falta preencher o vetor das normais e das texturas
 void lerficheiro(string nomeficheiro)
 {
 	int c = 0;
@@ -304,30 +375,58 @@ void lerficheiro(string nomeficheiro)
 			aux.x = storedouble[0];
 			aux.y = storedouble[1];
 			aux.z = storedouble[2];
-			if(type==1||type==2||type==3)
-			triangles.push_back(aux);
+
+			if (type == 1 || type == 2 || type == 3) {
+				cout << "1 \n";
+				triangles.push_back(aux);
+				cout << "1.1 \n";
+			}
 			if (type == 4 || type == 5 || type == 6)
+			{
+				cout << "2 \n";
 				normal.push_back(aux);
+				cout << "2.1 \n";
+			}
 			if (type == 7 || type == 8 || type == 9)
+			{
+				cout << "3 \n";
 				texture.push_back(aux);
-			if (type == 9) type = 0;
+				cout << "3.1 \n";
+			}
+			if (type == 9) 
+			{
+				cout << "4 \n";
+				type = 0;
+				cout << "4.1 \n";
+			}
+			
 			c = 0;
 		}
 	}
 }
 
+
 void lertudoemaisalgumacoisa() {
-	vertexB = (double**)malloc(sizeof(double*) * files.size());
+
+	vertexB  = (double**)malloc(sizeof(double*) * files.size());
+	normais  = (double**)malloc(sizeof(double*) * files.size());
+	textures = (double**)malloc(sizeof(double*) * files.size());
+
 	vector<OperFile*>::iterator itout;
 	itout = files.begin();
 	int i = 0;
 	while (itout != files.end()) {
 		triangles.clear();
+		normal.clear();
+		texture.clear();
 		OperFile* op = *itout;
 		char* stds = op->fileName;
 		string std(stds);
+		cout << "entrar lerficheiro \n";
 		lerficheiro(std);
+		cout << "entrar createVBO \n";
 		createVBO(i);
+		cout << "saiu createVBO \n";
 		itout++;
 		i++;
 	}
@@ -403,6 +502,7 @@ void dynamicRotate(Oper* oper, int i)
 	glRotated(angles[i], oper->x, oper->y, oper->y);
 }
 
+
 void desenhar(void)
 {
 	vector<OperFile*>::iterator itout;
@@ -411,6 +511,8 @@ void desenhar(void)
 
 	while (itout != files.end()) {
 		triangles.clear();
+		normal.clear();
+		texture.clear();
 		OperFile* op = *itout;
 		itout++;
 
@@ -445,19 +547,31 @@ void desenhar(void)
 				glScalef(oper->x, oper->y, oper->z);
 			}
 		}
-		glColor3f(1, 1, 1);
 
-		//glBindTexture(GL_TEXTURE_2D, textures[i]);
+		if (op->color != NULL) {
+			cout << "COLOR \n";
+			processColor(op->color);
+		}
 
+		if (texturesByID[i] != NULL) {
+			cout << "TEXTURE \n";
+			glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
+		}
+
+
+		cout << "desenhar almost done \n";
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
 		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, normais[i], GL_STATIC_DRAW);
 		glVertexPointer(3, GL_DOUBLE, 0, 0);
 		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glPopMatrix();
 		i++;
 	}
-
+	cout << "desenhar check \n";
 }
+
 
 void changeSize(int w, int h)
 {
@@ -479,7 +593,6 @@ void changeSize(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 }
 
-float lx = 30.0, ly = 30.0, lz = 30.0;
 
 void renderScene(void)
 {
@@ -494,18 +607,38 @@ void renderScene(void)
 		20.0, 5.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
-	light();
+	processLight();
 
-	// put drawing instructions here
+    glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+    glVertexPointer(3, GL_DOUBLE, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
+    glNormalPointer(GL_DOUBLE, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, texturesG[0]);
+    glTexCoordPointer(2, GL_DOUBLE, 0, 0);
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	int size = files.size();
 	glGenBuffers(size, buffers);
+
+	cout << "desenhar iniciada \n";
 	desenhar();
 
+	// reset
+    float ambi[4] = {0.2, 0.2, 0.2, 1.0};
+    float diff[4] = {1.0, 1.0, 1.0, 1.0};
+    float spec[4] = {0.0, 0.0, 0.0, 1.0};
+    float emis[4] = {0.0, 0.0, 0.0, 1.0};
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambi);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
+    glMaterialfv(GL_FRONT, GL_EMISSION, emis);
 
 	// End of frame
 	glutSwapBuffers();
 }
+
 
 void processSpecialKeys(int key, int xx, int yy)
 {
@@ -532,12 +665,15 @@ void processSpecialKeys(int key, int xx, int yy)
 	}
 }
 
+
 void initTexturesByID() {
 
 	int i = 0;
-	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
-    vector<OperFile*>::iterator it;
 
+	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
+	for (int i = 0; i < files.size(); i++) texturesByID[i] = NULL;
+
+    vector<OperFile*>::iterator it;
     for (it = files.begin(); it != files.end(); i++, it++) {
         OperFile* oper = *it;
         if (oper->texture != NULL) {
@@ -554,14 +690,17 @@ void initTexturesByID() {
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	
+	cout << "initTexturesByID check \n";
+
 }
+
 
 int main(int argc, char** argv)
 {
 	// put GLUT’s init here
 	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
 
-	//if (!files.empty()) cout << "ola";
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
