@@ -167,7 +167,8 @@ void createVBO(int i) {
 	vertexB[i]    = (double*)malloc(sizeof(double) * triangles.size() * 3);
     normais[i]    = (double*)malloc(sizeof(double) * normal.size() * 3);
   	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 3);
-
+	
+	printf("%d\n", normal.size());
 
 	while (tri != triangles.end()) {
 
@@ -384,6 +385,141 @@ void dynamicRotate(Oper* oper, int i)
 	glRotated(angles[i], oper->x, oper->y, oper->y);
 }
 
+void processLight() {
+	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat ambi[4] = { 0.2, 0.2, 0.2, 1.0 };
+	GLfloat diff[4] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat direction[3] = { 0.0, 0.0, -1.0 };
+	vector<Light*>::iterator it;
+	for (it = lightVector.begin(); it != lightVector.end(); it++) {
+		Light* light = *it;
+		if (strcmp(light->type, "POINT") == 0) {
+			pos[0] = static_cast<GLfloat>(light->x);
+			pos[1] = static_cast<GLfloat>(light->y);
+			pos[2] = static_cast<GLfloat>(light->z);
+			pos[3] = 1;
+			glEnable(GL_LIGHT0);
+			glLightfv(GL_LIGHT0, GL_POSITION, pos);
+			glLightfv(GL_LIGHT0, GL_AMBIENT, ambi);
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+		}
+		else if (strcmp(light->type, "DIRECTIONAL") == 0) {
+			pos[0] = static_cast<GLfloat>(light->x);
+			pos[1] = static_cast<GLfloat>(light->y);
+			pos[2] = static_cast<GLfloat>(light->z);
+			pos[3] = 0;
+			glEnable(GL_LIGHT0);
+			glLightfv(GL_LIGHT0, GL_POSITION, pos);
+			glLightfv(GL_LIGHT0, GL_AMBIENT, ambi);
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+		}
+		else if (strcmp(light->type, "SPOT") == 0) {
+			pos[0] = static_cast<GLfloat>(light->x);
+			pos[1] = static_cast<GLfloat>(light->y);
+			pos[2] = static_cast<GLfloat>(light->z);
+			pos[3] = 1;
+			direction[0] = static_cast<GLfloat>(light->x);
+			direction[1] = static_cast<GLfloat>(light->y);
+			direction[2] = static_cast<GLfloat>(light->z);
+			glEnable(GL_LIGHT0);
+			glLightfv(GL_LIGHT0, GL_POSITION, pos);
+			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+			glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direction);
+			glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0);
+			glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0);
+		}
+	}
+	cout << "processLight check \n";
+}
+
+void processColor(Color* color)
+{
+	GLfloat diff[4] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat spec[4] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat emis[4] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat ambi[4] = { 0.2, 0.2, 0.2, 1.0 };
+	if (strcmp(color->component, "diffuse") == 0) {
+		diff[0] = static_cast<GLfloat>(color->r);
+		diff[1] = static_cast<GLfloat>(color->g);
+		diff[2] = static_cast<GLfloat>(color->b);
+		diff[3] = 1;
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
+	}
+	if (strcmp(color->component, "specular") == 0) {
+		spec[0] = static_cast<GLfloat>(color->r);
+		spec[1] = static_cast<GLfloat>(color->g);
+		spec[2] = static_cast<GLfloat>(color->b);
+		spec[3] = 1;
+		glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
+	}
+	if (strcmp(color->component, "emissive") == 0) {
+		emis[0] = static_cast<GLfloat>(color->r);
+		emis[1] = static_cast<GLfloat>(color->g);
+		emis[2] = static_cast<GLfloat>(color->b);
+		emis[3] = 1;
+		glMaterialfv(GL_FRONT, GL_EMISSION, emis);
+	}
+	if (strcmp(color->component, "ambient") == 0) {
+		ambi[0] = static_cast<GLfloat>(color->r);
+		ambi[1] = static_cast<GLfloat>(color->g);
+		ambi[2] = static_cast<GLfloat>(color->b);
+		ambi[3] = 1;
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambi);
+	}
+	cout << "processColor check \n";
+}
+
+/*
+int loadTexture(string texture) {
+	unsigned int t, tw, th;
+	unsigned char* texData;
+	unsigned int id;
+	ilInit();
+	ilEnable(IL_ORIGIN_SET);
+	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
+	ilGenImages(1, &t);
+	ilBindImage(t);
+	ilLoadImage((ILstring)texture.c_str());
+	tw = ilGetInteger(IL_IMAGE_WIDTH);
+	th = ilGetInteger(IL_IMAGE_HEIGHT);
+	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
+	texData = ilGetData();
+	glGenTextures(1, &id);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	return id;
+	cout << "loadTexture check \n";
+}
+
+void initTexturesByID() {
+	int i = 0;
+	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
+	for (int i = 0; i < files.size(); i++) texturesByID[i] = NULL;
+	vector<OperFile*>::iterator it;
+	for (it = files.begin(); it != files.end(); i++, it++) {
+		OperFile* oper = *it;
+		if (oper->texture != NULL) {
+			char dir[60] = "../texturas/";
+			char* textureFileName = strcat(dir, oper->texture);
+			string textureString(textureFileName);
+			texturesByID[i] = loadTexture(textureString);
+		}
+	}
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_TEXTURE_2D);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	cout << "initTexturesByID check \n";
+}
+*/
 void desenhar(void)
 {
 	vector<OperFile*>::iterator itout;

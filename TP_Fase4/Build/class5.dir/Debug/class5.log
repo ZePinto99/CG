@@ -1,8 +1,8 @@
 ﻿  main.cpp
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(229,8): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(230,9): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(231,11): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(250,22): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(514,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(539,19): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(230,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(231,9): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(232,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(251,22): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(649,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(674,19): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
   class5.vcxproj -> C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\Debug\class5.exe
