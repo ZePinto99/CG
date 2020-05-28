@@ -29,7 +29,7 @@ vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 						 // com as suas respetivas transforma��es).
 
 int* fiVertexCount;
-GLuint vertexCount;
+GLuint vertexCount[17];
 GLuint buffers[17];
 GLuint normals[17];
 GLuint texts[17];
@@ -126,16 +126,16 @@ void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** cur
 
 void createVBO(int i) {
 	int p = 0, n = 0, t = 0;  int vertex = 0;
-	
+
 	vector<Ponto>::iterator tri = triangles.begin();
 	vector<Ponto>::iterator norm = normal.begin();
 	vector<Ponto>::iterator text = texture.begin();
 	//cout << texture.size() << "!!";
 
-	vertexB[i]    = (double*)malloc(sizeof(double) * triangles.size() * 3);
-    normais[i]    = (double*)malloc(sizeof(double) * normal.size() * 3);
-  	textures[i]   = (double*)malloc(sizeof(double) * texture.size() * 2);
-	
+	vertexB[i] = (double*)malloc(sizeof(double) * triangles.size() * 3);
+	normais[i] = (double*)malloc(sizeof(double) * normal.size() * 3);
+	textures[i] = (double*)malloc(sizeof(double) * texture.size() * 2);
+
 	printf("%d\n", normal.size());
 
 	while (tri != triangles.end()) {
@@ -149,7 +149,7 @@ void createVBO(int i) {
 		Ponto norm_3 = *norm; norm++;
 		Ponto text_1 = *text; text++;
 		Ponto text_2 = *text; text++;
-     	Ponto text_3 = *text; text++; 
+		Ponto text_3 = *text; text++;
 
 		vertexB[i][p] = aux_1.x;
 		vertexB[i][p + 1] = aux_1.y;
@@ -158,7 +158,7 @@ void createVBO(int i) {
 		normais[i][n] = norm_1.x;
 		normais[i][n + 1] = norm_1.y;
 		normais[i][n + 2] = norm_1.z;
-		
+
 		textures[i][t] = 1.f;
 		textures[i][t + 1] = text_1.y;
 		textures[i][t + 1] = text_1.z;
@@ -168,11 +168,11 @@ void createVBO(int i) {
 		vertexB[i][p + 4] = aux_2.y;
 		vertexB[i][p + 5] = aux_2.z;
 
-		
+
 		normais[i][n + 3] = norm_1.x;
 		normais[i][n + 4] = norm_1.y;
 		normais[i][n + 5] = norm_1.z;
-		
+
 		textures[i][t + 2] = text_2.x;
 		textures[i][t + 3] = text_2.y;
 		vertex++;
@@ -181,11 +181,11 @@ void createVBO(int i) {
 		vertexB[i][p + 7] = aux_3.y;
 		vertexB[i][p + 8] = aux_3.z;
 
-		
+
 		normais[i][n + 6] = norm_1.x;
 		normais[i][n + 7] = norm_1.y;
 		normais[i][n + 8] = norm_1.z;
-		
+
 		textures[i][t + 4] = text_3.x;
 		textures[i][t + 5] = text_3.y;
 		vertex++;
@@ -193,18 +193,18 @@ void createVBO(int i) {
 		p += 9; n += 9; t += 6;
 
 	}
-	vertexCount = vertex;
+	vertexCount[i] = vertex;
 
-	glGenBuffers(1, &buffers[i]);
-	glGenBuffers(1, &normals[i]);
-	glGenBuffers(1, &texts[i]);
+	glGenBuffers(files.size(), buffers);
+	glGenBuffers(files.size(), normals);
+	glGenBuffers(files.size(), texts);
 
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 3, vertexB[i], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 3, vertexB[i], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 3, normais[i], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount[i] * 3, normais[i], GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 2, textures[i], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 2, textures[i], GL_DYNAMIC_DRAW);
 
 	free(vertexB[i]);
 	free(normais[i]);
@@ -276,7 +276,6 @@ void lerficheiro(string nomeficheiro)
 		cout << numlinhas << "\n";
 	}
 }
-
 
 void lertudoemaisalgumacoisa() {
 	vertexB = (double**)malloc(sizeof(double*) * files.size());
@@ -470,7 +469,7 @@ int loadTexture(std::string s) {
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
 	cout << tw << "\n";
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
-	cout << th<< "\n";
+	cout << th << "\n";
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
 
@@ -534,31 +533,36 @@ void desenhar(void)
 			}
 		}
 
-	/*	if (oper->co != NULL) {
-			processColors(oper->col);
-		}*/
+		/*	if (oper->co != NULL) {
+				processColors(oper->col);
+			}*/
 
 		printf("Check inicio desenhar\n");
 
-		glColor3f(1, 1, 1);
+		//	glColor3f(1, 1, 1);
 
-		/*printf("Check 1.1\n");
-		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-		glVertexPointer(3, GL_FLOAT, 0, 0);
-		printf("Check 1.2\n");
-		glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
-		glNormalPointer(GL_FLOAT, 0, 0);
-		printf("Check 1.3\n");
-		glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
-		glTexCoordPointer(2, GL_FLOAT, 0, 0);
-		printf("Check 1.4\n");*/
+			/*printf("Check 1.1\n");
+			glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+			glVertexPointer(3, GL_FLOAT, 0, 0);
+			printf("Check 1.2\n");
+			glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
+			glNormalPointer(GL_FLOAT, 0, 0);
+			printf("Check 1.3\n");
+			glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
+			glTexCoordPointer(2, GL_FLOAT, 0, 0);
+			printf("Check 1.4\n");*/
+
+		int total = 0;
+		for (int j = 0; j <= i; j++)
+		{
+			total += vertexCount[j];
+		}
+
 		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
-		printf("Check 1.5\n");
-		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-		printf("Check 1.6\n");
-		glBindTexture(GL_TEXTURE_2D, 0);
 
-		printf("Check fim desenhar\n");
+		glDrawArrays(GL_TRIANGLES, 0, vertexCount[i]);
+
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glPopMatrix();
 		i++;
@@ -586,7 +590,7 @@ void changeSize(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 }
 
-float lx = 30.0, ly = 30.0, lz = 30.0;
+float lx = 180.0, ly = 30.0, lz = 0.0;
 
 void renderScene(void)
 {
@@ -599,7 +603,7 @@ void renderScene(void)
 
 
 	gluLookAt(lx, ly, lz,
-		20.0, 5.0, 0.0,
+		-80.0, 0.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
 	processLight();
@@ -607,14 +611,14 @@ void renderScene(void)
 	// put drawing instructions here
 	int size = files.size();
 
-	for (int i = 0; i < 17; i++) {
-		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	for (int i = 0; i < size; i++) {
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
 		glVertexPointer(3, GL_DOUBLE, 0, 0);
 
-		glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
 		glNormalPointer(GL_DOUBLE, 0, 0);
 
-		glBindBuffer(GL_ARRAY_BUFFER, texts[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
 		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
 		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
 	}
@@ -662,7 +666,6 @@ void processSpecialKeys(int key, int xx, int yy)
 		std::cout << "N�o conhe�o esse comando!" << "\n";
 	}
 }
-
 
 
 void initTexturesByID() {
@@ -730,7 +733,7 @@ int main(int argc, char** argv)
 
 	initTexturesByID();
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_POINTS);
 	// enter GLUT�s main cycle
 	printf("vou entrar no loop\n");
 	glutMainLoop();

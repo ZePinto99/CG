@@ -6,7 +6,7 @@
     <group>
         <translate X="-90" />
         <models>
-            <model file="sphere.3d"  texture="2k_sun.jpg" /> <!-- Sun -->
+            <model file="sphere.3d"  texture="texture_sun.jpg" /> <!-- Sun -->
         </models>
         <group>
            	<translate time="1">
@@ -38,7 +38,7 @@
             </translate>
             <scale X="0.244" Y="0.244" Z="0.244" />
             <models>
-                <model file = "sphere.3d" texture="2k_mercury.jpg"/>
+                <model file = "sphere.3d" texture="texture_mercury.jpg"/>
             </models>
         </group>
         <group>
@@ -59,7 +59,7 @@
             </translate>
             <scale X="0.605" Y="0.605" Z="0.605" />
             <models>
-                 <model file = "sphere.3d" texture="2k_venus_surface.jpg"/>
+                 <model file = "sphere.3d" texture="texture_venus.jpg"/>
              </models>
          </group>
          <group>
@@ -80,7 +80,7 @@
             </translate>
              <scale X="0.6450" Y="0.6450" Z="0.6450" />
              <models>
-                 <model file ="sphere.3d" texture="2k_earth_daymap.jpg"/>
+                 <model file ="sphere.3d" texture="texture_earth.jpg"/>
              </models>
              <group>
               <!-- lua -->
@@ -100,7 +100,7 @@
                 </translate>
                  <scale X="0.1737" Y="0.1737" Z="0.1737" />
                  <models>
-                     <model file = "sphere.3d" texture="2k_moon.jpg"/>
+                     <model file = "sphere.3d" texture="texture_lua1.jpg"/>
                  </models>
              </group>
          </group>
@@ -122,7 +122,7 @@
                   </translate>
                   <scale X="0.3395" Y="0.3395" Z="0.3395" />
                   <models>
-                      <model file = "sphere.3d" texture="2k_mars.jpg"/>
+                      <model file = "sphere.3d" texture="texture_mars.jpg"/>
                   </models>
               </group>
           <group>
@@ -143,7 +143,7 @@
                     </translate>
                     <scale X="0.8" Y="0.8" Z="0.8" />
                     <models>
-                        <model file = "sphere.3d" texture="2k_jupiter.jpg" />
+                        <model file = "sphere.3d" texture="texture_jupiter.jpg" />
                     </models>
             <!-- satelite Ganímedes -->
             <group>
@@ -163,7 +163,7 @@
                 </translate>
                 <scale X="0.2634" Y="0.2634" Z="0.2634" />
                 <models>
-                    <model file = "sphere.3d" texture="2k_eris_fictional.jpg"/>
+                    <model file = "sphere.3d" texture="texture_lua2.jpg"/>
                 </models>
             </group>
             <!-- satelite Calisto -->
@@ -184,7 +184,7 @@
                  </translate>
                  <scale X="0.2408" Y="0.2408" Z="0.2408" />
                  <models>
-                     <model file = "sphere.3d" texture="2k_haumea_fictional.jpg" />
+                     <model file = "sphere.3d" texture="texture_lua3.jpg" />
                  </models>
              </group>
             </group>
@@ -206,7 +206,7 @@
                 </translate>
                 <scale X="0.7" Y="0.7" Z="0.7" />
                 <models>
-                        <model file = "sphere.3d" texture="2k_saturn.jpg"/>
+                        <model file = "sphere.3d" texture="texture_saturn.jpg"/>
                 </models>
             <!-- satelite Titã -->
             <group>
@@ -226,7 +226,7 @@
                 </translate>
                 <scale X="0.2575" Y="0.2575" Z="0.2575" />
                 <models>
-                    <model file = "sphere.3d" texture="2k_ceres_fictional.jpg"/>
+                    <model file = "sphere.3d" texture="texture_lua4.jpg"/>
                 </models>
             </group>
             </group>
@@ -248,7 +248,7 @@
                 </translate>
                 <scale X="0.675" Y="0.675" Z="0.675" />
                 <models>
-                    <model file = "sphere.3d" texture="2k_uranus.jpg"/>
+                    <model file = "sphere.3d" texture="texture_uranus.jpg"/>
                 </models>
             <group> 
                 <!-- Titania -->
@@ -268,7 +268,7 @@
                 </translate>
                 <scale X="0.4" Y="0.4" Z="0.4" />
                 <models>
-                    <model file = "sphere.3d" texture="2k_makemake_fictional.jpg" />
+                    <model file = "sphere.3d" texture="texture_lua5.jpg" />
                 </models>   
             </group>    
             <group> 
@@ -289,7 +289,7 @@
                 </translate>
                 <scale X="0.4" Y="0.4" Z="0.4" />
                 <models>
-                     <model file = "sphere.3d" texture="2k_eris_fictional.jpg"/>
+                     <model file = "sphere.3d" texture="texture_lua6.jpg"/>
                 </models>
             </group>
             </group>
@@ -311,7 +311,7 @@
                 </translate>
                 <scale X="0.65" Y="0.65" Z="0.65" />
                 <models>
-                     <model file = "sphere.3d" texture="2k_neptune.jpg"/>
+                     <model file = "sphere.3d" texture="texture_neptune.jpg"/>
                 </models>
             <!-- satelite Triton-->
             <group>
@@ -331,7 +331,7 @@
               </translate>
               <scale X="0.353" Y="0.353" Z="0.353" />
               <models>
-                  <model file = "sphere.3d" texture="2k_haumea_fictional.jpg"/>
+                  <model file = "sphere.3d" texture="texture_lua7.jpg"/>
               </models>
             </group>
             </group>
