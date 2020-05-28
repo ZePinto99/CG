@@ -29,9 +29,9 @@ vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 						 // com as suas respetivas transforma��es).
 
 int* fiVertexCount;
-GLuint vertexCount;
-GLuint buffers[17];
-GLuint normals[17];
+GLuint vertexCount[20];
+GLuint buffers[20];
+GLuint normals[20];
 GLuint texts[17];
 GLuint* texturesByID;
 double** vertexB;
@@ -193,19 +193,19 @@ void createVBO(int i) {
 		p += 9; n += 9; t += 6;
 
 	}
-	vertexCount = vertex;
-
-	glGenBuffers(1, &buffers[i]);
-	glGenBuffers(1, &normals[i]);
-	glGenBuffers(1, &texts[i]);
-
+	vertexCount[i] = vertex;
+	
+	glGenBuffers(files.size(), buffers);
+	glGenBuffers(files.size(), normals);
+	glGenBuffers(files.size(), texts);
+	
 	glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 3, vertexB[i], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 3, vertexB[i], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 3, normais[i], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount[i] * 3, normais[i], GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 2, textures[i], GL_STATIC_DRAW);
-
+	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 2, textures[i], GL_STATIC_DRAW);
+	
 	free(vertexB[i]);
 	free(normais[i]);
 	free(textures[i]);
@@ -276,7 +276,6 @@ void lerficheiro(string nomeficheiro)
 		cout << numlinhas << "\n";
 	}
 }
-
 
 void lertudoemaisalgumacoisa() {
 	vertexB = (double**)malloc(sizeof(double*) * files.size());
@@ -540,7 +539,7 @@ void desenhar(void)
 
 		printf("Check inicio desenhar\n");
 
-		glColor3f(1, 1, 1);
+	//	glColor3f(1, 1, 1);
 
 		/*printf("Check 1.1\n");
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
@@ -552,13 +551,18 @@ void desenhar(void)
 		glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
 		glTexCoordPointer(2, GL_FLOAT, 0, 0);
 		printf("Check 1.4\n");*/
-		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
-		printf("Check 1.5\n");
-		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-		printf("Check 1.6\n");
-		glBindTexture(GL_TEXTURE_2D, 0);
 
-		printf("Check fim desenhar\n");
+		int total = 0;
+		for (int  j = 0; j <= i; j++)
+		{
+			total += vertexCount[j];
+		}
+
+		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
+
+		glDrawArrays(GL_TRIANGLES, 0, total);
+
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glPopMatrix();
 		i++;
@@ -586,7 +590,7 @@ void changeSize(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 }
 
-float lx = 30.0, ly = 30.0, lz = 30.0;
+float lx = 180.0, ly = 30.0, lz = 0.0;
 
 void renderScene(void)
 {
@@ -599,7 +603,7 @@ void renderScene(void)
 
 
 	gluLookAt(lx, ly, lz,
-		20.0, 5.0, 0.0,
+		-80.0, 0.0, 0.0,
 		0.0f, 1.0f, 0.0f);
 
 	processLight();
@@ -607,14 +611,14 @@ void renderScene(void)
 	// put drawing instructions here
 	int size = files.size();
 
-	for (int i = 0; i < 17; i++) {
-		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+	for (int i = 0; i < size; i++) {
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
 		glVertexPointer(3, GL_DOUBLE, 0, 0);
 
-		glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
 		glNormalPointer(GL_DOUBLE, 0, 0);
 
-		glBindBuffer(GL_ARRAY_BUFFER, texts[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
 		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
 		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
 	}
@@ -662,7 +666,6 @@ void processSpecialKeys(int key, int xx, int yy)
 		std::cout << "N�o conhe�o esse comando!" << "\n";
 	}
 }
-
 
 
 void initTexturesByID() {
