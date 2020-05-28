@@ -1,10 +1,9 @@
 ﻿  main.cpp
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(231,8): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(232,9): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(233,11): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(253,22): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(656,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(665,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(680,11): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 1 has type 'std::string'
-C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(671,28): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(213,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(214,9): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(215,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(235,22): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(662,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(672,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\main.cpp(677,9): warning C4101: 'dir': unreferenced local variable
   class5.vcxproj -> C:\Users\asus\Documents\GitHub\CG\TP_Fase4\Build\Debug\class5.exe

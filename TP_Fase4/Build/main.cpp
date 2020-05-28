@@ -30,50 +30,15 @@ vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 
 int* fiVertexCount;
 GLuint vertexCount;
-GLuint buffers[20];
-GLuint normals[20];
+GLuint buffers[17];
+GLuint normals[17];
+GLuint texts[17];
 GLuint* texturesByID;
 double** vertexB;
 double** normais;
 double** textures;
 
 ////////////////////////////////Curvas///////////////////////////////////////
-#define POINT_COUNT 5
-// Points that make up the loop for catmull-rom interpolation
-float p[POINT_COUNT][3] = { {-1,-1,0},{-1,1,0},{1,1,0},{0,0,0},{1,-1,0} };
-
-void buildRotMatrix(float* x, float* y, float* z, float* m) {
-
-	m[0] = x[0]; m[1] = x[1]; m[2] = x[2]; m[3] = 0;
-	m[4] = y[0]; m[5] = y[1]; m[6] = y[2]; m[7] = 0;
-	m[8] = z[0]; m[9] = z[1]; m[10] = z[2]; m[11] = 0;
-	m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
-}
-
-
-void cross(float* a, float* b, float* res) {
-
-	res[0] = a[1] * b[2] - a[2] * b[1];
-	res[1] = a[2] * b[0] - a[0] * b[2];
-	res[2] = a[0] * b[1] - a[1] * b[0];
-}
-
-
-void normalize(float* a) {
-
-	float l = sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-	a[0] = a[0] / l;
-	a[1] = a[1] / l;
-	a[2] = a[2] / l;
-}
-
-
-float length(float* v) {
-
-	float res = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
-	return res;
-
-}
 
 void multMatrixVector(float* m, float* v, float* res) {
 
@@ -226,8 +191,25 @@ void createVBO(int i) {
 		vertex++;
 
 		p += 9; n += 9; t += 6;
+
 	}
 	vertexCount = vertex;
+
+	glGenBuffers(1, &buffers[i]);
+	glGenBuffers(1, &normals[i]);
+	glGenBuffers(1, &texts[i]);
+
+	glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 3, vertexB[i], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 3, normais[i], GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount * 2, textures[i], GL_STATIC_DRAW);
+
+	free(vertexB[i]);
+	free(normais[i]);
+	free(textures[i]);
+
 	normal.end();
 	texture.end();
 	triangles.end();
@@ -300,6 +282,7 @@ void lertudoemaisalgumacoisa() {
 	vertexB = (double**)malloc(sizeof(double*) * files.size());
 	normais = (double**)malloc(sizeof(double*) * files.size());
 	textures = (double**)malloc(sizeof(double*) * files.size());
+
 	std::vector<OperFile*>::iterator itout;
 	itout = files.begin();
 	int i = 0;
@@ -485,7 +468,9 @@ int loadTexture(std::string s) {
 	ilBindImage(t);
 	ilLoadImage((ILstring)s.c_str());
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
+	cout << tw << "\n";
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
+	cout << th<< "\n";
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
 
@@ -496,12 +481,12 @@ int loadTexture(std::string s) {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, tw, th, 0, GL_RGBA, GL_UNSIGNED_BYTE, texData);
-	//glGenerateMipmap(GL_TEXTURE_2D);
+	glGenerateMipmap(GL_TEXTURE_2D);
+
 	glBindTexture(GL_TEXTURE_2D, 0);
-	cout << "loadTexture check \n";
 	return texID;
 }
 
@@ -548,23 +533,33 @@ void desenhar(void)
 				glScalef(oper->x, oper->y, oper->z);
 			}
 		}
+
 	/*	if (oper->co != NULL) {
 			processColors(oper->col);
 		}*/
 
+		printf("Check inicio desenhar\n");
+
 		glColor3f(1, 1, 1);
 
-		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
-
+		/*printf("Check 1.1\n");
 		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-		glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(double) * 3, vertexB[i], GL_STATIC_DRAW);
-		glVertexPointer(3, GL_DOUBLE, 0, 0);
+		glVertexPointer(3, GL_FLOAT, 0, 0);
+		printf("Check 1.2\n");
+		glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
+		glNormalPointer(GL_FLOAT, 0, 0);
+		printf("Check 1.3\n");
+		glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
+		glTexCoordPointer(2, GL_FLOAT, 0, 0);
+		printf("Check 1.4\n");*/
+		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
+		printf("Check 1.5\n");
 		glDrawArrays(GL_TRIANGLES, 0, vertexCount);
-
-		glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
-		glBufferData(GL_ARRAY_BUFFER, vertexCount * 8 * 3, normais[i], GL_STATIC_DRAW);
-
+		printf("Check 1.6\n");
 		glBindTexture(GL_TEXTURE_2D, 0);
+
+		printf("Check fim desenhar\n");
+
 		glPopMatrix();
 		i++;
 	}
@@ -595,6 +590,7 @@ float lx = 30.0, ly = 30.0, lz = 30.0;
 
 void renderScene(void)
 {
+	printf("Hello, renderScene!\n");
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -607,13 +603,21 @@ void renderScene(void)
 		0.0f, 1.0f, 0.0f);
 
 	processLight();
-
+	printf("Sai da processLight\n");
 	// put drawing instructions here
-	glEnableClientState(GL_VERTEX_ARRAY);
 	int size = files.size();
-	glGenBuffers(size, buffers);
-	glGenBuffers(size, normals);
-	desenhar();
+
+	for (int i = 0; i < 17; i++) {
+		glBindBuffer(GL_ARRAY_BUFFER, buffers[0]);
+		glVertexPointer(3, GL_DOUBLE, 0, 0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, normals[0]);
+		glNormalPointer(GL_DOUBLE, 0, 0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, texts[0]);
+		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
+		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
+	}
 
 	//#####################################MUDAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!########################################################################################
 	// Reset
@@ -627,7 +631,9 @@ void renderScene(void)
 	glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
 	glMaterialfv(GL_FRONT, GL_EMISSION, emi);
 	//#####################################MUDAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!########################################################################################
-
+	printf("Vou entrar na desenhar\n");
+	desenhar();
+	printf("Sai da desenhar\n");
 	// End of frame
 	glutSwapBuffers();
 }
@@ -660,6 +666,7 @@ void processSpecialKeys(int key, int xx, int yy)
 
 
 void initTexturesByID() {
+
 	int i = 0;
 	texturesByID = (GLuint*)malloc(sizeof(GLuint) * files.size());
 	for (int i = 0; i < files.size(); i++) texturesByID[i] = NULL;
@@ -667,27 +674,16 @@ void initTexturesByID() {
 	for (it = files.begin(); it != files.end(); i++, it++) {
 		OperFile* oper = *it;
 		if (oper->texture != NULL) {
-			char dir[60] = "../texturas/";
-			char* textureFileName = strcat(dir, oper->texture);
-			string textureString = "";
+			char dir[60];//"../texturas/";
+			char* textureFileName = oper->texture;
+			string textureString(textureFileName);
 
-			int length = sizeof(textureFileName) / sizeof(char);
-			for (int k = 0; k < length; k++) {
-				textureString = textureString + textureFileName[k];
-			}
-			//strcpy(textureFileName, textureString);
 			printf("-----> %s\n", textureFileName);
-			printf("-----> %s\n", textureString);
+			cout << "-----> " << textureString << "\n";
 
-			texturesByID[i] = loadTexture(string(textureFileName));
+			texturesByID[i] = loadTexture(textureString);
 		}
 	}
-	glEnable(GL_LIGHTING);
-	glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_TEXTURE_2D);
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glEnableClientState(GL_NORMAL_ARRAY);
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	cout << "initTexturesByID check \n";
 }
 
@@ -696,10 +692,6 @@ void initTexturesByID() {
 int main(int argc, char** argv)
 {
 	// put GLUT�s init here
-	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
-
-	lertudoemaisalgumacoisa();
-	initTexturesByID();
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
@@ -712,17 +704,35 @@ int main(int argc, char** argv)
 	glutIdleFunc(renderScene);
 	glutDisplayFunc(renderScene);
 	// some OpenGL settings
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_NORMAL_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	glEnable(GL_LIGHTING);
+
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_TEXTURE_2D);
 
 #ifndef __APPLE__
 	glewInit();
 #endif
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	xmlParser("sistemaSolarDinamico.xml", files, lightVector);
+
+	lertudoemaisalgumacoisa();
+
+
+	initTexturesByID();
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	// enter GLUT�s main cycle
+	printf("vou entrar no loop\n");
 	glutMainLoop();
 	return 1;
 }
