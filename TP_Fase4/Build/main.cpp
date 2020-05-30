@@ -7,7 +7,8 @@
 #include <GL/glut.h>
 #include <IL/il.h>
 #endif
-
+//<light type="POINT" posX="-90.0" posY="11.0" posZ="0.0" />
+//<light type = "POINT" posX = "-90.0" posY = "-6.0" posZ = "0.0" / >
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <iostream>
@@ -441,37 +442,34 @@ void processLight() {
 
 void processColor(Color* color)
 {
-	GLfloat diff[4] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat spec[4] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat emis[4] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat ambi[4] = { 0.2, 0.2, 0.2, 1.0 };
+	GLfloat colortype[4] = { 1.0, 1.0, 1.0, 1.0 };
 	if (strcmp(color->component, "diffuse") == 0) {
-		diff[0] = static_cast<GLfloat>(color->r);
-		diff[1] = static_cast<GLfloat>(color->g);
-		diff[2] = static_cast<GLfloat>(color->b);
-		diff[3] = 1;
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diff);
+		colortype[0] = static_cast<GLfloat>(color->r);
+		colortype[1] = static_cast<GLfloat>(color->g);
+		colortype[2] = static_cast<GLfloat>(color->b);
+		colortype[3] = 1;
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, colortype);
 	}
 	if (strcmp(color->component, "specular") == 0) {
-		spec[0] = static_cast<GLfloat>(color->r);
-		spec[1] = static_cast<GLfloat>(color->g);
-		spec[2] = static_cast<GLfloat>(color->b);
-		spec[3] = 1;
-		glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
+		colortype[0] = static_cast<GLfloat>(color->r);
+		colortype[1] = static_cast<GLfloat>(color->g);
+		colortype[2] = static_cast<GLfloat>(color->b);
+		colortype[3] = 1;
+		glMaterialfv(GL_FRONT, GL_SPECULAR, colortype);
 	}
 	if (strcmp(color->component, "emissive") == 0) {
-		emis[0] = static_cast<GLfloat>(color->r);
-		emis[1] = static_cast<GLfloat>(color->g);
-		emis[2] = static_cast<GLfloat>(color->b);
-		emis[3] = 1;
-		glMaterialfv(GL_FRONT, GL_EMISSION, emis);
+		colortype[0] = static_cast<GLfloat>(color->r);
+		colortype[1] = static_cast<GLfloat>(color->g);
+		colortype[2] = static_cast<GLfloat>(color->b);
+		colortype[3] = 1;
+		glMaterialfv(GL_FRONT, GL_EMISSION, colortype);
 	}
 	if (strcmp(color->component, "ambient") == 0) {
-		ambi[0] = static_cast<GLfloat>(color->r);
-		ambi[1] = static_cast<GLfloat>(color->g);
-		ambi[2] = static_cast<GLfloat>(color->b);
-		ambi[3] = 1;
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambi);
+		colortype[0] = static_cast<GLfloat>(color->r);
+		colortype[1] = static_cast<GLfloat>(color->g);
+		colortype[2] = static_cast<GLfloat>(color->b);
+		colortype[3] = 1;
+		glMaterialfv(GL_FRONT, GL_AMBIENT, colortype);
 	}
 	cout << "processColor check \n";
 }
@@ -555,9 +553,9 @@ void desenhar(void)
 			}
 		}
 
-		/*	if (oper->co != NULL) {
-				processColors(oper->col);
-			}*/
+			if (op->color != NULL) {
+				processColor(op->color);
+			}
 
 		printf("Check inicio desenhar\n");
 
