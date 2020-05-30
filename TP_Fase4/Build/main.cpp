@@ -135,13 +135,10 @@ void createVBO(int i) {
 	vector<Ponto>::iterator tri = triangles.begin();
 	vector<Ponto>::iterator norm = normal.begin();
 	vector<Ponto>::iterator text = texture.begin();
-	//cout << texture.size() << "!!";
 
 	vertexB[i] = (double*)malloc(sizeof(double) * triangles.size() * 3);
 	normais[i] = (double*)malloc(sizeof(double) * normal.size() * 3);
 	textures[i] = (double*)malloc(sizeof(double) * texture.size() * 2);
-
-	printf("%d\n", normal.size());
 
 	while (tri != triangles.end()) {
 
@@ -223,7 +220,6 @@ void createVBO(int i) {
 void lerficheiro(string nomeficheiro)
 {
 	int c = 0;
-	cout << nomeficheiro << "\n";
 
 	double storedouble[3];
 	for (int i = 0; i < 3; i++) storedouble[i] = 0;
@@ -278,7 +274,6 @@ void lerficheiro(string nomeficheiro)
 			c = 0;
 			numlinhas++;
 		}
-		cout << numlinhas << "\n";
 	}
 }
 
@@ -294,7 +289,6 @@ void lertudoemaisalgumacoisa() {
 		triangles.clear();
 		normal.clear();
 		texture.clear();
-		//cout << texture.size() << "........";
 		OperFile* op = *itout;
 		char* stds = op->fileName;
 		std::string std(stds);
@@ -437,7 +431,6 @@ void processLight() {
 		}
 		else { cout << "Ultrapassado máximo de 8 luzes! \n"; break; }
 	}
-	cout << "processLight check \n";
 }
 
 
@@ -472,7 +465,6 @@ void processColor(Color* color)
 		colortype[3] = 1;
 		glMaterialfv(GL_FRONT, GL_AMBIENT, colortype);
 	}
-	cout << "processColor check \n";
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -488,9 +480,7 @@ int loadTexture(std::string s) {
 	ilBindImage(t);
 	ilLoadImage((ILstring)s.c_str());
 	tw = ilGetInteger(IL_IMAGE_WIDTH);
-	cout << tw << "\n";
 	th = ilGetInteger(IL_IMAGE_HEIGHT);
-	cout << th << "\n";
 	ilConvertImage(IL_RGBA, IL_UNSIGNED_BYTE);
 	texData = ilGetData();
 
@@ -558,8 +548,6 @@ void desenhar(void)
 				processColor(op->color);
 			}
 
-		printf("Check inicio desenhar\n");
-
 		int total = 0;
 		for (int j = 0; j <= i; j++)
 		{
@@ -614,7 +602,6 @@ void renderScene(void)
 		0.0f, 1.0f, 0.0f);
 
 	processLight();
-	printf("Sai da processLight\n");
 	// put drawing instructions here
 	int size = files.size();
 
@@ -630,9 +617,7 @@ void renderScene(void)
 		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
 	}
 
-	printf("Vou entrar na desenhar\n");
 	desenhar();
-	printf("Sai da desenhar\n");
 
 	// End of frame
 	glutSwapBuffers();
@@ -728,7 +713,6 @@ int main(int argc, char** argv)
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_POINTS);
 	// enter GLUT�s main cycle
-	printf("vou entrar no loop\n");
 	glutMainLoop();
 
 	return 1;

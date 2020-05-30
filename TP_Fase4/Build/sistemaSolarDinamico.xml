@@ -1,6 +1,6 @@
 <scene>
 	<lights>
-        <light type="POINT" posX="-90.0" posY="-1.0" posZ="15.0" />
+  <light type="POINT" posX="-90.0" posY="-1.0" posZ="15.0" />
 	<light type="POINT" posX="-90.0" posY="-1.0" posZ="-15.0" />
 	<light type="POINT" posX="-90.0" posY="10.0" posZ="15.0" />
 	<light type="POINT" posX="-90.0" posY="10.0" posZ="-15.0" />
@@ -24,9 +24,9 @@
             </translate>
             <scale X="0.5" Y="0.55" Z="0.55" />
             <models>
-                <model file = "sphere.3d" />
+                <model file = "sphere.3d" diffR="0.8" diffG="0.8" diffB="0.15" />
             </models>
-         </group>        
+         </group>
         <!--mercurio-->
         <group>
         	<translate time="0.25">
@@ -34,7 +34,7 @@
             	<point X="14.05" Y="0" Z="8.115" />
             	<point X="8.115" Y="0" Z="14.05" />
                 <point X="0" Y="0" Z="16.3" />
-            	<point X="-8.115" Y="0" Z="14.05" />   
+            	<point X="-8.115" Y="0" Z="14.05" />
             	<point X="-14.05" Y="0" Z="8.115" />
                 <point X="-16.23" Y="0" Z="0" />
             	<point X="-14.05" Y="0" Z="-8.115" />
@@ -53,13 +53,13 @@
             <translate time="0.5">
                  <point X="29.67" Y="0" Z="0" />
                  <point X="25.695" Y="0" Z="14.685" />
-                 <point X="14.835" Y="0" Z="25.43" />	
+                 <point X="14.835" Y="0" Z="25.43" />
                  <point X="0" Y="0" Z="29.67" />
                  <point X="-14.835" Y="0" Z="25.43" />
                  <point X="-25.695" Y="0" Z="14.685" />
                  <point X="-29.67" Y="0" Z="0" />
                  <point X="-25.695" Y="0" Z="-14.685" />
-                 <point X="-14.835" Y="0" Z="-25.43" />	
+                 <point X="-14.835" Y="0" Z="-25.43" />
                  <point X="0" Y="0" Z="-29.67" />
                  <point X="14.835" Y="0" Z="-25.43" />
                  <point X="25.695" Y="0" Z="-14.685" />
@@ -160,7 +160,7 @@
                  <point X="-5.1317" Y="0" Z="-8.89" />
                  <point X="0" Y="0" Z="-10.2634" />
                  <point X="5.1317" Y="0" Z="-8.89" />
-                 <point X="8.89" Y="0" Z="-5.1317" />            
+                 <point X="8.89" Y="0" Z="-5.1317" />
                  <point X="10.2634" Y="0" Z="0" />
                  <point X="8.89" Y="0" Z="5.1317" />
                  <point X="5.1317" Y="0" Z="8.89" />
@@ -257,7 +257,7 @@
                 <models>
                     <model file = "sphere.3d" texture="uranos.jpg"/>
                 </models>
-            <group> 
+            <group>
                 <!-- Titania -->
                 <translate time="2000">
                     <point X="0" Y="6" Z="20" />
@@ -265,34 +265,34 @@
                     <point X="17.3" Y="6" Z="10" />
                     <point X="20" Y="6" Z="0" />
                     <point X="17.3" Y="6" Z="-10" />
-                    <point X="10" Y="6" Z="-17.3" />           
+                    <point X="10" Y="6" Z="-17.3" />
                     <point X="0" Y="6" Z="-20" />
                     <point X="-10" Y="6" Z="-17.3" />
                     <point X="-17.3" Y="6" Z="-10" />
                     <point X="-20" Y="6" Z="0" />
                     <point X="-17.3" Y="6" Z="10" />
-                    <point X="-10" Y="6" Z="17.3" /> 
+                    <point X="-10" Y="6" Z="17.3" />
                 </translate>
                 <scale X="0.4" Y="0.4" Z="0.4" />
                 <models>
                     <model file = "sphere.3d" texture="lua5.jpg" />
-                </models>   
-            </group>    
-            <group> 
+                </models>
+            </group>
+            <group>
                 <!-- Uberon -->
                 <translate time="1000">
-                    <point X="14" Y="0" Z="-10" />
-                    <point X="12.124" Y="0" Z="-3" />
-                    <point X="7" Y="0" Z="2.124" />
-                    <point X="0" Y="0" Z="4" />
-                    <point X="-7" Y="0" Z="2.124" />
-                    <point X="-12.124" Y="0" Z="-3" />
-                    <point X="-14" Y="0" Z="-10" />
-                    <point X="-12.124" Y="0" Z="-17" />
-                    <point X="-7" Y="0" Z="-22.124" />
-                    <point X="0" Y="0" Z="-24" />
-                    <point X="7" Y="0" Z="-22.124" />
-                    <point X="12.124" Y="0" Z="-17" />
+                    <point X="18" Y="0" Z="-6" />
+                    <point X="16.124" Y="0" Z="1" />
+                    <point X="11" Y="0" Z="6.124" />
+                    <point X="0" Y="0" Z="8" />
+                    <point X="-3" Y="0" Z="6.124" />
+                    <point X="-8.124" Y="0" Z="1" />
+                    <point X="-6" Y="0" Z="-6" />
+                    <point X="-8.124" Y="0" Z="-14" />
+                    <point X="-3" Y="0" Z="-18.124" />
+                    <point X="0" Y="0" Z="-20" />
+                    <point X="11" Y="0" Z="-18.124" />
+                    <point X="16.124" Y="0" Z="-13" />
                 </translate>
                 <scale X="0.4" Y="0.4" Z="0.4" />
                 <models>
@@ -338,7 +338,7 @@
               </translate>
               <scale X="0.353" Y="0.353" Z="0.353" />
               <models>
-                  <model file = "sphere.3d" texture="lua7.jpg"/>
+                  <model file = "sphere.3d" diffR="0.8" diffG="0.8" diffB="0.15"/>
               </models>
             </group>
             </group>
