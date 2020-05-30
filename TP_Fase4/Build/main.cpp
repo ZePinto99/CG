@@ -28,7 +28,7 @@ vector<Light*> lightVector;
 vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 						 // com as suas respetivas transforma��es).
 
-GLenum luzes[6] = { GL_LIGHT0, GL_LIGHT1, GL_LIGHT2 };
+GLenum luzes[8] = { GL_LIGHT0, GL_LIGHT1, GL_LIGHT2,  GL_LIGHT3, GL_LIGHT4, GL_LIGHT5, GL_LIGHT6, GL_LIGHT7};
 int luzesInt = 0;
 
 int* fiVertexCount;
