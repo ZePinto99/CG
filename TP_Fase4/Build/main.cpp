@@ -28,6 +28,9 @@ vector<Light*> lightVector;
 vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 						 // com as suas respetivas transforma��es).
 
+GLenum luzes[6] = { GL_LIGHT0, GL_LIGHT1, GL_LIGHT2 };
+int luzesInt = 0;
+
 int* fiVertexCount;
 GLuint vertexCount[17];
 GLuint buffers[17];
@@ -386,20 +389,20 @@ void processLight() {
 			pos[1] = static_cast<GLfloat>(light->y);
 			pos[2] = static_cast<GLfloat>(light->z);
 			pos[3] = 1;
-			glEnable(GL_LIGHT0);
-			glLightfv(GL_LIGHT0, GL_POSITION, pos);
-			glLightfv(GL_LIGHT0, GL_AMBIENT, ambi);
-			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+			glEnable(luzes[luzesInt]);
+			glLightfv(luzes[luzesInt], GL_POSITION, pos);
+			glLightfv(luzes[luzesInt], GL_AMBIENT, ambi);
+			glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
 		}
 		else if (strcmp(light->type, "DIRECTIONAL") == 0) {
 			pos[0] = static_cast<GLfloat>(light->x);
 			pos[1] = static_cast<GLfloat>(light->y);
 			pos[2] = static_cast<GLfloat>(light->z);
 			pos[3] = 0;
-			glEnable(GL_LIGHT0);
-			glLightfv(GL_LIGHT0, GL_POSITION, pos);
-			glLightfv(GL_LIGHT0, GL_AMBIENT, ambi);
-			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
+			glEnable(luzes[luzesInt]);
+			glLightfv(luzes[luzesInt], GL_POSITION, pos);
+			glLightfv(luzes[luzesInt], GL_AMBIENT, ambi);
+			glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
 		}
 		else if (strcmp(light->type, "SPOT") == 0) {
 			pos[0] = static_cast<GLfloat>(light->x);
@@ -409,15 +412,16 @@ void processLight() {
 			direction[0] = static_cast<GLfloat>(light->x);
 			direction[1] = static_cast<GLfloat>(light->y);
 			direction[2] = static_cast<GLfloat>(light->z);
-			glEnable(GL_LIGHT0);
-			glLightfv(GL_LIGHT0, GL_POSITION, pos);
-			glLightfv(GL_LIGHT0, GL_DIFFUSE, diff);
-			glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direction);
-			glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0);
-			glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.0);
+			glEnable(luzes[luzesInt]);
+			glLightfv(luzes[luzesInt], GL_POSITION, pos);
+			glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
+			glLightfv(luzes[luzesInt], GL_SPOT_DIRECTION, direction);
+			glLightf(luzes[luzesInt], GL_SPOT_CUTOFF, 45.0);
+			glLightf(luzes[luzesInt], GL_SPOT_EXPONENT, 0.0);
 		}
 	}
 	cout << "processLight check \n";
+	luzesInt++;
 }
 
 void processColor(Color* color)

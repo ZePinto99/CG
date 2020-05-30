@@ -1,7 +1,6 @@
 <scene>
 	<lights>
-        <light type="POINT" posX="-90.0" posY="15.0" posZ="0.0" />
-	<light type="POINT" posX="-90.0" posY="-15.0" posZ="0.0" />
+        <light type="POINT" posX="-90.0" posY="0.0" posZ="0.0" />
 	</lights>
 	<!--sol-->
     <group>
