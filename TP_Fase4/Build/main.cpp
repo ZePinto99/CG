@@ -376,53 +376,68 @@ void dynamicRotate(Oper* oper, int i)
 	glRotated(angles[i], oper->x, oper->y, oper->y);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void processLight() {
-	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
-	GLfloat ambi[4] = { 0.2, 0.2, 0.2, 1.0 };
+	luzesInt = 0;
+	float position[4] = { 1.0, 1.0, 1.0, 0.0 };
+	GLfloat ambi[4] = { 0.0, 0.0, 0.0, 1.0 };
 	GLfloat diff[4] = { 1.0, 1.0, 1.0, 1.0 };
 	GLfloat direction[3] = { 0.0, 0.0, -1.0 };
+
+
 	vector<Light*>::iterator it;
 	for (it = lightVector.begin(); it != lightVector.end(); it++) {
-		Light* light = *it;
-		if (strcmp(light->type, "POINT") == 0) {
-			pos[0] = static_cast<GLfloat>(light->x);
-			pos[1] = static_cast<GLfloat>(light->y);
-			pos[2] = static_cast<GLfloat>(light->z);
-			pos[3] = 1;
-			glEnable(luzes[luzesInt]);
-			glLightfv(luzes[luzesInt], GL_POSITION, pos);
-			glLightfv(luzes[luzesInt], GL_AMBIENT, ambi);
-			glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
+
+		if (luzesInt < 8) {
+
+			Light* light = *it;
+
+			if (strcmp(light->type, "POINT") == 0) {
+				position[0] = static_cast<GLfloat>(light->x);
+				position[1] = static_cast<GLfloat>(light->y);
+				position[2] = static_cast<GLfloat>(light->z);
+				position[3] = 1;
+				glEnable(luzes[luzesInt]);
+				glLightfv(luzes[luzesInt], GL_POSITION, position);
+				glLightfv(luzes[luzesInt], GL_AMBIENT, ambi);
+				glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
+				luzesInt++;
+			}
+
+			else if (strcmp(light->type, "DIRECTIONAL") == 0) {
+				position[0] = static_cast<GLfloat>(light->x);
+				position[1] = static_cast<GLfloat>(light->y);
+				position[2] = static_cast<GLfloat>(light->z);
+				position[3] = 0;
+				glEnable(luzes[luzesInt]);
+				glLightfv(luzes[luzesInt], GL_POSITION, position);
+				glLightfv(luzes[luzesInt], GL_AMBIENT, ambi);
+				glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
+				luzesInt++;
+			}
+
+			else if (strcmp(light->type, "SPOT") == 0) {
+				position[0] = static_cast<GLfloat>(light->x);
+				position[1] = static_cast<GLfloat>(light->y);
+				position[2] = static_cast<GLfloat>(light->z);
+				position[3] = 1;
+				direction[0] = static_cast<GLfloat>(light->x);
+				direction[1] = static_cast<GLfloat>(light->y);
+				direction[2] = static_cast<GLfloat>(light->z);
+				glEnable(luzes[luzesInt]);
+				glLightfv(luzes[luzesInt], GL_POSITION, position);
+				glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
+				glLightfv(luzes[luzesInt], GL_SPOT_DIRECTION, direction);
+				glLightf(luzes[luzesInt], GL_SPOT_CUTOFF, 45.0);
+				glLightf(luzes[luzesInt], GL_SPOT_EXPONENT, 0.0);
+				luzesInt++;
+			}
 		}
-		else if (strcmp(light->type, "DIRECTIONAL") == 0) {
-			pos[0] = static_cast<GLfloat>(light->x);
-			pos[1] = static_cast<GLfloat>(light->y);
-			pos[2] = static_cast<GLfloat>(light->z);
-			pos[3] = 0;
-			glEnable(luzes[luzesInt]);
-			glLightfv(luzes[luzesInt], GL_POSITION, pos);
-			glLightfv(luzes[luzesInt], GL_AMBIENT, ambi);
-			glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
-		}
-		else if (strcmp(light->type, "SPOT") == 0) {
-			pos[0] = static_cast<GLfloat>(light->x);
-			pos[1] = static_cast<GLfloat>(light->y);
-			pos[2] = static_cast<GLfloat>(light->z);
-			pos[3] = 1;
-			direction[0] = static_cast<GLfloat>(light->x);
-			direction[1] = static_cast<GLfloat>(light->y);
-			direction[2] = static_cast<GLfloat>(light->z);
-			glEnable(luzes[luzesInt]);
-			glLightfv(luzes[luzesInt], GL_POSITION, pos);
-			glLightfv(luzes[luzesInt], GL_DIFFUSE, diff);
-			glLightfv(luzes[luzesInt], GL_SPOT_DIRECTION, direction);
-			glLightf(luzes[luzesInt], GL_SPOT_CUTOFF, 45.0);
-			glLightf(luzes[luzesInt], GL_SPOT_EXPONENT, 0.0);
-		}
+		else { cout << "Ultrapassado máximo de 8 luzes! \n"; break; }
 	}
 	cout << "processLight check \n";
-	luzesInt++;
 }
+
 
 void processColor(Color* color)
 {
