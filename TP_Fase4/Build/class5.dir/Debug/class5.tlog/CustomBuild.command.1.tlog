@@ -1,6 +1,6 @@
-^C:\USERS\RVCAR\ONEDRIVE\DOCUMENTOS\GITHUB\CG\TP_FASE4\CMAKELISTS.TXT
+^C:\USERS\ASUS\DOCUMENTS\GITHUB\CG\TP_FASE4\CMAKELISTS.TXT
 setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/rvcar/OneDrive/Documentos/GitHub/CG/TP_Fase4 -BC:/Users/rvcar/OneDrive/Documentos/GitHub/CG/TP_Fase4/Build --check-stamp-file C:/Users/rvcar/OneDrive/Documentos/GitHub/CG/TP_Fase4/Build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/asus/Documents/GitHub/CG/TP_Fase4 -BC:/Users/asus/Documents/GitHub/CG/TP_Fase4/Build --check-stamp-file C:/Users/asus/Documents/GitHub/CG/TP_Fase4/Build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

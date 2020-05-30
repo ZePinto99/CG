@@ -29,15 +29,9 @@ vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
 						 // com as suas respetivas transforma��es).
 
 int* fiVertexCount;
-<<<<<<< HEAD
 GLuint vertexCount[17];
 GLuint buffers[17];
 GLuint normals[17];
-=======
-GLuint vertexCount[20];
-GLuint buffers[20];
-GLuint normals[20];
->>>>>>> ed237c9dac23852d8798b72319053cba1a979f95
 GLuint texts[17];
 GLuint* texturesByID;
 double** vertexB;
@@ -200,7 +194,6 @@ void createVBO(int i) {
 
 	}
 	vertexCount[i] = vertex;
-<<<<<<< HEAD
 
 	glGenBuffers(files.size(), buffers);
 	glGenBuffers(files.size(), normals);
@@ -213,20 +206,6 @@ void createVBO(int i) {
 	glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
 	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 2, textures[i], GL_DYNAMIC_DRAW);
 
-=======
-	
-	glGenBuffers(files.size(), buffers);
-	glGenBuffers(files.size(), normals);
-	glGenBuffers(files.size(), texts);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 3, vertexB[i], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * vertexCount[i] * 3, normais[i], GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
-	glBufferData(GL_ARRAY_BUFFER, 8 * vertexCount[i] * 2, textures[i], GL_STATIC_DRAW);
-	
->>>>>>> ed237c9dac23852d8798b72319053cba1a979f95
 	free(vertexB[i]);
 	free(normais[i]);
 	free(textures[i]);
@@ -560,7 +539,6 @@ void desenhar(void)
 
 		printf("Check inicio desenhar\n");
 
-<<<<<<< HEAD
 		//	glColor3f(1, 1, 1);
 
 			/*printf("Check 1.1\n");
@@ -583,30 +561,6 @@ void desenhar(void)
 		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
 
 		glDrawArrays(GL_TRIANGLES, 0, vertexCount[i]);
-=======
-	//	glColor3f(1, 1, 1);
-
-		/*printf("Check 1.1\n");
-		glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-		glVertexPointer(3, GL_FLOAT, 0, 0);
-		printf("Check 1.2\n");
-		glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
-		glNormalPointer(GL_FLOAT, 0, 0);
-		printf("Check 1.3\n");
-		glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
-		glTexCoordPointer(2, GL_FLOAT, 0, 0);
-		printf("Check 1.4\n");*/
-
-		int total = 0;
-		for (int  j = 0; j <= i; j++)
-		{
-			total += vertexCount[j];
-		}
-
-		glBindTexture(GL_TEXTURE_2D, texturesByID[i]);
-
-		glDrawArrays(GL_TRIANGLES, 0, total);
->>>>>>> ed237c9dac23852d8798b72319053cba1a979f95
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -692,19 +646,19 @@ void processSpecialKeys(int key, int xx, int yy)
 {
 	switch (key) {
 	case GLUT_KEY_RIGHT:
-		glTranslatef(lx += 1, ly += 0, lz += 0);
+		glTranslatef(lx += 0, ly += 0, lz -= 1);
 		glutPostRedisplay();
 		break;
 	case GLUT_KEY_LEFT:
-		glTranslatef(lx -= 1, ly -= 0, lz -= 0);
+		glTranslatef(lx -= 0, ly -= 0, lz += 1);
 		glutPostRedisplay();
 		break;
 	case GLUT_KEY_UP:
-		glTranslatef(lx -= 1, ly -= 1, lz -= 1);
+		glTranslatef(lx -= 1, ly -= 0, lz -= 0);
 		glutPostRedisplay();
 		break;
 	case GLUT_KEY_DOWN:
-		glTranslatef(lx += 1, ly += 1, lz += 1);
+		glTranslatef(lx += 1, ly += 0, lz += 0);
 		glutPostRedisplay();
 		break;
 
