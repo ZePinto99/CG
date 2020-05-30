@@ -122,7 +122,7 @@ void getGlobalCatmullRomPoint(double gt, double* pos, float* deriv, double** cur
 	getCatmullRomPoint(t, curve[indices[0]], curve[indices[1]], curve[indices[2]], curve[indices[3]], pos, deriv);
 }
 
-////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
 
 void createVBO(int i) {
 	int p = 0, n = 0, t = 0;  int vertex = 0;
@@ -248,27 +248,27 @@ void lerficheiro(string nomeficheiro)
 			aux.z = storedouble[2];
 
 			if (type == 1 || type == 2 || type == 3) {
-				////cout << "1 \n";
+				
 				triangles.push_back(aux);
-				////cout << "1.1 \n";
+			
 			}
 			if (type == 4 || type == 5 || type == 6)
 			{
-				////cout << "2 \n";
+				
 				normal.push_back(aux);
-				////cout << "2.1 \n";
+				
 			}
 			if (type == 7 || type == 8 || type == 9)
 			{
-				////cout << "3 \n";
+				
 				texture.push_back(aux);
-				////cout << "3.1 \n";
+				
 			}
 			if (type == 9)
 			{
-				////cout << "4 \n";
+				
 				type = 0;
-				////cout << "4.1 \n";
+				
 			}
 			c = 0;
 			numlinhas++;
@@ -299,6 +299,9 @@ void lertudoemaisalgumacoisa() {
 		i++;
 	}
 }
+
+
+
 
 
 void dynamicTranslate(Oper* oper, int i)
@@ -369,7 +372,7 @@ void dynamicRotate(Oper* oper, int i)
 	angles[i] += 360 / (time * 1000);
 	glRotated(angles[i], oper->x, oper->y, oper->y);
 }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void processLight() {
 	float pos[4] = { 1.0, 1.0, 1.0, 0.0 };
 	GLfloat ambi[4] = { 0.2, 0.2, 0.2, 1.0 };
@@ -454,7 +457,7 @@ void processColor(Color* color)
 	cout << "processColor check \n";
 }
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int loadTexture(std::string s) {
 	unsigned int t, tw, th;
 	unsigned char* texData;
@@ -539,19 +542,6 @@ void desenhar(void)
 
 		printf("Check inicio desenhar\n");
 
-		//	glColor3f(1, 1, 1);
-
-			/*printf("Check 1.1\n");
-			glBindBuffer(GL_ARRAY_BUFFER, buffers[i]);
-			glVertexPointer(3, GL_FLOAT, 0, 0);
-			printf("Check 1.2\n");
-			glBindBuffer(GL_ARRAY_BUFFER, normals[i]);
-			glNormalPointer(GL_FLOAT, 0, 0);
-			printf("Check 1.3\n");
-			glBindBuffer(GL_ARRAY_BUFFER, texts[i]);
-			glTexCoordPointer(2, GL_FLOAT, 0, 0);
-			printf("Check 1.4\n");*/
-
 		int total = 0;
 		for (int j = 0; j <= i; j++)
 		{
@@ -594,7 +584,6 @@ float lx = 180.0, ly = 30.0, lz = 0.0;
 
 void renderScene(void)
 {
-	printf("Hello, renderScene!\n");
 	// clear buffers
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -623,21 +612,10 @@ void renderScene(void)
 		glTexCoordPointer(2, GL_DOUBLE, 0, 0);
 	}
 
-	//#####################################MUDAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!########################################################################################
-	// Reset
-	float amb[4] = { 0.2, 0.2, 0.2, 1.0 };
-	float dif[4] = { 1.0, 1.0, 1.0, 1.0 };
-	float spec[4] = { 0.0, 0.0, 0.0, 1.0 };
-	float emi[4] = { 0.0, 0.0, 0.0, 1.0 };
-
-	glMaterialfv(GL_FRONT, GL_AMBIENT, amb);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, dif);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, spec);
-	glMaterialfv(GL_FRONT, GL_EMISSION, emi);
-	//#####################################MUDAR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!########################################################################################
 	printf("Vou entrar na desenhar\n");
 	desenhar();
 	printf("Sai da desenhar\n");
+
 	// End of frame
 	glutSwapBuffers();
 }
@@ -680,14 +658,9 @@ void initTexturesByID() {
 			char dir[60];//"../texturas/";
 			char* textureFileName = oper->texture;
 			string textureString(textureFileName);
-
-			printf("-----> %s\n", textureFileName);
-			cout << "-----> " << textureString << "\n";
-
 			texturesByID[i] = loadTexture(textureString);
 		}
 	}
-	cout << "initTexturesByID check \n";
 }
 
 
