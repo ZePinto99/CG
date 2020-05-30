@@ -1,9 +1,9 @@
 ﻿  main.cpp
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(217,8): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(218,9): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(219,11): warning C4834: discarding return value of function with 'nodiscard' attribute
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(239,22): warning C4018: '<=': signed/unsigned mismatch
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(661,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(670,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(675,9): warning C4101: 'dir': unreferenced local variable
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(214,8): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(215,9): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(216,11): warning C4834: discarding return value of function with 'nodiscard' attribute
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(236,22): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(658,16): warning C4566: character represented by universal-character-name '\uFFFD' cannot be represented in the current code page (1252)
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(667,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\main.cpp(672,9): warning C4101: 'dir': unreferenced local variable
   class5.vcxproj -> C:\Users\rvcar\OneDrive\Documentos\GitHub\CG\TP_Fase4\Build\Debug\class5.exe

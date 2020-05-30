@@ -7,8 +7,6 @@
 #include <GL/glut.h>
 #include <IL/il.h>
 #endif
-//<light type="POINT" posX="-90.0" posY="11.0" posZ="0.0" />
-//<light type = "POINT" posX = "-90.0" posY = "-6.0" posZ = "0.0" / >
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <iostream>
@@ -26,8 +24,7 @@ std::vector<Ponto> texture;
 
 vector<Light*> lightVector;
 
-vector<OperFile*> files; // Vector de OperFiles (que relacionam os ficheiros
-						 // com as suas respetivas transforma��es).
+vector<OperFile*> files; 
 
 GLenum luzes[8] = { GL_LIGHT0, GL_LIGHT1, GL_LIGHT2,  GL_LIGHT3, GL_LIGHT4, GL_LIGHT5, GL_LIGHT6, GL_LIGHT7};
 int luzesInt = 0;
