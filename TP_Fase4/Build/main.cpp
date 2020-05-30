@@ -1,5 +1,9 @@
 ﻿#include <stdlib.h>
 #include <stdio.h>
+#include <windows.h>
+#include <iostream>
+#include <thread> 
+#pragma comment(lib, "winmm.lib")
 #ifdef __APPLE__
 #include <GLUT/glut.h>
 #else
@@ -677,13 +681,15 @@ void initTexturesByID() {
 	}
 }
 
-
+void foo(int Z)
+{
+	PlaySound("RM.wav", NULL, SND_FILENAME);
+}
 
 int main(int argc, char** argv)
 {
 	// put GLUT�s init here
-
-	glutInit(&argc, argv);
+	thread th1(foo, 3); 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(1920, 1080);
@@ -724,5 +730,6 @@ int main(int argc, char** argv)
 	// enter GLUT�s main cycle
 	printf("vou entrar no loop\n");
 	glutMainLoop();
+
 	return 1;
 }
