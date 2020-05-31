@@ -674,7 +674,11 @@ void foo(int Z)
 int main(int argc, char** argv)
 {
 	// put GLUT�s init here
+	///////////////////////////////////////
+	/////////////Song//////////////////////
 	thread th1(foo, 3); 	glutInit(&argc, argv);
+	///////////////////////////////////////
+	///////////////////////////////////////
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowPosition(0, 0);
 	glutInitWindowSize(1920, 1080);

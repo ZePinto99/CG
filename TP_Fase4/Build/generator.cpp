@@ -80,8 +80,6 @@ void esfera(char* argv[]) {
     double p4x, p4y, p4z;
     std::cout << "File:" << nomeFicheiro << "\n";
     if (open(nomeFicheiro)) {
-        float texV = 1 / (float)stacks;
-        float texH = 1 / (float)stacks;
         for (double i = 0; i < stacks; i++) {
             t_factor = (stacks - i) * (1.d / stacks); 
             angle1 = 0;
@@ -101,13 +99,12 @@ void esfera(char* argv[]) {
                 p4z = radius * sin(angle3 + angle4) * cos(angle1 + angle2);
 
                 /////////////////////////////
-                ///////////////   nao e preciso por o raio no normal pois é um vetor.
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p2x << " " << p2y << " " << p2z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
-                outFile << "" << radius*sin(angle3)*sin(angle1) << " " <<radius* cos(angle3) << " " << radius*cos(angle1) * sin(angle3) << "\n";
-                outFile << "" << radius * sin(angle3 + angle4) * sin(angle1) << " " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3+angle4) * cos(angle1) << "\n";
-                outFile << "" << radius * sin(angle3 + angle4) * sin(angle1+angle2) << " " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1+angle2) << "\n";
+                outFile << "" << sin(angle3)*sin(angle1) << " " << cos(angle3) << " " << cos(angle1) * sin(angle3) << "\n";
+                outFile << "" << sin(angle3 + angle4) * sin(angle1) << " " << cos(angle3 + angle4) << " " << sin(angle3+angle4) * cos(angle1) << "\n";
+                outFile << "" << sin(angle3 + angle4) * sin(angle1+angle2) << " " << cos(angle3 + angle4) << " " <<  sin(angle3 + angle4) * cos(angle1+angle2) << "\n";
                 outFile << s_factor << " " << t_factor << " 0\n";
                 outFile << s_factor << " " << t_factor - (1.d/stacks) << " 0\n";
                 outFile << s_factor + (1.d/slices) << " " << t_factor-(1.d/stacks) << " 0\n";
@@ -116,9 +113,9 @@ void esfera(char* argv[]) {
                 outFile << p1x << " " << p1y << " " << p1z << "\n";
                 outFile << p4x << " " << p4y << " " << p4z << "\n";
                 outFile << p3x << " " << p3y << " " << p3z << "\n";
-                outFile << "" << radius * sin(angle3) * sin(angle1) << " " << cos(angle3) << " " << radius * cos(angle1) * sin(angle3) << "\n";
-                outFile << "" << radius * sin(angle3 + angle4) * sin(angle1) << " " << radius*cos(angle3 + angle4) << " " << radius * sin(angle3 + angle4) * cos(angle1) << "\n";
-                outFile << "" << radius * sin(angle3) * sin(angle1 + angle2) << " " << radius*cos(angle3) << " " << radius * sin(angle3) * cos(angle1 + angle2) << "\n";
+                outFile << "" << sin(angle3) * sin(angle1) << " " << cos(angle3) << " " << cos(angle1) * sin(angle3) << "\n";
+                outFile << "" << sin(angle3 + angle4) * sin(angle1) << " " << cos(angle3 + angle4) << " " << sin(angle3 + angle4) * cos(angle1) << "\n";
+                outFile << "" << sin(angle3) * sin(angle1 + angle2) << " " << cos(angle3) << " " << sin(angle3) * cos(angle1 + angle2) << "\n";
                 outFile << s_factor << " " << t_factor << " 0\n";
                 outFile << s_factor + (1.d / slices) << " " << t_factor - (1.d / stacks) << " 0\n";
                 outFile << s_factor + (1.d/slices) << " " << t_factor << " 0\n";
