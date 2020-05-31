@@ -338,7 +338,7 @@ void dynamicTranslate(Oper* oper, int i)
 	int n = 100;
 	for (int j = 1; j < n; j++) {
 		getGlobalCatmullRomPoint((double)j / n, pos, deriv, curve, size);
-		glVertex3d(pos[0], pos[1], pos[2]);
+	//	glVertex3d(pos[0], pos[1], pos[2]);
 	}
 	glEnd();
 
@@ -676,7 +676,7 @@ int main(int argc, char** argv)
 	// put GLUT�s init here
 	///////////////////////////////////////
 	/////////////Song//////////////////////
-	thread th1(foo, 3); 	glutInit(&argc, argv);
+	//thread th1(foo, 3); 	glutInit(&argc, argv);
 	///////////////////////////////////////
 	///////////////////////////////////////
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
