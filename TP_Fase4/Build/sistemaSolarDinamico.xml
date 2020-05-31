@@ -7,7 +7,6 @@
 	<light type="POINT" posX="-96.0" posY="10.0" posZ="15.0" />
 	<light type="POINT" posX="-84.0" posY="10.0" posZ="-15.0" />
 	<light type="POINT" posX="-96.0" posY="-1.0" posZ="15.0" />
-	<light type="POINT" posX="-84.0" posY="-1.0" posZ="-15.0" />
     </lights>
 	<!--sol-->
     <group>
